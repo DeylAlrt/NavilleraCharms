@@ -131,7 +131,7 @@ body {
     text-shadow: 0 8px 7px #000000;
     -webkit-text-stroke: 15px #FFFFFF;
     font-weight: 400;
-    font-size: clamp(1.2rem, 4vw, 3rem);
+    font-size: 3rem;
     text-align: center;
     z-index: 1;
 }
@@ -139,7 +139,7 @@ body {
     position: absolute;
     font-family: KoPub Batang;
     font-weight: 400;
-    font-size: clamp(1.2rem, 4vw, 3rem);
+    font-size: 3rem;
     text-align: center;
     color: rgb(253, 155, 201);
     z-index: 2;
@@ -185,6 +185,7 @@ body {
     .container { width: 100%; }
     .Circle { width: 70%; transform: translate(25%, -10%); }
     .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
+    .subtitle, .subtitle_effect { font-size: 1rem; }
     .text-container { scale: 120%; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1rem; } 

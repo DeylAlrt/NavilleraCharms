@@ -1,0 +1,39 @@
+/* KEYFRAMES */
+@keyframes moveLinkUniversal {
+    from {
+        transform: translate(0%, 0%); 
+        opacity: 0;
+    }
+    to {    
+        transform: translate(var(--tx), var(--ty));
+        opacity: 1;
+    }
+}
+
+/* LINK BASE STYLES */
+.Link1, .Link2, .Link3, .Link4 {
+    position: absolute;
+    z-index: 1;
+    height: auto;
+    max-width: 400%;
+    will-change: transform;
+    transition: transform 0.3s ease-out;
+    opacity: 0;
+    animation: moveLinkUniversal linear forwards;
+    animation-timeline: view();
+    animation-range: entry 20% cover 30%; 
+}
+
+/* DESKTOP COORDINATES */
+.Link1 { width: 11%; --tx: 200%; --ty: -170%; }
+.Link2 { width: 12%; --tx: 250%; --ty: -60%; }
+.Link3 { width: 13%; --tx: -220%; --ty: 50%; }
+.Link4 { width: 9%;  --tx: -170%; --ty: 270%; }
+
+/* MOBILE COORDINATES */
+@media (max-width: 431px) {
+    .Link1 { width: 25%; left: 1%; --tx: 250%; --ty: -120%; }
+    .Link2 { width: 25%; left: 1%; --tx: 325%; --ty: -30%; }
+    .Link3 { width: 19%; left: 50%; --tx: -220%; --ty: 90%; }
+    .Link4 { width: 17%; left: 50%; --tx: -130%; --ty: 300%; }
+}

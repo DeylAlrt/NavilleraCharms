@@ -1,0 +1,133 @@
+/* GLOBAL SETTINGS */
+html {
+    scroll-behavior: smooth;
+    height: 9900px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    overflow-x: hidden;
+}
+
+/* PAGE SECTIONS */
+.intro {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+.background-image {
+    width: 99vw;
+    position: relative;
+    border-radius: 12%;
+    background-size: cover;      
+    background-position: center;  
+    background-repeat: no-repeat; 
+}
+
+.build {
+    position: absolute;
+    z-index: 2;
+    padding: 12px 24px;
+    font-size: 1.5rem;
+    width: 15%;
+    color: black;
+    background-color: #FCF5BE;
+    border-radius: 30px;
+    text-decoration: none;
+    bottom: 15%;
+    left: 14%;      
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.section_1 {
+    position: relative;
+    display: flex;
+    border: solid red; /* Temporary debug border */
+    overflow: visible;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+    height: 600px;
+    contain: layout;
+}
+
+.container {
+    position: relative;
+    height: 100%;
+    width: 70%;
+    z-index: 2;
+}
+
+.Section1_Bracelet {
+    position: absolute;
+    width: 40%;
+    right: 23%;
+    transform: rotate(-10deg); 
+    height: auto;
+    max-width: 600px;
+    z-index: 3;
+}
+
+.anim-container {
+    position: relative;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Circle {
+    position: absolute;
+    z-index: 1;
+    width: 50%;
+    height: auto;
+    transform: translate(100px, -40px);
+    max-width: 600px;
+}
+
+.title {
+    position: absolute;
+    font-family: KoPub Batang;
+    top: 0;
+    left: 8%;
+    font-weight: 400;
+    font-size: 9rem;
+    text-align: center;
+    color: #a7c7e7;
+    z-index: 999999;
+}
+.subtitle {
+    position: absolute;
+    font-family: KoPub Batang;
+    top: 20%;
+    left: 10%;
+    text-shadow: 4px 4px 9px #ffffff;
+    font-weight: 400;
+    font-size: 3rem;
+    text-align: center;
+    color: rgb(253, 155, 201);
+    z-index: 999999;
+}
+
+@media (max-width: 431px) {
+    .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
+    .section_1 { height: 480px; }
+    .container { width: 100%; }
+    .Circle { width: 70%; transform: translate(25%, -10%); }
+    .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
+}

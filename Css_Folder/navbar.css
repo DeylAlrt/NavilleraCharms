@@ -93,7 +93,7 @@
 }
 
 /* MOBILE NAV OVERRIDES */
-@media (max-width: 431px) {
+@media (max-width: 600px) {
     .nav-menu { display: none; }
     .nav-icons { gap: 9px; }
     .navbar { border-radius: 120px; }

@@ -31,7 +31,7 @@
 .Link4 { width: 9%;  --tx: -170%; --ty: 270%; }
 
 /* MOBILE COORDINATES */
-@media (max-width: 431px) {
+@media (max-width: 600px) {
     .Link1 { width: 25%; left: 1%; --tx: 250%; --ty: -120%; }
     .Link2 { width: 25%; left: 1%; --tx: 325%; --ty: -30%; }
     .Link3 { width: 19%; left: 50%; --tx: -220%; --ty: 90%; }

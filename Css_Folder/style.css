@@ -124,7 +124,7 @@ body {
     z-index: 999999;
 }
 
-@media (max-width: 431px) {
+@media (max-width: 600px) {
     .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
     .section_1 { height: 480px; }
     .container { width: 100%; }

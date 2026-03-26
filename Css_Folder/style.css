@@ -125,17 +125,7 @@ body {
     z-index: 3;
 }
 
-.subtitle_effect {
-    position: absolute;
-    font-family: KoPub Batang;
-    text-shadow: 0 8px 7px #000000;
-    -webkit-text-stroke: 15px #FFFFFF;
-    font-weight: 400;
-    font-size: 3rem;
-    text-align: center;
-    z-index: 1;
-}
-.subtitle {
+.subtitle, .subtitle_effect {
     position: absolute;
     font-family: KoPub Batang;
     font-weight: 400;
@@ -144,6 +134,12 @@ body {
     color: rgb(253, 155, 201);
     z-index: 2;
 }
+.subtitle_effect {
+    text-shadow: 0 8px 7px #000000;
+    -webkit-text-stroke: 15px #FFFFFF;
+    z-index: 1;
+}
+
 
 .text-container2 {
     position: absolute;
@@ -185,7 +181,8 @@ body {
     .container { width: 100%; }
     .Circle { width: 70%; transform: translate(25%, -10%); }
     .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
-    .subtitle, .subtitle_effect { font-size: 1rem; }
+    .subtitle, .subtitle_effect { font-size: 1.4rem; }
+    .subtitle_effect { text-shadow: 0 4px 2px #000000; -webkit-text-stroke: 7px #FFFFFF; }
     .text-container { scale: 120%; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1rem; } 

@@ -173,6 +173,81 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
+/*  Collections Block  */
+.collections {
+  background-color: #b8d8ea;
+  border-radius: 12px;
+  padding: 28px 24px 24px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.collections__title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 20px 0;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.collections__plus {
+  width: 5%;
+  max-width: 100%;
+}
+
+.collections__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.collections__card {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.collections__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.collections__img-wrap {
+  background: #fff;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.collections__img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.collections__label {
+  width: 100%;
+  background: #a8ccdf;
+  color: #fff;
+  text-align: center;
+  padding: 8px 4px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+
 @media (max-width: 567px) {
     .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
     .section_1 { height: 480px; }
@@ -181,9 +256,10 @@ body {
     .Circle { width: 70%; transform: translate(25%, -10%); }
     .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
     .subtitle, .subtitle_effect { font-size: 1.4rem; }
-    .subtitle_effect { text-shadow: 0 3px .5px #000000; -webkit-text-stroke: 5px #FFFFFF; }
+    .subtitle_effect { text-shadow: 0 3px 1px #000000; -webkit-text-stroke: 5px #FFFFFF; }
     .text-container { scale: 120%; top: 0; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; } 
     .collection { font-size: 1rem; padding: 8px 16px; width: 150%; }
+    .collections__grid {grid-template-columns: repeat(2, 1fr); }
 }

@@ -181,7 +181,7 @@ body {
     .Circle { width: 70%; transform: translate(25%, -10%); }
     .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
     .subtitle, .subtitle_effect { font-size: 1.4rem; }
-    .subtitle_effect { text-shadow: 0 4px .5px #000000; -webkit-text-stroke: 5px #FFFFFF; }
+    .subtitle_effect { text-shadow: 0 3px .5px #000000; -webkit-text-stroke: 5px #FFFFFF; }
     .text-container { scale: 120%; top: 0; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; } 

@@ -2,6 +2,7 @@
 html {
     scroll-behavior: smooth;
     height: 9900px;
+    background-color: white;
 }
 
 * {
@@ -56,13 +57,13 @@ body {
 .section_1 {
     position: relative;
     display: flex;
-    border: solid red; /* Temporary debug border */
     overflow: visible;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 3%;
     height: 600px;
+    border: solid;
+    border-color: red;
     contain: layout;
 }
 
@@ -176,14 +177,14 @@ body {
 
 @media (max-width: 567px) {
     .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
-    .anim-container { width: 60%; }
     .section_1 { height: 480px; }
+    .anim-container { width: 80%; top: -8%;}
     .container { width: 100%; }
     .Circle { width: 70%; transform: translate(25%, -10%); }
     .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
     .subtitle, .subtitle_effect { font-size: 1.4rem; }
-    .subtitle_effect { text-shadow: 0 4px 2px #000000; -webkit-text-stroke: 7px #FFFFFF; }
-    .text-container { scale: 120%; }
+    .subtitle_effect { text-shadow: 0 4px 4px #000000; -webkit-text-stroke: 3px #FFFFFF; }
+    .text-container { scale: 120%; top: 0; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1rem; } 
     .collection { font-size: 1rem; padding: 8px 16px; width: 150%; }

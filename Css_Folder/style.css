@@ -177,13 +177,14 @@ body {
 .collections {
   background-color: #b8d8ea;
   border-radius: 12px;
-  padding: 28px 24px 24px;
+  padding: 28px 24px 63px;
   font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 .collections__title {
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-family: kantumruy, system-ui, sans-serif;
   color: #fff;
   margin: 0 0 20px 0;
   letter-spacing: 0.04em;
@@ -238,28 +239,40 @@ body {
 
 .collections__label {
   width: 100%;
-  background: #a8ccdf;
   color: #fff;
   text-align: center;
   padding: 8px 4px;
-  font-size: 0.95rem;
+  font-size: 1.6rem;
   font-weight: 500;
+  border: solid;
+  border-width: 1px;
   box-sizing: border-box;
 }
 
 
 @media (max-width: 567px) {
     .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
+    /* Section 1 area */
     .section_1 { height: 480px; }
     .anim-container { width: 80%; top: -8%;}
     .container { width: 100%; }
     .Circle { width: 70%; transform: translate(25%, -10%); }
     .Section1_Bracelet { width: 60%; bottom: 9%; right: 9%; transform: rotate(-1deg); }
     .subtitle, .subtitle_effect { font-size: 1.4rem; }
-    .subtitle_effect { text-shadow: 0 3px 1px #000000; -webkit-text-stroke: 5px #FFFFFF; }
+    .subtitle_effect { text-shadow: 0 3px 2px #000000; -webkit-text-stroke: 5px #FFFFFF; }
     .text-container { scale: 120%; top: 0; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; } 
+    /* Section 2 area */
     .collection { font-size: 1rem; padding: 8px 16px; width: 150%; }
-    .collections__grid {grid-template-columns: repeat(2, 1fr); }
+    .collections { padding: 28px 24px 42px; }
+    .collections__grid { grid-template-columns: repeat(2, 1fr); }
+    .collections__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
+    .collections__grid::-webkit-scrollbar { display: none; }
+    .collections__card { flex: 0 0 calc(50% - 6px); scroll-snap-align: start; }
+    .collections__title { font-size: 2.5rem; }
+    .collections__plus { width: 10%; }
+    .collections__dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.5); transition: all 0.3s ease; }
+    .dot.active { background-color: #fff; transform: scale(1.2); }
 }

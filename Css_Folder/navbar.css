@@ -32,7 +32,7 @@
     scale: calc(2);
 }
 
-.logo-link{
+a.logo-link{
     display: flex;
     height: 100%;
     width: 100%;

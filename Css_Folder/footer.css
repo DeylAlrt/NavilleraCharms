@@ -77,15 +77,22 @@
 
 .social-icons {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     margin-bottom: 25px;
     max-width: 100%;
 }
 
 .social-icons img {
-    width: 15%;
-    max-width: 100%;
+    width: 55px;      
+    max-width: 100%;     
+    object-fit: contain;
+    transition: transform 0.3s ease;
 }
+
+.social-icons a:hover img {
+    transform: scale(1.1);
+}
+
 
 .social-icons a {
     color: #ffffff;

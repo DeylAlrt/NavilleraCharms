@@ -27,8 +27,12 @@
 }
 
 .title {
-    display: block;
     margin-top: 3vh;
     min-height: calc(100vh - 70px);
+    width: 100%;
+}
+
+.aboutus-intro{
+    height: 100vh;
     width: 100%;
 }

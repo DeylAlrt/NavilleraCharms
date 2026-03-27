@@ -33,8 +33,9 @@
 }
 
 a.logo-link{
-    display: block;
+    display: flex;
     height: 100%;
+    align-items: flex-start;
 }
 
 .nav-menu {

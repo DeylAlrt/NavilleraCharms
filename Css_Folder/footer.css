@@ -1,0 +1,141 @@
+.main-footer {
+    background-color: #1a2740;
+    color: #ffffff;
+    padding: 37px 60px 40px 60px;
+    border-top-left-radius: 100px; 
+    border-top-right-radius: 100px;
+    font-family: 'Playfair Display', serif;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px; 
+}
+
+.footer-logo-row {
+    width: 100%;
+}
+
+.footer-logo {
+    max-width: 320px;
+    height: auto;
+    display: block;
+}
+.footer-links-row {
+    display: grid;
+    grid-template-columns: repeat(4, auto); 
+    justify-content: flex-end; 
+    gap: 15%; 
+    width: 100%;
+    padding-bottom: 40px;
+}
+
+.link-column {
+    text-align: right; 
+}
+
+.link-column h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.link-column a {
+    display: block;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+    font-style: italic;
+    transition: color 0.3s ease;
+}
+
+.link-column a:hover {
+    color: #ffffff;
+}
+
+.footer-bottom-row {
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-wrap: wrap;
+}
+
+/* Left Side: Connect With Us */
+.social-box h3 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-family: 'Source Serif Pro';
+    font-style: italic;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    max-width: 100%;
+}
+
+.social-icons img {
+    width: 15%;
+    max-width: 100%;
+}
+
+.social-icons a {
+    color: #ffffff;
+    font-size: 1.8rem;
+    text-decoration: none;
+}
+
+.copyright {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    margin-top: 10px;
+}
+
+/* Right Side: Contact Info */
+.contact-box {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-line {
+    display: flex;
+    align-items: center; 
+    gap: 12px;        
+}
+
+.contact-line img {
+    width: 13%;
+    max-width: 100%;     
+    height: auto;
+}
+
+.contact-line p {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 300;
+    font-family: 'Source Serif 4';
+    text-decoration: underline;
+    font-style: italic;
+    color: #ffffff;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media (max-width: 567px) {
+    .main-footer { padding: 40px 20px; border-top-left-radius: 50px; border-top-right-radius: 50px; }
+    .footer-bottom-row { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 20px; }
+    .copyright { width: 100%; text-align: left; margin-top: 30px; order: 3; }
+    .social-box, .contact-box { flex: 1; min-width: 140px; }
+    .social-box h3 { font-size: 1.6rem; }
+    .footer-links-row { grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; }
+    .link-column { text-align: left; }
+    .contact-line p { font-size: .7rem; }
+}

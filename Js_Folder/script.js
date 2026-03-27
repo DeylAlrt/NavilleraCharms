@@ -1,3 +1,4 @@
+// 2 Circle Slide Animation //
 const grid = document.querySelector('.collections__grid');
 const dots = document.querySelectorAll('.dot');
 

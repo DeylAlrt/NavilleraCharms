@@ -16,6 +16,7 @@
     height: 100%;
     border: 0;
     object-fit: cover;
+    margin-top: 20vh;
 }
 
 .flex-container {

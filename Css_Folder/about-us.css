@@ -5,7 +5,7 @@
     height: 100vh;
     min-height: calc(100vh - 70px);
     overflow: hidden;
-    background: url(.../TempAssets/AboutUsPic.png);
+    background: url('.../TempAssets/AboutUsPic.png');
     background-repeat: no-repeat;
     margin-top: 8vh;
 }

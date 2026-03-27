@@ -1,21 +1,21 @@
-/* GLOBAL SETTINGS */
-html {
-    scroll-behavior: smooth;
-    background-color: white;
-    overflow-x: hidden;
-}
-
+/*  1. GLOBAL SETTINGS & RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    background-color: white;
+    overflow-x: hidden;
+}
+
 body {
     font-family: 'Poppins', system-ui, sans-serif;
 }
 
-/* PAGE SECTIONS */
+/* 2. INTRO SECTION */
 .intro {
     position: relative;
     display: flex;
@@ -53,7 +53,7 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-/* Section 1 Area PC*/
+/*  3. SECTION 1 (BRACELET AREA) */
 .section_1 {
     position: relative;
     display: flex;
@@ -134,12 +134,12 @@ body {
     color: rgb(253, 155, 201);
     z-index: 2;
 }
+
 .subtitle_effect {
     text-shadow: 0 8px 7px #000000;
     -webkit-text-stroke: 15px #FFFFFF;
     z-index: 1;
 }
-
 
 .text-container2 {
     position: absolute;
@@ -150,18 +150,21 @@ body {
     bottom: 9%;
     width: 27%;
 }
+
 .primary-text, .secondary-text {
     font-family: 'kantumruy', system-ui, sans-serif;
     font-weight: 700;
     font-size: 2.2rem;
     text-align: right;
 }
+
 .secondary-text {
     font-family: 'Mate';
     font-style: italic;
     font-size: 1.5rem;
     font-weight: 300;
 }
+
 .collection {
     margin-top: 20px;
     padding: 10px 20px;
@@ -174,7 +177,7 @@ body {
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
-/*  Section 2 Area PC  */
+/* 4. SECTION 2 (COLLECTIONS GRID) */
 .collections {
   background-color: #b8d8ea;
   border-radius: 12px;
@@ -250,8 +253,7 @@ body {
   box-sizing: border-box;
 }
 
-/* Section 3 Area */
-
+/* 5. SECTION 3 (INFO POINTS) */
 .info {
     position: relative;
     width: 100%;
@@ -320,7 +322,7 @@ body {
 .info__text h3 { font-size: 1.5rem; font-weight: 700; font-style: italic; margin-bottom: 5px; font-family: 'Source Serif 4', serif;}
 .info__text p { width: 120%; font-size: 1.1rem; line-height: 1.4; color: #333; font-family: 'Source Serif 4', serif; }
 
-/* Section 4 Area */
+/* 6. SECTION 4 (DISCOUNT AREA) */
 .discount-area {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -354,7 +356,6 @@ body {
     max-width: 100%;
     flex-direction: column;
     align-items: center;
-
 }
 
 .greeting-text {
@@ -386,6 +387,7 @@ body {
     right: -15%;
     scale: calc(.2);
 }
+
 .Star2 {
     position: absolute;
     top: 35%;
@@ -427,9 +429,11 @@ body {
     font-weight: 700;
 }
 
+/* 7. RESPONSIVE DESIGN (MOBILE) */
 @media (max-width: 567px) {
     .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
-    /* Section 1 Area */
+
+    /* Section 1 Mobile */
     .section_1 { height: 480px; }
     .anim-container { width: 80%; top: -8%;}
     .container { width: 100%; }
@@ -440,10 +444,10 @@ body {
     .text-container { scale: 120%; top: 0; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
     .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; } 
-    /* Section 2 Area */
+
+    /* Section 2 Mobile */
     .collection { font-size: 1rem; padding: 8px 16px; width: 150%; }
     .collections { padding: 28px 24px 42px; }
-    .collections__grid { grid-template-columns: repeat(2, 1fr); }
     .collections__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
     .collections__grid::-webkit-scrollbar { display: none; }
     .collections__card { flex: 0 0 calc(50% - 6px); scroll-snap-align: start; }
@@ -452,7 +456,8 @@ body {
     .collections__dots { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
     .dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.5); transition: all 0.3s ease; }
     .dot.active { background-color: #fff; transform: scale(1.2); }
-    /* Section 3 Area */
+
+    /* Section 3 Mobile */
     .info { height: auto; padding: 60px 20px; }
     .info__wrapper { flex-direction: column; align-items: flex-start; gap: 40px; }
     .info__main-img { order: -1; width: 100%; margin-bottom: 20px; }
@@ -464,20 +469,18 @@ body {
     .glow--yellow { width: 80%; top: 0; left: -30%; }
     .glow--pink { width: 70%; bottom: 10%; left: -20%; }
     .glow--blue { width: 90%; top: 30%; right: -30%; }
-    /* Section 4 Area */
+
+    /* Section 4 Mobile */
     .discount-area { grid-template-columns: 1fr; gap: 20px; padding: 5%; }
     .left-image { width: 100%; transform: translate(0); border-radius: 40px; }
     .discount-container { width: 100%; transform: translate(0); border-radius: 40px; padding: 30px 10px; min-height: auto; }
     .text-container3 { width: 90%; }
     .greeting-text { right: 0; text-align: center; font-size: 1.4rem; margin-bottom: 15px; }
-    .offer-row { display: flex; align-items: center; justify-content: center; gap: 8px; 
-    white-space: nowrap; margin: 10px 0; position: relative; }
+    .offer-row { display: flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap; margin: 10px 0; position: relative; }
     .take-text { position: relative; top: 0; left: 0; font-size: 1.5rem; -webkit-text-stroke: 4px white; }
     .percent-text { position: relative; top: 0; left: 0; font-size: 2.5rem; -webkit-text-stroke: 6px white; }
     .Star1 { position: absolute; right: -5%; top: -10%; width: 35px; height: auto; scale: 1; }
     .Star2 { display: none; }
     .instruction-text { margin-top: 10px; font-size: 1.1rem; }
-    .promo-text { scale: 1; width: 80%; height: 45px; display: flex; justify-content: center; 
-    align-items: center; font-size: 1.1rem; border-radius: 12px; margin-top: 15px; }
-        
+    .promo-text { scale: 1; width: 80%; height: 45px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; border-radius: 12px; margin-top: 15px; }
 }

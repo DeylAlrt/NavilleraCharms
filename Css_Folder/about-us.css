@@ -16,6 +16,7 @@
     height: 100%;
     border: 0;
     object-fit: cover;
+    padding-top: 10vh;
 }
 
 .flex-container {

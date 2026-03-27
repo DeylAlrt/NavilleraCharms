@@ -32,6 +32,11 @@
     scale: calc(2);
 }
 
+.logo-link{
+    display: flex;
+    height: 100%;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;

@@ -33,7 +33,7 @@
 }
 
 a.logo-link{
-    display: flex;
+    display: block;
     height: 100%;
 }
 

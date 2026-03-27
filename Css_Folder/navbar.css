@@ -35,6 +35,7 @@
 .logo-link{
     display: flex;
     height: 100%;
+    width: auto;
 }
 
 .nav-menu {

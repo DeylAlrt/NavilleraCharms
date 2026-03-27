@@ -141,6 +141,7 @@
     .footer-bottom-row { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 20px; }
     .copyright { width: 100%; text-align: left; margin-top: 30px; order: 3; }
     .social-box, .contact-box { flex: 1; min-width: 140px; }
+    .social-icons img { width: 60px; }
     .social-box h3 { font-size: 1.6rem; }
     .footer-links-row { grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; }
     .link-column { text-align: left; }

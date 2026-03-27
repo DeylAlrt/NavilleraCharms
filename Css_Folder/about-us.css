@@ -23,3 +23,9 @@
     white-space: nowrap;
     justify-content: flex-end;
 }
+
+.title {
+    margin-top: 70px;
+    min-height: calc(100vh - 70px);
+    width: 100%;
+}

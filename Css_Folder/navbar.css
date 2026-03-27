@@ -32,6 +32,12 @@
     scale: calc(2);
 }
 
+a.logo-link{
+    display: flex;
+    height: 100%;
+    align-items: flex-start;
+}
+
 .nav-menu {
     display: flex;
     list-style: none;

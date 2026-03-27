@@ -28,7 +28,8 @@
 }
 
 .title {
-    margin-top: 70px;
+    display: block;
+    margin-top: 3vh;
     min-height: calc(100vh - 70px);
     width: 100%;
 }

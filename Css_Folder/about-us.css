@@ -33,6 +33,11 @@
 }
 
 .aboutus-intro{
-    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    overflow: hidden;
+    height: 100vh;
 }

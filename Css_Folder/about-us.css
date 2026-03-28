@@ -38,6 +38,10 @@ body {
     object-position: center;
 }
 
+p, h3, h4, h5{
+    text-align: center;
+}
+
 /* --- 2. THE BLUR OVERLAY --- */
 .image-wrapper::after {
     content: "";

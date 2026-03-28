@@ -38,8 +38,22 @@ body {
     object-position: center;
 }
 
-p, h2, h3, h4{
+p, h2, h4{
     text-align: center;
+}
+
+p{
+    font-family: 'Kantumruy Pro';
+    font-style: italic;
+}
+
+h2{
+    font-family: 'Kantumruy';
+}
+
+h4{
+    font-family:'Source-Serif-Pro';
+    font-style: italic;
 }
 
 /* --- 2. THE BLUR OVERLAY --- */

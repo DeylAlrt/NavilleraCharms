@@ -43,16 +43,16 @@ p, h2, h4{
 }
 
 p{
-    font-family: 'Kantumruy Pro';
+    font-family: 'Kantumruy Pro', system-ui, sans-serif;
     font-style: italic;
 }
 
 h2{
-    font-family: 'Kantumruy';
+    font-family: 'Kantumruy', system-ui, sans-serif;
 }
 
 h4{
-    font-family:'Source-Serif-Pro';
+    font-family:'Source-Serif-Pro', system-ui, sans-serif;
     font-style: italic;
 }
 

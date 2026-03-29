@@ -67,13 +67,13 @@ h4{
 
 .partner-us{
     font-style: italic;
+    text-align: center;
 }
 
 .partner-us a{
     color: inherit; /* or specify a color like 'black' or '#000000' */
     text-decoration: none;
     font-weight: 600;
-    text-align: center;
 }
 
 /* --- 2. THE BLUR OVERLAY --- */

@@ -77,6 +77,23 @@ h4{
     margin: 5vh;
 }
 
+.her{
+    font-family: 'Kantumruy Pro', system-ui, sans-serif;
+    color: #FD9AC8;
+    font-size: xxx-large;
+    font-weight:600;
+    font-style: italic;
+}
+
+.story{
+    font-family: 'Source Serif 4',serif;
+    color: #1C2B4B;
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -3px;
+}
+
+
 .carousel p{
     margin: 5vh;
 }

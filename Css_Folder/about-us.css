@@ -73,6 +73,7 @@ h4{
     color: inherit; /* or specify a color like 'black' or '#000000' */
     text-decoration: none;
     font-style: bold;
+    text-align: center;
 }
 
 /* --- 2. THE BLUR OVERLAY --- */

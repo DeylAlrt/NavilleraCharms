@@ -131,6 +131,14 @@ h4{
     left: 45%;
 }
 
+@media (max-width: 320px) {
+    .aboutus-background { height: 600px}
+    .image-wrapper { border-radius: 0; }
+    .aboutus-text { scale: calc(.4); left: 1%; bottom: 10%;}
+    .small-star { width: 9%; left: 1%; bottom: 30%;}
+    .big-star { width: 16%; left: 4%; bottom: 22%;}
+}
+
 @media (max-width: 567px) {
     .aboutus-background { height: 600px;}
     .image-wrapper { border-radius: 0; }

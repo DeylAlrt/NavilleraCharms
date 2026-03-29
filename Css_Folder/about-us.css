@@ -62,10 +62,19 @@ h4{
 }
 
 .welcome-section{
-    margin-top: 5vh;
+    margin: 5vh;
 }
 
-.partner-us{
+.her-story{
+    margin: 5vh;
+}
+
+.carousel p{
+    margin: 5vh;
+}
+    
+.partner-us h4{
+    font-weight: 300;
     font-style: italic;
     text-align: center;
 }

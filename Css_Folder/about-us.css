@@ -42,13 +42,9 @@ p, h2, h4{
     text-align: center;
 }
 
-p{
+p, h2{
     font-family: 'Kantumruy Pro', system-ui, sans-serif;
     font-style: italic;
-}
-
-h2{
-    font-family: 'Kantumruy', system-ui, sans-serif;
 }
 
 h4{

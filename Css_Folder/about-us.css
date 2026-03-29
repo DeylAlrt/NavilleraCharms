@@ -54,7 +54,9 @@ h4{
 }
 
 .quote{
-    letter-spacing: -1px;
+    font-family: serif;
+    font-size: medium;
+    letter-spacing: -0.5px;
 }
 
 .welcome{

@@ -48,12 +48,13 @@ p, h2{
 }
 
 h4{
-    font-family:'Source-Serif-Pro';
+    font-family: 'Source-Serif-Pro', ui-serif, ui-monospace;
     font-style: italic;
+    font-size: large;
 }
 
 .quote{
-    letter-spacing: 0;
+    letter-spacing: -1px;
 }
 
 .welcome{

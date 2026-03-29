@@ -86,9 +86,25 @@ h4{
 
 /* --- THE BLUE GRADIENT PART --- */
 .star-banner {
-    background: linear-gradient(180deg, #1a2740 0%, #2a78bd 50%, #1a2740 100%);
-    padding: 60px 20px;
-    margin: 40px 0;
+    /* Fades from White -> Dark Blue -> White */
+    background: linear-gradient(
+        to bottom, 
+        #1a2740 0%,        /* Start with the page white */
+        #1a2740 15%,       /* Fade into the Navy quickly */
+        #1a2740 85%,       /* Stay solid Navy for the middle */
+        #ffffff 100%       /* Fade back out to White at the bottom */
+    );
+    
+    padding: 120px 20px;   /* Padding gives the fade room to "breathe" */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.star-banner h4{
     color: white;
 }
 

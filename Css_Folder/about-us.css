@@ -121,7 +121,7 @@ h4{
 @media (max-width: 567px) {
     .aboutus-background { height: 600px;}
     .image-wrapper { border-radius: 0; }
-    .aboutus-text { scale: calc(.7); left: 13%; bottom: 1%;}
-    .small-star { width: 9%; left: 10%; bottom: 22%;}
-    .big-star { width: 16%; left: 14%; bottom: 14%;}
+    .aboutus-text { scale: calc(.7); left: 1%; bottom: 10%;}
+    .small-star { width: 9%; left: 1%; bottom: 30%;}
+    .big-star { width: 16%; left: 4%; bottom: 22%;}
 }

@@ -72,7 +72,7 @@ h4{
 .partner-us a:link, a:visited, a:hover, a:active {
     color: inherit; /* or specify a color like 'black' or '#000000' */
     text-decoration: none;
-    font-style: bold;
+    font-weight: 600;
     text-align: center;
 }
 

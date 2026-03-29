@@ -65,6 +65,14 @@ h4{
     margin-top: 5vh;
 }
 
+.partner-us{
+    font-style: italic;
+}
+
+.partner-us a{
+    font-style: bold;
+}
+
 /* --- 2. THE BLUR OVERLAY --- */
 .image-wrapper::after {
     content: "";

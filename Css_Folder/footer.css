@@ -20,6 +20,7 @@
 }
 
 .footer-logo {
+    width: 100%; /*Added this because it's messing with the responsiveness*/
     max-width: 320px;
     height: auto;
     display: block;

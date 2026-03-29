@@ -162,6 +162,30 @@ h4{
     margin: 5vh;
 }
 
+.gallery-wrapper {
+    /* Create 2 columns for mobile */
+    column-count: 2;
+    column-gap: 15px; /* Space between the two columns */
+    padding: 20px;
+    width: 100%;
+}
+
+.gallery-wrapper-item {
+    display: inline-block; /* Essential to prevent image "splitting" between columns */
+    width: 100%;
+    margin-bottom: 15px; /* Space between images vertically */
+    border-radius: 25px; /* Rounded corners like your image */
+    overflow: hidden; /* Ensures image follows the rounded corner */
+    line-height: 0;   /* Removes tiny gap at bottom of images */
+}
+
+.gallery-wrapper-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
 .partner-us {
     display: flex;
     flex-direction: column;

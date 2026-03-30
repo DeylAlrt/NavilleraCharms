@@ -38,6 +38,173 @@ body {
     object-position: center;
 }
 
+p, h2, h4{
+    text-align: center;
+}
+
+p, h2{
+    font-family: 'Kantumruy Pro', system-ui, sans-serif;
+    font-style: italic;
+}
+
+h4{
+    font-family: 'Source-Serif-Pro', ui-serif, ui-monospace;
+    font-style: italic;
+    font-size: large;
+}
+
+.quote{
+    font-family: serif;
+    font-size: medium;
+    letter-spacing: -0.5px;
+    margin-bottom: 5vh;
+}
+
+.welcome{
+    font-weight: 300;
+    font-style: normal;
+}
+
+.emphasis{
+    font-style: normal;
+}
+
+.welcome-section{
+    margin: 5vh;
+}
+
+/* Main Image Placeholder */
+.main-image-placeholder {
+    width: 100%;
+    height: 400px;
+    background: #e0e0e0;
+    margin-bottom: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- THE BLUE GRADIENT PART --- */
+.star-banner {
+    /* Fades from White -> Dark Blue -> White */
+    background: linear-gradient(
+        to bottom, 
+        #1a2740 0%,        /* Start with the page white */
+        #1a2740 15%,       /* Fade into the Navy quickly */
+        #1a2740 85%,       /* Stay solid Navy for the middle */
+        #ffffff 100%       /* Fade back out to White at the bottom */
+    );
+    
+    padding: 120px 20px;   /* Padding gives the fade room to "breathe" */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.star-banner h4{
+    color: white;
+}
+
+/* Gallery Row */
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Keeps them bottom-aligned */
+    gap: 15px;
+}
+
+.gallery-item {
+    background: #cccccc;
+    border-radius: 50px; /* Highly rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333;
+}
+
+/* Different sizes for the 3-image look */
+.gallery-item.side {
+    width: 25%;
+    height: 180px;
+}
+
+.gallery-item.middle {
+    width: 35%;
+    height: 240px;
+}
+
+.her-story{
+    margin: 5vh;
+}
+
+.her{
+    font-family: 'Kantumruy Pro', system-ui, sans-serif;
+    color: #FD9AC8;
+    font-size: xxx-large;
+    font-weight:600;
+    font-style: italic;
+}
+
+.story{
+    font-family: 'Source Serif 4',serif;
+    color: #1C2B4B;
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -3px;
+    margin-bottom: 5vh;
+}
+
+
+.carousel p{
+    margin: 5vh;
+}
+
+.gallery-wrapper {
+    /* Create 2 columns for mobile */
+    column-count: 2;
+    column-gap: 15px; /* Space between the two columns */
+    padding: 20px;
+    width: 100%;
+}
+
+.gallery-wrapper-item {
+    display: inline-block; /* Essential to prevent image "splitting" between columns */
+    width: 100%;
+    margin-bottom: 15px; /* Space between images vertically */
+    border-radius: 25px; /* Rounded corners like your image */
+    overflow: hidden; /* Ensures image follows the rounded corner */
+    line-height: 0;   /* Removes tiny gap at bottom of images */
+}
+
+.gallery-wrapper-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.partner-us {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers all children (h4 and a) horizontally */
+    justify-content: center;
+    width: 100%;
+}
+
+.partner-us h4{
+    font-weight: 400;
+    font-style: italic;
+}
+
+.partner-us a{
+    color: inherit; /* or specify a color like 'black' or '#000000' */
+    text-decoration: none;
+    font-weight: 600;
+}
+
 /* --- 2. THE BLUR OVERLAY --- */
 .image-wrapper::after {
     content: "";
@@ -54,21 +221,21 @@ body {
 /* --- 3. TEXT LAYER --- */
 .aboutus-text {
     position: absolute;
-    bottom: 16%; 
-    left: 24%;
-    transform: scale(1.4);
+    bottom: 16%;
+    left: calc(70vw);
+    transform: translateX(-50%); /* Keeps it centered */
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 1.3vw;
     z-index: 10;
     width: 100%;
     color: white;
-    display: flex;
-    align-items: baseline;
-    justify-content: center; 
-    gap: 15px;
 }
 
 .about {
     font-family: 'Kantumruy Pro', sans-serif;
-    font-size: 5rem;
+    font-size: 12vw;
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -78,7 +245,7 @@ body {
 .us {
     font-family: 'Source Serif 4', serif;
     font-style: italic;
-    font-size: 7rem;         
+    font-size: 16vw;         
     font-weight: 500;
     text-transform: lowercase;
     line-height: 1;
@@ -94,20 +261,27 @@ body {
 
 .big-star {
     width: 7%;
-    bottom: 27%;
-    left: 47%;
+    bottom: 30%;
+    left: 33%;
 }
 
 .small-star {
     width: 4%;
     bottom: 36%;
-    left: 45%;
+    left: 30%;
 }
 
-@media (max-width: 567px) {
-    .aboutus-background { height: 600px;}
+/* Mobile adjustments */
+@media (max-width: 425px) {
+    .aboutus-background { height: 600px; }
     .image-wrapper { border-radius: 0; }
-    .aboutus-text { scale: calc(.7); left: 13%; bottom: 1%;}
-    .small-star { width: 9%; left: 10%; bottom: 22%;}
-    .big-star { width: 16%; left: 14%; bottom: 14%;}
+    .aboutus-text {
+        left: 65%;
+        bottom: 10%;
+    }
+    .small-star { width: 9%; left: 15%; bottom: 19%; }
+    .big-star { width: 16%; left: 20%; bottom:14%; }
+    .image-gallery { gap: 8px; }
+    .gallery-item.side { height: 120px; }
+    .gallery-item.middle { height: 160px; }
 }

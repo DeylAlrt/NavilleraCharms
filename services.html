@@ -15,31 +15,107 @@
 
 <body>
     <header>
-        <nav class="navbar">
+        <!-- Desktop & Mobile Navbar -->
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="nav-container">
-                    <a href="https://navilleracharms.vercel.app/">
-                        <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" alt="Navillera Logo" class="logo">    
-                    </a>
+
+                <!-- Logo -->
+                <a href="index.html" aria-label="NavilleraCharms Home">
+                    <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="logo" alt="NavilleraCharms Logo">
+                </a>
+
+                <!-- Desktop Nav Links -->
                 <ul class="nav-menu">
-                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
                     <li><a href="charms.html">Charms</a></li>
-                    <li><a href="services.html">Services</a></li>
                     <li><a href="FAQs.html">FAQs</a></li>
                 </ul>
 
+                <!-- Desktop Action Icons -->
                 <div class="nav-right">
                     <div class="nav-icons">
-                        <button class="icon-btn"><img src="https://img.icons8.com/?size=100&id=82712&format=png&color=FFFFFF" alt="Search" width="24" height="24"></button>
-                        <button class="icon-btn"><img src="https://img.icons8.com/?size=100&id=22167&format=png&color=FFFFFF" alt="Cart" width="24" height="24"></button>
-                        <button class="icon-btn"><img src="https://img.icons8.com/?size=100&id=ckzyIeK3KzhH&format=png&color=FFFFFF" alt="Profile" width="24" height="24"></button>
+                        <button class="icon-btn" aria-label="Search">
+                            <img src="https://img.icons8.com/?size=100&id=82712&format=png&color=FFFFFF" alt="">
+                        </button>
+                        <button class="icon-btn" aria-label="Shopping Cart">
+                            <img src="https://img.icons8.com/?size=100&id=22167&format=png&color=FFFFFF" alt="">
+                        </button>
+                        <button class="icon-btn account-btn" aria-label="Account">
+                            <img src="https://img.icons8.com/?size=100&id=98957&format=png&color=FFFFFF" alt="">
+                        </button>
                     </div>
-
-                    <button class="hamburger">
-                        <img src="https://img.icons8.com/?size=100&id=VypMXfzO4ZOq&format=png&color=FFFFFF" alt="Menu" width="28" height="28">
-                    </button>
                 </div>
             </div>
         </nav>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger" id="hamBtn" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Mobile Sidebar -->
+        <aside class="mobile-sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
+
+            <!-- Sidebar Header / Profile Area -->
+            <div class="sidebar-header">
+                <div class="profile-img" role="img" aria-label="Profile picture placeholder"></div>
+                <h2 class="user-name">User Name</h2>
+            </div>
+
+            <!-- Sidebar Nav Links -->
+            <div class="sidebar-content">
+                <nav class="nav-list" aria-label="Mobile navigation links">
+
+                    <a href="index.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/home--v1.png" class="nav-icon" alt="">
+                        Home
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="about.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/info--v1.png" class="nav-icon" alt="">
+                        About Us
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="charms.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/filled-star.png" class="nav-icon" alt="">
+                        Charms
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="services.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/customer-support.png" class="nav-icon" alt="">
+                        Services
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="faqs.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/chat--v1.png" class="nav-icon" alt="">
+                        FAQs
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <!-- Dark Mode Toggle -->
+                    <div class="nav-item">
+                        <img src="https://img.icons8.com/?size=100&id=i5MtCbn9kxgc&format=png&color=000000" class="nav-icon" alt="">
+                        Dark Mode
+                        <label class="switch" aria-label="Toggle dark mode">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="logout-container">
+                <button class="logout-btn">Log Out</button>
+            </div>
+        </aside>
     </header>
  <footer class="main-footer">
         <div class="footer-container">

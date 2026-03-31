@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="telephone=no">
     <title>NavilleraCharms</title>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="Css_Folder/navbar.css">
     <link rel="stylesheet" href="Css_Folder/animations.css">
     <link rel="stylesheet" href="Css_Folder/style.css">
@@ -14,141 +16,242 @@
 </head>
 
 <body>
+    <!-- HEADER — Navbar + Mobile Sidebar  -->
     <header>
-        <nav class="navbar">
+        <!-- Desktop & Mobile Navbar -->
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
             <div class="nav-container">
-                    <a href="https://navilleracharms.vercel.app/">
-                        <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" alt="Navillera Logo" class="logo">    
-                    </a>
+
+                <!-- Logo -->
+                <a href="https://navilleracharms.vercel.app/" aria-label="NavilleraCharms Home">
+                    <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="logo" alt="NavilleraCharms Logo">
+                </a>
+
+                <!-- Desktop Nav Links -->
                 <ul class="nav-menu">
-                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="https://navilleracharms.vercel.app/">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
                     <li><a href="charms.html">Charms</a></li>
-                    <li><a href="services.html">Services</a></li>
                     <li><a href="FAQs.html">FAQs</a></li>
                 </ul>
 
+                <!-- Desktop Action Icons -->
                 <div class="nav-right">
                     <div class="nav-icons">
-                        <button class="icon-btn"><img src="https://img.icons8.com/?size=100&id=82712&format=png&color=FFFFFF" alt="Search" width="24" height="24"></button>
-                        <button class="icon-btn"><img src="https://img.icons8.com/?size=100&id=22167&format=png&color=FFFFFF" alt="Cart" width="24" height="24"></button>
-                        <button class="icon-btn"><img src="https://img.icons8.com/?size=100&id=ckzyIeK3KzhH&format=png&color=FFFFFF" alt="Profile" width="24" height="24"></button>
+                        <button class="icon-btn" aria-label="Search">
+                            <img src="https://img.icons8.com/?size=100&id=82712&format=png&color=FFFFFF" alt="">
+                        </button>
+                        <button class="icon-btn" aria-label="Shopping Cart">
+                            <img src="https://img.icons8.com/?size=100&id=22167&format=png&color=FFFFFF" alt="">
+                        </button>
+                        <button class="icon-btn account-btn" aria-label="Account">
+                            <img src="https://img.icons8.com/?size=100&id=98957&format=png&color=FFFFFF" alt="">
+                        </button>
                     </div>
-
-                    <button class="hamburger">
-                        <img src="https://img.icons8.com/?size=100&id=VypMXfzO4ZOq&format=png&color=FFFFFF" alt="Menu" width="28" height="28">
-                    </button>
                 </div>
             </div>
         </nav>
-    </header>
 
-    <div class="intro">
+        <!-- Mobile Hamburger Button -->
+        <button class="hamburger" id="hamBtn" aria-label="Open menu" aria-expanded="false" aria-controls="sidebar">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Mobile Sidebar -->
+        <aside class="mobile-sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
+
+            <!-- Sidebar Header / Profile Area -->
+            <div class="sidebar-header">
+                <div class="profile-img" role="img" aria-label="Profile picture placeholder"></div>
+                <h2 class="user-name">User Name</h2>
+            </div>
+
+            <!-- Sidebar Nav Links -->
+            <div class="sidebar-content">
+                <nav class="nav-list" aria-label="Mobile navigation links">
+
+                    <a href="index.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/home--v1.png" class="nav-icon" alt="">
+                        Home
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="about.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/info--v1.png" class="nav-icon" alt="">
+                        About Us
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="charms.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/filled-star.png" class="nav-icon" alt="">
+                        Charms
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="services.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/customer-support.png" class="nav-icon" alt="">
+                        Services
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <a href="faqs.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/000000/chat--v1.png" class="nav-icon" alt="">
+                        FAQs
+                        <span class="nav-arrow" aria-hidden="true">›</span>
+                    </a>
+
+                    <!-- Dark Mode Toggle -->
+                    <div class="nav-item">
+                        <img src="https://img.icons8.com/?size=100&id=i5MtCbn9kxgc&format=png&color=000000" class="nav-icon" alt="">
+                        Dark Mode
+                        <label class="switch" aria-label="Toggle dark mode">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </nav>
+            </div>
+
+            <!-- Sidebar Footer -->
+            <div class="logout-container">
+                <button class="logout-btn">Log Out</button>
+            </div>
+        </aside>
+    </header>
+    <!-- End Header -->
+
+    <!-- HERO — Full-screen intro with background image -->
+    <section class="intro" aria-label="Hero section">
         <picture>
             <source media="(max-width: 768px)" srcset="https://ik.imagekit.io/jdwr5wztm/Main_Background_Mobile.png">
-            <img src="https://ik.imagekit.io/mpojoducq/Main_Background.png?updatedAt=1774355845551" class="background-image" alt="Navillera Background">
+            <img src="https://ik.imagekit.io/mpojoducq/Main_Background.png?updatedAt=1774355845551"
+                 class="background-image"
+                 alt="NavilleraCharms Italian charm bracelet display">
         </picture>
         <a href="https://navillera.vercel.app/" class="build">Build Now</a>
-    </div>
-    
-    <section class="section_1">
+    </section>
+    <!-- End Hero -->
+
+    <!-- SECTION 1 — Italian Charm Bracelet Intro -->
+    <section class="section_1" aria-label="About Italian charm bracelets">
+
+        <!-- Left: Heading -->
         <div class="text-container">
             <h2 class="title">italian</h2>
             <p class="subtitle">charm bracelet</p>
             <p class="subtitle_effect" aria-hidden="true">charm bracelet</p>
-        </div> 
-          
-        <div class="anim-container">
-            <img src="https://ik.imagekit.io/jdwr5wztm/container.png" class="container" alt="Container Image">
-            <img src="https://ik.imagekit.io/jdwr5wztm/Section1_Bracelet.png?updatedAt=1774431619903" class="Section1_Bracelet" alt="Bracelet">
-            <img src="https://ik.imagekit.io/jdwr5wztm/Circle.png" class="Circle" alt="Circle Design">
-            <img src="https://ik.imagekit.io/jdwr5wztm/Link1.png" class="Link1" alt="Link Design 1">
-            <img src="https://ik.imagekit.io/jdwr5wztm/Link2.png" class="Link2" alt="Link Design 2">
-            <img src="https://ik.imagekit.io/jdwr5wztm/Link3.png" class="Link3" alt="Link Design 3">
-            <img src="https://ik.imagekit.io/jdwr5wztm/Link4.png" class="Link4" alt="Link Design 4">
         </div>
-        
+
+        <!-- Center: Animated Bracelet -->
+        <div class="anim-container" role="img" aria-label="Animated bracelet display">
+            <img src="https://ik.imagekit.io/jdwr5wztm/container.png" class="container" alt="Container for bracelet">
+            <img src="https://ik.imagekit.io/jdwr5wztm/Section1_Bracelet.png?updatedAt=1774431619903" class="Section1_Bracelet" alt="Charm bracelet">
+            <img src="https://ik.imagekit.io/jdwr5wztm/Circle.png" class="Circle" alt="Circle decorative element">
+            <img src="https://ik.imagekit.io/jdwr5wztm/Link1.png" class="Link1" alt="Link Charm 1">
+            <img src="https://ik.imagekit.io/jdwr5wztm/Link2.png" class="Link2" alt="Link Charm 2">
+            <img src="https://ik.imagekit.io/jdwr5wztm/Link3.png" class="Link3" alt="Link Charm 3">
+            <img src="https://ik.imagekit.io/jdwr5wztm/Link4.png" class="Link4" alt="Link Charm 4">
+        </div>
+
+        <!-- Right: Description + CTA -->
         <div class="text-container2">
             <p class="primary-text">Customizable bracelet</p>
             <p class="secondary-text">made of interlocking links<br>where each charm tells a unique story</p>
-            <a href="#" class="collection">Charm Collection</a>
+            <a href="charms.html" class="collection">Charm Collection</a>
         </div>
     </section>
+    <!-- End Section 1 -->
 
-    <section class="collections">
+    <!-- COLLECTIONS — Product category cards -->
+    <section class="collections" aria-label="Product collections">
         <h2 class="collections__title">
-            <img class="collections__plus" src="https://ik.imagekit.io/jdwr5wztm/star.png" alt="star icon">COLLECTIONS
+            <img class="collections__plus" src="https://ik.imagekit.io/jdwr5wztm/star.png" alt="" aria-hidden="true">
+            COLLECTIONS
         </h2>
 
         <div class="collections__grid">
-            <a href="#" class="collections__card">
+            <a href="#" class="collections__card" aria-label="Shop Links collection">
                 <div class="collections__img-wrap">
-                    <img src="https://ik.imagekit.io/jdwr5wztm/Links.png" width="50%" alt="Links" />
+                    <img src="https://ik.imagekit.io/jdwr5wztm/Links.png" width="50%" alt="Links collection">
                 </div>
                 <span class="collections__label">Links</span>
             </a>
 
-            <a href="#" class="collections__card">
+            <a href="#" class="collections__card" aria-label="Shop Bracelets collection">
                 <div class="collections__img-wrap">
-                    <img src="https://ik.imagekit.io/jdwr5wztm/Bracelet.png" alt="Bracelets" />
+                    <img src="https://ik.imagekit.io/jdwr5wztm/Bracelet.png" alt="Bracelets collection">
                 </div>
                 <span class="collections__label">Bracelets</span>
             </a>
 
-            <a href="#" class="collections__card">
+            <a href="#" class="collections__card" aria-label="Shop Watch collection">
                 <div class="collections__img-wrap">
-                    <img src="https://ik.imagekit.io/jdwr5wztm/watch.png" alt="Watch" />
+                    <img src="https://ik.imagekit.io/jdwr5wztm/watch.png" alt="Watch collection">
                 </div>
                 <span class="collections__label">Watch</span>
             </a>
 
-            <a href="#" class="collections__card">
+            <a href="#" class="collections__card" aria-label="Shop Keychain collection">
                 <div class="collections__img-wrap">
-                    <img src="https://ik.imagekit.io/jdwr5wztm/Keychain.png" alt="Keychain" />
+                    <img src="https://ik.imagekit.io/jdwr5wztm/Keychain.png" alt="Keychain collection">
                 </div>
                 <span class="collections__label">Keychain</span>
             </a>
         </div>
 
-        <div class="collections__dots">
-            <div class="dot active"></div>
-            <div class="dot"></div>
+        <!-- Carousel Dots -->
+        <div class="collections__dots" role="tablist" aria-label="Collection pages">
+            <div class="dot active" role="tab" aria-selected="true"  aria-label="Page 1"></div>
+            <div class="dot"        role="tab" aria-selected="false" aria-label="Page 2"></div>
         </div>
-    </section>
 
-    <section class="info">
-        <img src="https://ik.imagekit.io/jdwr5wztm/CircleYellow.png" class="glow glow--yellow" alt="Yellow Circle">
-        <img src="https://ik.imagekit.io/jdwr5wztm/CirclePink.png" class="glow glow--pink" alt="Pink Circle">
-        <img src="https://ik.imagekit.io/jdwr5wztm/Circle.png?updatedAt=1774373181281" class="glow glow--blue" alt="Blue Circle">
+    </section>
+    <!-- End Collections -->
+
+    <!-- INFO — Bracelet material features -->
+    <section class="info" aria-label="Bracelet features">
+
+        <!-- Decorative background glows -->
+        <img src="https://ik.imagekit.io/jdwr5wztm/CircleYellow.png" class="glow glow--yellow" alt="" aria-hidden="true">
+        <img src="https://ik.imagekit.io/jdwr5wztm/CirclePink.png"   class="glow glow--pink"   alt="" aria-hidden="true">
+        <img src="https://ik.imagekit.io/jdwr5wztm/Circle.png?updatedAt=1774373181281" class="glow glow--blue" alt="" aria-hidden="true">
 
         <div class="info__wrapper">
-            <img src="https://ik.imagekit.io/jdwr5wztm/BraceletInfo.png" class="info__main-img" alt="Bracelet Information">
 
+            <img src="https://ik.imagekit.io/jdwr5wztm/BraceletInfo.png" class="info__main-img" alt="Bracelet material details">
+
+            <!-- Feature Point 1 -->
             <div class="info__point point-1">
-                <span class="info__num">1</span>
+                <span class="info__num" aria-hidden="true">1</span>
                 <div class="info__text">
                     <h3>Stainless Steel</h3>
                     <p>Strong, durable metal designed for long-lasting wear.</p>
                 </div>
             </div>
 
+            <!-- Feature Point 2 -->
             <div class="info__point point-2">
-                <span class="info__num">2</span>
+                <span class="info__num" aria-hidden="true">2</span>
                 <div class="info__text">
                     <h3>Waterproof</h3>
                     <p>Safe to wear while washing hands or in daily water contact.</p>
                 </div>
             </div>
 
+            <!-- Feature Point 3 -->
             <div class="info__point point-3">
-                <span class="info__num">3</span>
+                <span class="info__num" aria-hidden="true">3</span>
                 <div class="info__text">
                     <h3>Non-Tarnish</h3>
                     <p>Maintains its shine and does not easily discolor over time.</p>
                 </div>
             </div>
 
+            <!-- Feature Point 4 -->
             <div class="info__point point-4">
-                <span class="info__num">4</span>
+                <span class="info__num" aria-hidden="true">4</span>
                 <div class="info__text">
                     <h3>Lightweight</h3>
                     <p>Comfortable to wear all day without feeling heavy.</p>
@@ -156,18 +259,20 @@
             </div>
         </div>
     </section>
+    <!-- End Info -->
 
-   <section class="discount-area">
-        <img class="left-image" src="https://ik.imagekit.io/jdwr5wztm/image1.png" alt="Bracelet Image">
+    <!-- DISCOUNT — First-order promo banner -->
+    <section class="discount-area" aria-label="First order discount offer">
+        <img class="left-image" src="https://ik.imagekit.io/jdwr5wztm/image1.png" alt="Navillera charm bracelet">
 
         <div class="discount-container">
-                <img class="Star1" src="https://ik.imagekit.io/jdwr5wztm/YellowStar1.png" alt="Small Yellow Star">
-                <img class="Star2" src="https://ik.imagekit.io/jdwr5wztm/YellowStar2.png" alt="Big Yellow Star">
+            <img class="Star1" src="https://ik.imagekit.io/jdwr5wztm/YellowStar1.png" alt="" aria-hidden="true">
+            <img class="Star2" src="https://ik.imagekit.io/jdwr5wztm/YellowStar2.png" alt="" aria-hidden="true">
 
             <div class="text-container3">
                 <p class="greeting-text">
                     Hey bestie,<br>
-                    it’s your first time here!
+                    it's your first time here!
                 </p>
 
                 <div class="offer-row">
@@ -176,20 +281,27 @@
                 </div>
 
                 <p class="instruction-text">your first order with code</p>
-                
-                <div class="promo-text">NEWBABE</div>
+
+                <div class="promo-text" role="text" aria-label="Promo code: NEWBABE">NEWBABE</div>
             </div>
         </div>
     </section>
-    
-    <footer class="main-footer">
+    <!-- End Discount -->
+
+    <!-- FOOTER -->
+    <footer class="main-footer" role="contentinfo">
         <div class="footer-container">
-            
+
+            <!-- Logo -->
             <div class="footer-logo-row">
-                <img src="https://ik.imagekit.io/jdwr5wztm/NavilleraLogo.png?updatedAt=1774607310193" alt="Navillera Charm Studio" class="footer-logo">
+                <img src="https://ik.imagekit.io/jdwr5wztm/NavilleraLogo.png?updatedAt=1774607310193"
+                     alt="Navillera Charm Studio"
+                     class="footer-logo">
             </div>
 
+            <!-- Footer Navigation Links -->
             <div class="footer-links-row">
+
                 <div class="link-column">
                     <h3>Shop</h3>
                     <a href="#">Charm Collection</a>
@@ -197,18 +309,21 @@
                     <a href="#">Bangle Charm Bracelet</a>
                     <a href="#">New Arrivals</a>
                 </div>
+
                 <div class="link-column">
                     <h3>Customer Support</h3>
                     <a href="#">FAQ</a>
-                    <a href="#">Shipping & Delivery</a>
-                    <a href="#">Returns & Exchanges</a>
+                    <a href="#">Shipping &amp; Delivery</a>
+                    <a href="#">Returns &amp; Exchanges</a>
                     <a href="#">Track Your Order</a>
                 </div>
+
                 <div class="link-column">
                     <h3>Legal</h3>
                     <a href="#">Privacy Policy</a>
-                    <a href="#">Terms & Conditions</a>
+                    <a href="#">Terms &amp; Conditions</a>
                 </div>
+
                 <div class="link-column">
                     <h3>About</h3>
                     <a href="about-us.html">About Us</a>
@@ -217,38 +332,39 @@
                 </div>
             </div>
 
+            <!-- Footer Bottom: Social + Contact -->
             <div class="footer-bottom-row">
                 <div class="social-box">
                     <h3>Connect With Us</h3>
                     <div class="social-icons">
-                        <a href="https://www.facebook.com/profile.php?id=61583464207854">
+                        <a href="https://www.facebook.com/profile.php?id=61583464207854" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
                             <img src="https://img.icons8.com/?size=100&id=S4chJiAOlGiU&format=png&color=FFFFFF" alt="Facebook">
                         </a>
-                        <a href="https://www.instagram.com/navilleracharms.ae/">
+                        <a href="https://www.instagram.com/navilleracharms.ae/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
                             <img src="https://img.icons8.com/?size=100&id=Iatym1CIDVkh&format=png&color=FFFFFF" alt="Instagram">
                         </a>
-                        <a href="https://www.tiktok.com/@navilleracharms.ae?lang=en">
-                            <img src="https://img.icons8.com/?size=100&id=aaoukT8evpOE&format=png&color=FFFFFF" alt="Tiktok">
+                        <a href="https://www.tiktok.com/@navilleracharms.ae?lang=en" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                            <img src="https://img.icons8.com/?size=100&id=aaoukT8evpOE&format=png&color=FFFFFF" alt="TikTok">
                         </a>
                     </div>
-                        <p class="copyright">&copy; 2026, Navillera Charm Studio</p>
+                    <p class="copyright">&copy; 2026 Navillera Charm Studio. All rights reserved.</p>
                 </div>
+
                 <div class="contact-box">
                     <div class="contact-line">
-                        <img src="https://img.icons8.com/?size=100&id=br7VK5sjdFtf&format=png&color=FFFFFF" alt="Email Icon">
+                        <img src="https://img.icons8.com/?size=100&id=br7VK5sjdFtf&format=png&color=FFFFFF" alt="">
                         <p>navilleracharms@gmail.com</p>
                     </div>
-
                     <div class="contact-line">
-                        <img src="https://img.icons8.com/?size=100&id=5402&format=png&color=FFFFFF" alt="Phone Icon">
+                        <img src="https://img.icons8.com/?size=100&id=5402&format=png&color=FFFFFF" alt="">
                         <p>+971 52 143 484</p>
                     </div>
                 </div>
             </div>
-
         </div>
     </footer>
-
+    <!-- End Footer -->
+     
     <script src="Js_Folder/script.js" defer></script>
 </body>
 </html>

@@ -1,46 +1,61 @@
-/* NAVBAR & NAVIGATION */
+
+/* 1. CSS VARIABLES */
+:root {
+    --navy:          #0f2a4f;   
+    --body-blue:     #d6eaff;    
+    --accent-blue:   #2d79ba;    
+    --pink-logout:   #ff9ec6;    
+    --anim-speed:    0.3s;      
+    --bar-width:     28px;      
+    --bar-height:    3px;       
+    --bar-gap:       5px;       
+}
+
+/* Nav Container */
 .navbar {
     position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    background-color: #0f2a4f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--navy);
     border-radius: 0 0 30px 30px;
     box-shadow: 0 10px 30px rgba(15, 42, 79, 0.3);
     z-index: 1000;
 }
 
 .nav-container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    height: 90px;
+    height: 85px;
     padding: 0 40px;
     box-sizing: border-box;
-    position: relative; 
 }
 
+/* Logo */
 .logo {
     position: relative;
-    width: 30%; 
-    max-width: 100%;
     display: block;
+    width: 28%;
+    max-width: 100%;
 }
 
+/* Nav Menu */
 .nav-menu {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     list-style: none;
     margin: 0;
     padding: 0;
     gap: 40px;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
 }
 
 .nav-menu li a {
@@ -48,12 +63,14 @@
     font-family: 'Poppins', sans-serif;
     font-size: 1.15rem;
     text-decoration: none;
+    transition: opacity var(--anim-speed) ease;
 }
 
 .nav-menu li a:hover {
-    opacity: 0.8;
+    opacity: 0.75;
 }
 
+/* Nav Right */
 .nav-right {
     display: flex;
     align-items: center;
@@ -66,55 +83,264 @@
     gap: 4px;
 }
 
+/* Icon Buttons */
 .icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: none;
     border: none;
     padding: 8px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    transition: opacity var(--anim-speed) ease;
+}
+
+.icon-btn:hover {
+    opacity: 0.75;
 }
 
 .icon-btn img {
     width: 30px;
     height: 30px;
 }
+.account-btn {
+    display: flex;
+}
 
+
+/* 3. HAMBURGER BUTTON */
 .hamburger {
     display: none;
+    flex-direction: column;
+    gap: var(--bar-gap);
+    position: fixed;
+    top: 30px;
+    right: 20px;
+    z-index: 3001;
     background: none;
     border: none;
+    padding: 5px;
     cursor: pointer;
-    padding: 8px;
+    transition: all var(--anim-speed) ease-in-out;
 }
 
-.hamburger img {
-    width: 28px;
-    height: 28px;
+.hamburger .bar {
+    display: block;
+    width: var(--bar-width);
+    height: var(--bar-height);
+    background-color: #ffffff;
+    border-radius: 10px;
+    transition: all var(--anim-speed) ease-in-out;
 }
 
-/* MOBILE NAV OVERRIDES */
-@media (max-width: 567px) {
-    .nav-menu { display: none; }
-    .nav-icons { gap: 9px; }
-    .navbar { border-radius: 120px; }
-    .nav-container > a { display: flex; align-items: center; width: auto; z-index: 10; }
-    .nav-right { gap: 0px; }
-    .logo { width: 55%; }
-    .icon-btn img { width: 25px; height: 25px; }
-    .hamburger { display: block; margin-left: 6px; }
-    .nav-menu.active {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 120%;
-        left: 0;
-        right: 0;
-        background-color: #0f2a4f;
-        padding: 15px;
-        gap: 15px;
-        border-radius: 20px;
-        margin-top: 5px;
+.hamburger.open .bar:nth-child(1) {
+    transform: translateY(calc(var(--bar-gap) + var(--bar-height))) rotate(45deg);
+}
+
+.hamburger.open .bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.hamburger.open .bar:nth-child(3) {
+    transform: translateY(calc(-1 * (var(--bar-gap) + var(--bar-height)))) rotate(-45deg);
+}
+
+
+/* 4. MOBILE SIDEBAR */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    right: -320px;
+    width: 300px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--body-blue);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.12);
+    z-index: 2000;
+    transition: right var(--anim-speed) ease-in-out;
+}
+
+.mobile-sidebar.active {
+    right: 0;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    background-color: var(--accent-blue);
+    padding: 40px 20px 20px;
+    color: #ffffff;
+}
+
+.profile-img {
+    width: 80px;
+    height: 80px;
+    background: #ffffff;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+
+.user-name {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+
+/* Sidebar Nav Items */
+.sidebar-content {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    text-decoration: none;
+    color: var(--navy);
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    border-bottom: 1.5px solid rgba(0, 0, 0, 0.08);
+    transition: opacity var(--anim-speed) ease;
+}
+
+.nav-item:hover {
+    opacity: 0.7;
+}
+
+.nav-icon {
+    width: 24px;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.nav-arrow {
+    margin-left: auto;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* 4d. Dark Mode Toggle Switch */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 22px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background-color: #cccccc;
+    border-radius: 34px;
+    cursor: pointer;
+    transition: background-color 0.4s ease;
+}
+
+.slider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.4s ease;
+}
+
+.switch input:checked + .slider {
+    background-color: var(--accent-blue);
+}
+
+.switch input:checked + .slider::before {
+    transform: translateX(22px);
+}
+
+/* Logout Button */
+.logout-container {
+    padding: 20px 0 40px;
+    text-align: center;
+}
+
+.logout-btn {
+    width: 80%;
+    height: 46px;
+    background-color: var(--pink-logout);
+    color: #ffffff;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity var(--anim-speed) ease;
+}
+
+.logout-btn:hover {
+    opacity: 0.85;
+}
+
+
+/* 5. MOBILE OVERRIDES */
+@media (max-width: 768px) {
+
+    /* Hide desktop nav links */
+    .nav-menu {
+        display: none;
     }
+
+    /* Pill shape on mobile */
+    .navbar {
+        border-radius: 120px;
+    }
+
+    /* Logo sizing */
+    .logo {
+        width: 55%;
+    }
+
+    /* Logo link alignment */
+    .nav-container > a {
+        display: flex;
+        align-items: center;
+        z-index: 10;
+    }
+
+    /* Tighten right side gap */
+    .nav-right {
+        gap: 0;
+    }
+
+    /* Slightly smaller icons */
+    .nav-icons {
+        gap: 9px;
+        transform: translate(-25%);
+    }
+
+    .icon-btn img {
+        width: 25px;
+        height: 25px;
+    }
+
+    /* Hide account icon on mobile — sidebar handles it */
+    .account-btn {
+        display: none;
+    }
+
+    /* Show hamburger on mobile */
+    .hamburger {
+        display: flex;
+    }
+
 }

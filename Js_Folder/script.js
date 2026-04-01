@@ -28,9 +28,21 @@ const hamBtn = document.getElementById('hamBtn');
         });
     }
 
+// 3D Image Gallery //
 (function () {
     const gallery = document.querySelector('.image-gallery');
     if (!gallery) return;
+
+    const isMobile = window.innerWidth <= 768;
+    const slots = isMobile ? [
+        { x: '-220%', scale: 1.75, zIndex: 1 },  // left
+        { x: '0%',   scale: 2.4, zIndex: 3,  },  // mid
+        { x: '220%',  scale: 1.75, zIndex: 0 },  // right
+    ] : [
+        { x: '-103%', scale: 0.82, zIndex: 1 }, // left
+        { x: '0%',    scale: 1.08, zIndex: 3 }, // mid
+        { x: '103%',  scale: 0.82, zIndex: 0 }, // right
+    ];
 
     const images = [
         "https://ik.imagekit.io/jdwr5wztm/Image%201.jpg",
@@ -41,18 +53,15 @@ const hamBtn = document.getElementById('hamBtn');
     const DURATION = 600;
     const EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';
 
-    const slots = [
-        { x: '-38%', scale: 0.82, opacity: 0.65, zIndex: 1 },  // 0 = left
-        { x: '0%',   scale: 1.08, opacity: 1,    zIndex: 3 },  // 1 = mid
-        { x: '38%',  scale: 0.82, opacity: 0.65, zIndex: 1 },  // 2 = right
-    ];
 
     gallery.style.cssText = `
         position: relative;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 67%;
+        width: 75%;
+        top: 23%;
+        max-width: 100%;
         height: 100%;
     `;
 
@@ -62,9 +71,9 @@ const hamBtn = document.getElementById('hamBtn');
             position: absolute;
             width: 28%;
             aspect-ratio: 3/4;
-            border-radius: 28px;
+            border-radius: ${isMobile ? '12px' : '28px'};
             overflow: hidden;
-            box-shadow: 0 14px 36px rgba(0,0,0,0.22);
+            box-shadow: 0 12px 25px rgba(0,0,0,.30);
             will-change: transform, opacity;
             left: 50%;
             margin-left: -14%;

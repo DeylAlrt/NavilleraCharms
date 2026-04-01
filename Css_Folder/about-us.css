@@ -13,6 +13,7 @@ html {
 
 body {
     font-family: 'Poppins', system-ui, sans-serif;
+    overflow-x: hidden;
 }
 
 /* --- ABOUT US TOP BANNER --- */

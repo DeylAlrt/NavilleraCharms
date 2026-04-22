@@ -38,11 +38,12 @@ body {
 }
 
 .title-logo {
-  font-family: 'Great Vibes', cursive;
+  font-family: 'Kantumruy';
   color: #1a2a44; /* Dark blue */
   font-size: 3rem;
 }
 
 .bigletter {
+  font-family: 'Kapakana', cursive;
   font-size: 5rem; /* Larger first letters */
 }

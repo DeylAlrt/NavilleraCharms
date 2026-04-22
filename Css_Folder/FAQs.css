@@ -40,10 +40,13 @@ body {
 .title-logo {
   font-family: 'Kantumruy';
   color: #1a2a44; /* Dark blue */
-  font-size: 3rem;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1;
 }
 
 .bigletter {
   font-family: 'Kapakana', cursive;
   font-size: 5rem; /* Larger first letters */
+  line-height: 1;
 }

@@ -14,3 +14,35 @@ body {
     font-family: 'Poppins', system-ui, sans-serif;
     overflow-x: hidden;
 }
+
+.faq-question {
+  background-color: #ff99cc; /* Pink background */
+  color: white;
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 25px;
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq-answer {
+  display: none; /* Hidden by default */
+  background-color: #d1e9ff; /* Light blue background */
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 5px;
+}
+
+.title-logo {
+  font-family: 'Great Vibes', cursive;
+  color: #1a2a44; /* Dark blue */
+  font-size: 3rem;
+}
+
+.bigletter {
+  font-size: 5rem; /* Larger first letters */
+}

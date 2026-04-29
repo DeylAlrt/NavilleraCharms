@@ -39,6 +39,8 @@ body {
 }
 
 .title-logo {
+  display: flex;
+  margin-top: 3em;
   font-family: 'Kantumruy';
   color: #1a2a44; /* Dark blue */
   font-weight: 700;

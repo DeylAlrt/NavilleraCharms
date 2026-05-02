@@ -16,6 +16,10 @@ body {
     overflow-x: hidden;
 }
 
+.faq-container {
+    margin: 1em;
+}
+
 .faq-question {
   background-color: #ff99cc; /* Pink background */
   color: white;

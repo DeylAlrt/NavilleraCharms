@@ -53,3 +53,8 @@ body {
   font-size: 5rem; /* Larger first letters */
   line-height: 1;
 }
+
+.title1, .title2, .title3{
+    display: flex;
+    margin-top: 3em;
+}

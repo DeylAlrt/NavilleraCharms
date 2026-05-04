@@ -44,14 +44,6 @@
     display: block;
     width: 28%;
     max-width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-}
-
-.logo-container{
-    width: 350px;
-    height: 80px;
 }
 
 /* Nav Menu */
@@ -316,6 +308,14 @@
     /* Logo sizing */
     .logo {
         width: 55%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+    
+    .logo-container{
+        width: 350px;
+        height: 80px;
     }
 
     /* Logo link alignment */

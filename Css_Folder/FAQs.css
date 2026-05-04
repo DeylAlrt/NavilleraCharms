@@ -177,14 +177,14 @@ details .faq-question::-webkit-details-marker {
 }
 
 .chevron {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #ff99cc;
-    font-size: 2rem; /* Make the '⌄' bigger */
-    font-weight: bold;
-    line-height: 0;
-    margin-top: -5px; /* Adjust based on your font */
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid #ff99cc;
+    border-bottom: 3px solid #ff99cc;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: -5px;
 }
 
 .faq-question.active + .faq-answer {

@@ -162,7 +162,7 @@ details .faq-question::-webkit-details-marker {
 .icon-circle {
   width: 35px;
   height: 35px;
-  background-color: white; /* Ensure this is white */
+  background-color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;

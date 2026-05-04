@@ -172,6 +172,16 @@ details[open] .icon-circle {
   transition: transform 0.4s ease;
 }
 
+.chevron {
+  width: 10px;
+  height: 10px;
+  border-right: 3px solid #ff99cc; /* Pink arrow lines */
+  border-bottom: 3px solid #ff99cc;
+  transform: rotate(45deg); /* Tilts the borders into a 'V' */
+  display: block;
+  margin-top: -4px; /* Centers it perfectly in the circle */
+}
+
 details[open] .faq-answer {
   display: block;
   animation: slideDown 0.4s ease-out forwards;

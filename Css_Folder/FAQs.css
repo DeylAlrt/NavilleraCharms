@@ -160,7 +160,16 @@ details[open] .icon-circle {
 }
 
 .icon-circle {
-  transition: transform 0.4s ease; 
+  width: 35px;
+  height: 35px;
+  background-color: white; /* Ensure this is white */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Add this to stop it from disappearing */
+  margin-left: 10px;
+  transition: transform 0.4s ease;
 }
 
 details[open] .faq-answer {

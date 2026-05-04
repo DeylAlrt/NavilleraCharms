@@ -127,6 +127,19 @@ h2, h3{
     resize: none;
 }
 
+.submit-btn {
+    background-color: #1C2B4B;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 40px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 
 @media (max-width:426px){
     .title1{

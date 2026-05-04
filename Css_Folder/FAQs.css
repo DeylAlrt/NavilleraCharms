@@ -17,8 +17,13 @@ body {
 }
 
 h2, h3{
-    font-family: 'SourceSerif', system-ui;
+    font-family: 'SourceSerif';
     font-style: italic;
+    font-weight: 500;
+}
+
+.bold{
+    font-weight:1000;
 }
 
 .faq-container {

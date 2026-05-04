@@ -47,6 +47,7 @@ h2, h3{
   z-index: 2;
   position: relative; /* Ensure it stays above the answer */
   outline: none; /* Remove focus outline */
+  transition: all 0.3s ease; /* Smooths out the hover transition */
 }
 
 .faq-answer {
@@ -185,6 +186,20 @@ details .faq-question::-webkit-details-marker {
     transition: all 0.3s ease;
     display: inline-block;
     margin-top: -5px;
+}
+
+.faq-question:hover {
+    background-color: #ff85c2; /* Slightly darker pink */
+    transform: translateY(-3px); /* Lifts the pill up */
+    box-shadow: 0 5px 15px rgba(255, 153, 204, 0.4); /* Soft pink glow */
+}
+
+.faq-question:active {
+    transform: translateY(-1px); /* Slight 'press' feel when clicked */
+}
+
+.faq-question:hover .icon-circle {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
 .faq-question.active + .faq-answer {

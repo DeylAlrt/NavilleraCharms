@@ -93,6 +93,37 @@ h2, h3{
     margin-top:-5.5em;
 }
 
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left; /* Labels stay left-aligned */
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #1C2B4B;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.form-textarea {
+    min-height: 160px;
+    resize: none;
+}
+
+
 @media (max-width:426px){
     .title1{
         line-height:1.2;

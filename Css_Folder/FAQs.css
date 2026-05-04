@@ -50,17 +50,16 @@ h2, h3{
 }
 
 .faq-answer {
-  background-color: #d0e7ff;
-  border-radius: 30px;
-  margin-top: -25px; 
-  padding: 15px;
-  color: #2c3e50;
-  font-style: italic;
-  font-size: 0.9em;
-  display: none;
-  padding-top: 40px;
-  z-index: 1;
-  animation: slideDown 0.4s ease-out forwards; 
+    display: none;
+    background-color: #d0e7ff;
+    border-radius: 30px;
+    margin-top: -25px; 
+    padding: 40px 20px 20px; /* Top padding increased to avoid overlap */
+    color: #2c3e50;
+    font-style: italic;
+    font-size: 0.9em;
+    position: relative;
+    z-index: 1;
 }
 
 .title-logo {
@@ -156,8 +155,8 @@ details .faq-question::-webkit-details-marker {
   display: none;
 }
 
-details[open] .icon-circle {
-  transform: rotate(180deg);
+.faq-question.active .icon-circle {
+    transform: rotate(180deg);
 }
 
 .icon-circle {
@@ -174,18 +173,19 @@ details[open] .icon-circle {
 }
 
 .chevron {
-  width: 10px;
-  height: 10px;
-  border-right: 3px solid #ff99cc; /* Pink arrow lines */
-  border-bottom: 3px solid #ff99cc;
-  transform: rotate(45deg); /* Tilts the borders into a 'V' */
-  display: block;
-  margin-top: -4px; /* Centers it perfectly in the circle */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff99cc;
+    font-size: 2rem; /* Make the '⌄' bigger */
+    font-weight: bold;
+    line-height: 0;
+    margin-top: -5px; /* Adjust based on your font */
 }
 
-details[open] .faq-answer {
-  display: block;
-  animation: slideDown 0.4s ease-out forwards;
+.faq-question.active + .faq-answer {
+    display: block;
+    animation: slideDown 0.4s ease-out forwards;
 }
 
 @keyframes slideDown {

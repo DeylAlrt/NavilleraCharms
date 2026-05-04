@@ -16,6 +16,11 @@ body {
     overflow-x: hidden;
 }
 
+h2, h3{
+    font-family: 'SourceSerif', system-ui;
+    font-style: italic;
+}
+
 .faq-container {
     margin: 1em;
 }

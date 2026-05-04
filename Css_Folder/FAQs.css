@@ -172,6 +172,10 @@ details .faq-question::-webkit-details-marker {
   transition: transform 0.4s ease;
 }
 
+details .faq-question::-webkit-details-marker {
+  display: none;
+}
+
 .chevron {
     display: flex;
     align-items: center;
@@ -216,4 +220,7 @@ details .faq-question::-webkit-details-marker {
         margin-left:7em;
         margin-top: -5.5em;
     }
+
+    .faq-answer{
+        text-align: left;
 }

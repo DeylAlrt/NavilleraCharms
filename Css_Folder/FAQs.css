@@ -31,6 +31,7 @@ h2, h3{
 }
 
 .faq-question {
+  align-items: center;
   list-style: none;
   background-color: #ff99cc; /* Pink background */
   color: white;

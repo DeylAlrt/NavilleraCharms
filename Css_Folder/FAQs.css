@@ -112,6 +112,7 @@ h2, h3{
 
 .query-box{
     margin: 1em;
+    margin-inline:10em;
 }
 
 .form-label {
@@ -238,4 +239,9 @@ details .faq-question::-webkit-details-marker {
 
     .faq-answer{
         text-align: left;
+    }
+    
+    .query-box{
+            margin: 1em;
+    }
 }

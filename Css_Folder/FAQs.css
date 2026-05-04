@@ -45,11 +45,15 @@ h2, h3{
 }
 
 .faq-answer {
-  display: none; /* Hidden by default */
-  background-color: #d1e9ff; /* Light blue background */
+  background-color: #d0e7ff; /* Sky blue from your image */
+  border-radius: 30px;
+  margin-top: -20px; /* Pulls content up to nest behind the pink pill */
   padding: 15px;
-  border-radius: 15px;
-  margin-top: 5px;
+  color: #2c3e50;
+  font-style: italic;
+  font-size: 0.9em;
+  overflow: hidden;
+  animation: dropout 0.5s ease-out forwards; /* The Drop-out Animation */
 }
 
 .title-logo {
@@ -141,6 +145,38 @@ h2, h3{
     margin-top: 10px;
 }
 
+/* Custom Arrow Icon */
+.arrow {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s ease; /* The Rotation Speed */
+}
+
+.arrow::after {
+  content: '▼';
+  color: #ff99cc;
+  font-size: 12px;
+}
+
+details[open] .arrow {
+  transform: rotate(180deg);
+}
+
+@keyframes drop-out {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @media (max-width:426px){
     .title1{

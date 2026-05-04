@@ -31,6 +31,7 @@ h2, h3{
 }
 
 .faq-question {
+  list-style: none;
   background-color: #ff99cc; /* Pink background */
   color: white;
   width: 100%;
@@ -42,18 +43,18 @@ h2, h3{
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  z-index: 2;
 }
 
 .faq-answer {
-  background-color: #d0e7ff; /* Sky blue from your image */
+  background-color: #d0e7ff;
   border-radius: 30px;
-  margin-top: -20px; /* Pulls content up to nest behind the pink pill */
+  margin-top: -25px; 
   padding: 15px;
   color: #2c3e50;
   font-style: italic;
   font-size: 0.9em;
-  overflow: hidden;
-  animation: drop-out 0.5s ease-out forwards; /* The Drop-out Animation */
+  animation: slideDown 0.4s ease-out forwards; 
 }
 
 .title-logo {
@@ -145,34 +146,34 @@ h2, h3{
     margin-top: 10px;
 }
 
-/* Custom Arrow Icon */
-.arrow {
-  width: 30px;
-  height: 30px;
-  background-color: white;
+.icon-circle {
+  width: 35px;
+  height: 35px;
+  background: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.4s ease; /* The Rotation Speed */
+  transition: transform 0.4s ease; /* Rotating Animation */
 }
 
-.arrow::after {
-  content: '▼';
+.chevron::before {
+  content: '▼'; /* Small down arrow */
   color: #ff99cc;
-  font-size: 12px;
+  font-size: 14px;
 }
 
-details[open] .arrow {
+/* After State: Rotating the Arrow */
+details[open] .icon-circle {
   transform: rotate(180deg);
 }
 
-@keyframes drop-out {
-  0% {
+@keyframes slideDown {
+  from {
     opacity: 0;
     transform: translateY(-20px);
   }
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }

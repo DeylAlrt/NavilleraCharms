@@ -128,12 +128,13 @@ h2, h3{
 }
 
 .submit-btn {
+    font-family: 'KantumruyPro', sans-serif;
     background-color: #1C2B4B;
     color: white;
     border: none;
-    border-radius: 15px;
+    border-radius: 25px;
     padding: 14px 40px;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 1.2rem;
     text-transform: uppercase;
     cursor: pointer;

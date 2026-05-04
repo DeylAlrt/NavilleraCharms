@@ -146,32 +146,39 @@ h2, h3{
     margin-top: 10px;
 }
 
-.icon-circle {
-  width: 35px;
-  height: 35px;
-  background: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.4s ease; /* Rotating Animation */
+details summary::-webkit-details-marker {
+  display: none; /* Hide default chrome arrow */
 }
 
-.chevron::before {
-  content: '▼'; /* Small down arrow */
-  color: #ff99cc;
-  font-size: 14px;
+/* 2. Fix the Pill stacking */
+.faq-question {
+  position: relative; /* Ensure it stays above the answer */
+  z-index: 2;
+  outline: none; /* Remove focus outline */
 }
 
-/* After State: Rotating the Arrow */
+/* 3. The Arrow Rotation (Already in your CSS, just ensuring pathing) */
 details[open] .icon-circle {
   transform: rotate(180deg);
 }
 
+/* 4. The Drop-out Animation */
+.faq-answer {
+  display: none; /* Hidden by default */
+  padding-top: 40px; /* Extra padding so text doesn't hit the pink bar */
+  z-index: 1;
+}
+
+details[open] .faq-answer {
+  display: block; /* Show when open */
+  animation: slideDown 0.4s ease-out forwards;
+}
+
+/* 5. Refined Keyframes for a "Drop-out" feel */
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-30px); /* Starts higher behind the pink bar */
   }
   to {
     opacity: 1;

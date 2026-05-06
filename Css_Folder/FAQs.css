@@ -208,6 +208,83 @@ details .faq-question::-webkit-details-marker {
     animation: slideDown 0.4s ease-out forwards;
 }
 
+/* Contact Form Area */
+.contact-form-section {
+    width: 50%;
+    max-width: 100%;
+    left: 25%;
+    position: relative;
+    text-align: center;
+    padding: 2em;
+}
+
+.partner-text {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.email-text {
+    font-family: 'Source Serif 4', serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    color: #1C2B4B;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+/* --- FORM FIELDS --- */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left; /* Labels stay left-aligned */
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #1C2B4B;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.form-textarea {
+    min-height: 160px;
+    resize: none;
+}
+
+/* SUBMIT BUTTON */
+.submit-btn {
+    background-color: #1C2B4B;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    padding: 14px 40px;
+    font-weight: 800;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;

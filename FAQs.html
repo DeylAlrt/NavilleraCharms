@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="Css_Folder/FAQs.css">
     <link rel="stylesheet" href="Css_Folder/navbar.css">
     <link rel="stylesheet" href="Css_Folder/footer.css">
+
 </head>
 
 <body>
@@ -60,58 +61,56 @@
 
         <!-- Mobile Sidebar -->
         <aside class="mobile-sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
-
-            <!-- Sidebar Header / Profile Area -->
-            <div class="sidebar-header">
-                <div class="profile-img" role="img" aria-label="Profile picture placeholder"></div>
-                <h2 class="user-name">User Name</h2>
-            </div>
-
-            <!-- Sidebar Nav Links -->
             <div class="sidebar-content">
-                <nav class="nav-list" aria-label="Mobile navigation links">
+                <div class="sidebar-top">
+                    <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="sidebar-logo" alt="Navillera Logo">
+                </div>
 
+                <nav class="nav-list" aria-label="Mobile navigation links">
                     <a href="index.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/000000/home--v1.png" class="nav-icon" alt="">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/home--v1.png" class="nav-icon" alt="Home icon">
                         Home
-                        <span class="nav-arrow" aria-hidden="true">›</span>
                     </a>
 
                     <a href="about-us.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/000000/info--v1.png" class="nav-icon" alt="">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/chat--v1.png" class="nav-icon" alt="About icon">
                         About Us
-                        <span class="nav-arrow" aria-hidden="true">›</span>
                     </a>
 
-                    <a href="services.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/000000/customer-support.png" class="nav-icon" alt="">
-                        Services
-                        <span class="nav-arrow" aria-hidden="true">›</span>
-                    </a>
-
-                    <a href="faqs.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/000000/chat--v1.png" class="nav-icon" alt="">
+                    <a href="FAQs.html" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/chat--v1.png" class="nav-icon" alt="FAQs icon">
                         FAQs
-                        <span class="nav-arrow" aria-hidden="true">›</span>
                     </a>
 
-                    <!-- Dark Mode Toggle -->
-                    <div class="nav-item">
-                        <img src="https://img.icons8.com/?size=100&id=i5MtCbn9kxgc&format=png&color=000000" class="nav-icon" alt="">
-                        Dark Mode
+                    <a href="https://navillera.my.canva.site/charmcollection-volume1-2026" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/shopping-bag--v1.png" class="nav-icon" alt="Shop icon">
+                        Shop
+                    </a>
+
+                    <a href="https://navillera.my.canva.site/charmcollection-volume1-2026" class="nav-item">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/star--v1.png" class="nav-icon" alt="Charm collection icon">
+                        Charm Collection
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <div class="dark-mode-row">
+                        <div class="dark-mode-label">
+                            <img src="https://img.icons8.com/?size=100&id=i5MtCbn9kxgc&format=png&color=b6b6b6" class="nav-icon" alt="Dark mode icon">
+                            Dark Mode
+                        </div>
                         <label class="switch" aria-label="Toggle dark mode">
                             <input type="checkbox" id="darkModeToggle">
                             <span class="slider"></span>
                         </label>
                     </div>
-                </nav>
-            </div>
-
-            <!-- Sidebar Footer -->
-            <div class="logout-container">
-                <button class="logout-btn">Log Out</button>
+                </div>
             </div>
         </aside>
+            </div>
+        </aside>
+
+        <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
     </header>
     <section class="title-logo">
         <div class="title1">
@@ -188,31 +187,43 @@
             </div>
         </div>
     </section>
-    <section class="queries">
-        <div>
-            <h2>Have any questions?</h2>
-            <h3 class="bold">Send Us an Email</h3>
-            <h3>We'd love to help</h3>
-        </div>
-        <div class="query-box">
+    
+    <!-- Contact Form -->
+    <section class="contact-form-section">
+        <p class="partner-text">Interested in Partnering With Us?</p>
+        <h2 class="email-text">Send Us an Email</h2>
+
+        <div class="contact-form">
             <form>
-                <div class="form-group">
-                    <input type="text" class="form-input" placeholder="Name" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" placeholder="Enter first name" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" placeholder="Enter last name" required>
+                    </div>
                 </div>
-            
+                
                 <div class="form-group">
+                    <label class="form-label">Email Address</label>
                     <input type="email" class="form-input" placeholder="Example@gmail.com" required>
                 </div>
                 
                 <div class="form-group">
-                    <textarea class="form-textarea" placeholder="Message" required></textarea>
+                    <label class="form-label">Message</label>
+                    <textarea class="form-textarea" placeholder="Tell us more..." required></textarea>
                 </div>
                 
                 <button type="submit" class="submit-btn">SUMBIT</button>
             </form>
         </div>
     </section>
- <footer class="main-footer">
+
+
+    <!-- Footer -->
+    <footer class="main-footer">
         <div class="footer-container">
             
             <div class="footer-logo-row">

@@ -1,4 +1,6 @@
-// 2 Circle Slide Animation //
+// ========================================
+// 1. CAROUSEL SLIDE ANIMATION
+// ========================================
 const grid = document.querySelector('.collections__grid');
 const dots = document.querySelectorAll('.dot');
 
@@ -17,18 +19,73 @@ if (grid) {
     });
 }
 
-// Hamburger Menu Toggle //
+// ========================================
+// 2. MOBILE SIDEBAR MANAGEMENT
+// ========================================
+
+// Get sidebar elements
 const hamBtn = document.getElementById('hamBtn');
-    const sidebar = document.getElementById('sidebar');
+const sidebar = document.getElementById('sidebar');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
+const sidebarCloseBtn = document.querySelector('.sidebar-close');
+const navItems = document.querySelectorAll('.nav-item');
 
-    if (hamBtn && sidebar) {
-        hamBtn.addEventListener('click', () => {
-            hamBtn.classList.toggle('open');
-            sidebar.classList.toggle('active');
-        });
+// Function to set sidebar state
+function setSidebarState(isOpen) {
+    if (isOpen) {
+        sidebar.classList.add('active');
+        sidebar.setAttribute('aria-hidden', 'false');
+        hamBtn.classList.add('open');
+        hamBtn.setAttribute('aria-expanded', 'true');
+        sidebarOverlay.classList.add('active');
+    } else {
+        sidebar.classList.remove('active');
+        sidebar.setAttribute('aria-hidden', 'true');
+        hamBtn.classList.remove('open');
+        hamBtn.setAttribute('aria-expanded', 'false');
+        sidebarOverlay.classList.remove('active');
     }
+}
 
-// 3D Image Gallery //
+// Hamburger button toggle
+if (hamBtn && sidebar) {
+    hamBtn.addEventListener('click', () => {
+        const isCurrentlyOpen = sidebar.classList.contains('active');
+        setSidebarState(!isCurrentlyOpen);
+    });
+}
+
+// Close button in sidebar
+if (sidebarCloseBtn) {
+    sidebarCloseBtn.addEventListener('click', () => {
+        setSidebarState(false);
+    });
+}
+
+// Overlay click to close sidebar
+if (sidebarOverlay) {
+    sidebarOverlay.addEventListener('click', () => {
+        setSidebarState(false);
+    });
+}
+
+// Nav item clicks to close sidebar
+navItems.forEach(item => {
+    item.addEventListener('click', () => {
+        setSidebarState(false);
+    });
+});
+
+// Escape key to close sidebar
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && sidebar.classList.contains('active')) {
+        setSidebarState(false);
+    }
+});
+
+// ========================================
+// 3. 3D IMAGE GALLERY
+// ========================================
 (function () {
     const gallery = document.querySelector('.image-gallery');
     if (!gallery) return;
@@ -52,7 +109,6 @@ const hamBtn = document.getElementById('hamBtn');
 
     const DURATION = 600;
     const EASING = 'cubic-bezier(0.4, 0, 0.2, 1)';
-
 
     gallery.style.cssText = `
         position: relative;
@@ -115,6 +171,9 @@ const hamBtn = document.getElementById('hamBtn');
     setInterval(rotate, 2000);
 })();
 
+// ========================================
+// 4. FAQ ACCORDION
+// ========================================
 const faqButtons = document.querySelectorAll('.faq-question');
 
 faqButtons.forEach(button => {

@@ -23,7 +23,6 @@ body {
     align-items: center;
     width: 100%;
     overflow: hidden;
-    background-color: rgb(237, 244, 251);
 }
 
 .background-image {
@@ -64,7 +63,6 @@ body {
     align-items: center;
     height: 600px;
     contain: layout;
-    background-color: rgb(237, 244, 251);
 }
 
 .container {

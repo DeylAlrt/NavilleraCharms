@@ -16,11 +16,23 @@ body {
     overflow-x: hidden;
 }
 
+h2, h3{
+    font-family: 'SourceSerif';
+    font-style: italic;
+    font-weight: 500;
+}
+
+.bold{
+    font-weight:1000;
+}
+
 .faq-container {
     margin: 1em;
 }
 
 .faq-question {
+  align-items: center;
+  list-style: none;
   background-color: #ff99cc; /* Pink background */
   color: white;
   width: 100%;
@@ -32,33 +44,204 @@ body {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  z-index: 2;
+  position: relative; /* Ensure it stays above the answer */
+  outline: none; /* Remove focus outline */
+  transition: all 0.3s ease; /* Smooths out the hover transition */
 }
 
 .faq-answer {
-  display: none; /* Hidden by default */
-  background-color: #d1e9ff; /* Light blue background */
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 5px;
+    display: none;
+    background-color: #d0e7ff;
+    border-radius: 30px;
+    margin-top: -25px; 
+    padding: 40px 20px 20px; /* Top padding increased to avoid overlap */
+    color: #2c3e50;
+    font-style: italic;
+    font-size: 0.9em;
+    position: relative;
+    z-index: 1;
 }
 
 .title-logo {
+  position: relative;
   display: flex;
-  margin-top: 3em;
-  font-family: 'Kantumruy';
+  flex-direction: column;
+  margin-top: 5em;
+  margin-inline: 3em;
+  font-family: 'KantumruyPro', system-ui, sans-serif;
   color: #1a2a44; /* Dark blue */
   font-weight: 700;
   font-size: 1.3rem;
-  line-height: 1;
+  line-height: 2;
 }
 
 .bigletter {
   font-family: 'Kapakana', cursive;
-  font-size: 5rem; /* Larger first letters */
+  font-size: 6rem; /* Larger first letters */
   line-height: 1;
 }
 
 .title1, .title2, .title3{
     display: flex;
-    margin-top: 3em;
+    justify-content: center;
+}
+
+.title1{
+    line-height:1.4;
+    margin-top:1em;
+}
+
+.title2{
+    line-height:1.7;
+    margin-left:-11em;
+    margin-top: -2em;
+}
+
+.title3{
+    line-height:1.7;
+    margin-left:7em;
+    margin-top:-5.5em;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+    text-align: left; /* Labels stay left-aligned */
+}
+
+.query-box{
+    margin: 1em;
+    margin-inline:10em;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 12px 20px;
+    border: 2px solid #1C2B4B;
+    border-radius: 25px;
+    font-family: 'KantumruyPro', sans-serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.form-textarea {
+    min-height: 160px;
+    resize: none;
+}
+
+.submit-btn {
+    font-family: 'KantumruyPro', sans-serif;
+    background-color: #1C2B4B;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 14px 40px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+details .faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question.active .icon-circle {
+    transform: rotate(180deg);
+}
+
+.icon-circle {
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0; /* Add this to stop it from disappearing */
+  margin-left: 10px;
+  transition: transform 0.4s ease;
+}
+
+details .faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.chevron {
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid #ff99cc;
+    border-bottom: 3px solid #ff99cc;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: -5px;
+}
+
+.faq-question:hover {
+    background-color: #ff85c2; /* Slightly darker pink */
+    transform: translateY(-3px); /* Lifts the pill up */
+    box-shadow: 0 5px 15px rgba(255, 153, 204, 0.4); /* Soft pink glow */
+}
+
+.faq-question:active {
+    transform: translateY(-1px); /* Slight 'press' feel when clicked */
+}
+
+.faq-question:hover .icon-circle {
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.faq-question.active + .faq-answer {
+    display: block;
+    animation: slideDown 0.4s ease-out forwards;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width:426px){
+    .title1{
+        line-height:1.2;
+        justify-content: center;
+        margin-top:1em;
+    }
+    
+    .title2{
+        line-height:1.7;
+        margin-top: -2em;
+    }
+    
+    .title3{
+        line-height:1.7;
+        margin-left:7em;
+        margin-top: -5.5em;
+    }
+
+    .faq-answer{
+        text-align: left;
+    }
+    
+    .query-box{
+            margin: 1em;
+    }
 }

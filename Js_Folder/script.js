@@ -115,9 +115,21 @@ const hamBtn = document.getElementById('hamBtn');
     setInterval(rotate, 2000);
 })();
 
-document.querySelectorAll('.faq-question').forEach(button => {
-  button.addEventListener('click', () => {
-    const answer = button.nextElementSibling;
-    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-  });
+const faqButtons = document.querySelectorAll('.faq-question');
+
+faqButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Toggle 'active' class on the button itself
+        button.classList.toggle('active');
+        
+        // Find the answer box immediately after the button
+        const answer = button.nextElementSibling;
+        
+        // Show/Hide the answer
+        if (button.classList.contains('active')) {
+            answer.style.display = 'block';
+        } else {
+            answer.style.display = 'none';
+        }
+    });
 });

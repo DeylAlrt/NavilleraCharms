@@ -210,9 +210,9 @@ details .faq-question::-webkit-details-marker {
 
 /* Contact Form Area */
 .contact-form-section {
-    width: 50%;
+    width: 57%;
     max-width: 100%;
-    left: 25%;
+    left: 21%;
     position: relative;
     text-align: center;
     padding: 2em;
@@ -296,29 +296,13 @@ details .faq-question::-webkit-details-marker {
   }
 }
 
-@media (max-width:426px){
-    .title1{
-        line-height:1.2;
-        justify-content: center;
-        margin-top:1em;
-    }
+@media (max-width: 567px) {
     
-    .title2{
-        line-height:1.7;
-        margin-top: -2em;
-    }
-    
-    .title3{
-        line-height:1.7;
-        margin-left:7em;
-        margin-top: -5.5em;
-    }
+    .title1 { line-height:1.2; justify-content: center; margin-top:1em; }
+    .title2 { line-height:1.7; margin-top: -2em; }
+    .title3 { line-height:1.7; margin-left:7em; margin-top: -5.5em; } 
+    .faq-answer { text-align: left; }
+    .query-box { margin: 1em; }
+    .contact-form-section { width: 100%; left: 0; }
 
-    .faq-answer{
-        text-align: left;
-    }
-    
-    .query-box{
-            margin: 1em;
-    }
 }

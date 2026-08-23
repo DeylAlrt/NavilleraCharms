@@ -430,7 +430,7 @@ body {
 }
 
 /* 7. RESPONSIVE DESIGN (MOBILE) */
-@media (max-width: 567px) {
+@media (max-width: 768px) {
     .build { height: 7%; width: 35%; bottom: 9%; left: 8%; font-size: 1rem; }
 
     /* Section 1 Mobile */
@@ -483,4 +483,41 @@ body {
     .Star2 { display: none; }
     .instruction-text { margin-top: 10px; font-size: 1.1rem; }
     .promo-text { scale: 1; width: 80%; height: 45px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; border-radius: 12px; margin-top: 15px; }
+}
+
+/* 8. DARK MODE */
+html.dark-mode {
+    background-color: #0f172a;
+}
+
+html.dark-mode body {
+    color: #e5e7eb;
+}
+
+html.dark-mode .info {
+    background-color: #16233d;
+}
+
+html.dark-mode .info__text p {
+    color: #cbd5e1;
+}
+
+html.dark-mode .info__point::after {
+    background-color: #cbd5e1;
+}
+
+html.dark-mode .collections {
+    background-color: #1c2b4b;
+}
+
+html.dark-mode .collections__img-wrap {
+    background: #0f172a;
+}
+
+html.dark-mode .discount-container {
+    background-color: #3a2530;
+}
+
+html.dark-mode .promo-text {
+    background-color: #3a5a82;
 }

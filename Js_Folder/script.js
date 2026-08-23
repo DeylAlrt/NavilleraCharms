@@ -27,11 +27,12 @@ if (grid) {
 const hamBtn = document.getElementById('hamBtn');
 const sidebar = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
-const sidebarCloseBtn = document.querySelector('.sidebar-close');
 const navItems = document.querySelectorAll('.nav-item');
 
 // Function to set sidebar state
 function setSidebarState(isOpen) {
+    document.body.classList.toggle('menu-open', isOpen);
+
     if (isOpen) {
         sidebar.classList.add('active');
         sidebar.setAttribute('aria-hidden', 'false');
@@ -52,13 +53,6 @@ if (hamBtn && sidebar) {
     hamBtn.addEventListener('click', () => {
         const isCurrentlyOpen = sidebar.classList.contains('active');
         setSidebarState(!isCurrentlyOpen);
-    });
-}
-
-// Close button in sidebar
-if (sidebarCloseBtn) {
-    sidebarCloseBtn.addEventListener('click', () => {
-        setSidebarState(false);
     });
 }
 
@@ -180,10 +174,10 @@ faqButtons.forEach(button => {
     button.addEventListener('click', () => {
         // Toggle 'active' class on the button itself
         button.classList.toggle('active');
-        
+
         // Find the answer box immediately after the button
         const answer = button.nextElementSibling;
-        
+
         // Show/Hide the answer
         if (button.classList.contains('active')) {
             answer.style.display = 'block';
@@ -192,3 +186,26 @@ faqButtons.forEach(button => {
         }
     });
 });
+
+// ========================================
+// 5. DARK MODE
+// ========================================
+(function () {
+    const THEME_KEY = 'navillera-theme';
+    const toggle = document.getElementById('darkModeToggle');
+
+    function applyTheme(isDark) {
+        document.documentElement.classList.toggle('dark-mode', isDark);
+        if (toggle) toggle.checked = isDark;
+    }
+
+    // Restore saved preference on load
+    applyTheme(localStorage.getItem(THEME_KEY) === 'dark');
+
+    if (toggle) {
+        toggle.addEventListener('change', () => {
+            applyTheme(toggle.checked);
+            localStorage.setItem(THEME_KEY, toggle.checked ? 'dark' : 'light');
+        });
+    }
+})();

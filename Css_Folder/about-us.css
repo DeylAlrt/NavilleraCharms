@@ -281,6 +281,7 @@ body {
 }
 .contact-section-container {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     justify-content: center;
     gap: 40px;
@@ -293,7 +294,9 @@ body {
 .gallery {
     display: flex;       /* Use flex instead of columns to stop breaking */
     gap: 15px;
-    flex: 0 0 600px;     /* Keeps gallery big */
+    flex: 1 1 480px;     /* Keeps gallery big, but lets it shrink instead of forcing overflow */
+    max-width: 600px;
+    min-width: 280px;
 }
 
 .gallery-column {
@@ -454,4 +457,32 @@ body {
     form { width: 100%; }
     .form-row { flex-direction: column; gap: 0; }
     .submit-btn { width: 100% !important; margin: 20px auto 0 auto; }
+}
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-color: #0f172a;
+    color: #e5e7eb;
+}
+
+html.dark-mode .welcome-section p,
+html.dark-mode .her-story-text p,
+html.dark-mode .carousel-text p {
+    color: #cbd5e1;
+}
+
+html.dark-mode .story {
+    color: #e5e7eb;
+}
+
+html.dark-mode .form-input,
+html.dark-mode .form-textarea {
+    background-color: #1c2b4b;
+    color: #ffffff;
+    border-color: #3a5a82;
+}
+
+html.dark-mode .form-label,
+html.dark-mode .partner-text {
+    color: #cbd5e1;
 }

@@ -22,10 +22,6 @@ h2, h3{
     font-weight: 500;
 }
 
-.bold{
-    font-weight:1000;
-}
-
 .faq-container {
     margin: 1em;
 }
@@ -104,55 +100,6 @@ h2, h3{
     margin-top:-5.5em;
 }
 
-.form-group {
-    margin-bottom: 15px;
-    width: 100%;
-    text-align: left; /* Labels stay left-aligned */
-}
-
-.query-box{
-    margin: 1em;
-    margin-inline:10em;
-}
-
-.form-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form-input, .form-textarea {
-    width: 100%;
-    padding: 12px 20px;
-    border: 2px solid #1C2B4B;
-    border-radius: 25px;
-    font-family: 'KantumruyPro', sans-serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    outline: none;
-}
-
-.form-textarea {
-    min-height: 160px;
-    resize: none;
-}
-
-.submit-btn {
-    font-family: 'KantumruyPro', sans-serif;
-    background-color: #1C2B4B;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    padding: 14px 40px;
-    font-weight: 600;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
 details .faq-question::-webkit-details-marker {
   display: none;
 }
@@ -172,10 +119,6 @@ details .faq-question::-webkit-details-marker {
   flex-shrink: 0; /* Add this to stop it from disappearing */
   margin-left: 10px;
   transition: transform 0.4s ease;
-}
-
-details .faq-question::-webkit-details-marker {
-  display: none;
 }
 
 .chevron {
@@ -296,13 +239,39 @@ details .faq-question::-webkit-details-marker {
   }
 }
 
-@media (max-width: 567px) {
+@media (max-width: 768px) {
     
     .title1 { line-height:1.2; justify-content: center; margin-top:1em; }
-    .title2 { line-height:1.7; margin-top: -2em; }
-    .title3 { line-height:1.7; margin-left:7em; margin-top: -5.5em; } 
+    .title2 { line-height:1.7; margin-left: 0; margin-top: -2em; }
+    .title3 { line-height:1.7; margin-left: 0; margin-top: -5.5em; }
     .faq-answer { text-align: left; }
-    .query-box { margin: 1em; }
     .contact-form-section { width: 100%; left: 0; }
 
+}
+
+/* --- DARK MODE --- */
+html.dark-mode body {
+    background-color: #0f172a;
+    color: #e5e7eb;
+}
+
+html.dark-mode .title-logo {
+    color: #e5e7eb;
+}
+
+html.dark-mode .faq-answer {
+    background-color: #1c2b4b;
+    color: #cbd5e1;
+}
+
+html.dark-mode .form-input,
+html.dark-mode .form-textarea {
+    background-color: #1c2b4b;
+    color: #ffffff;
+    border-color: #3a5a82;
+}
+
+html.dark-mode .form-label,
+html.dark-mode .partner-text {
+    color: #cbd5e1;
 }

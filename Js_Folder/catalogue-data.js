@@ -1,20 +1,3 @@
-// ========================================
-// CHARM CATALOGUE DATA
-// ========================================
-// "links" is built from real product photos, already live on the charm
-// builder app, at CHARM_IMG_BASE + file. Pricing mirrors the getPrice()
-// logic from that app's own source so numbers stay in sync.
-//
-// "watch" and "keychain" are still placeholder/glyph tiles built from a
-// reference pricing photo (no product photos yet) — see the item format
-// note above the WATCH/KEYCHAIN section below.
-//
-// Item shape for photo-backed entries: { label, file, soldOut? }
-// Item shape for glyph-only (no photo) entries: a plain string, with an
-// optional trailing "*" to mark it sold out (parsed in collection.js).
-
-const CHARM_IMG_BASE = 'https://navillera.vercel.app/charms/';
-
 function letterLinkItems(material) {
     // material: 'Silver' | 'Gold'. File (1) uses a different filename
     // prefix than the rest — a quirk of how they were exported.

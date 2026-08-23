@@ -6,6 +6,10 @@
     const emptyEl = document.getElementById('collectionEmpty');
     const toolbarEl = document.getElementById('collectionToolbar');
     const jumpNavEl = document.getElementById('jumpNav');
+    const jumpNavScrollbarEl = document.getElementById('jumpNavScrollbar');
+    const jumpNavTrackEl = document.getElementById('jumpNavTrack');
+    const jumpNavThumbEl = document.getElementById('jumpNavThumb');
+    const jumpNavButterflyEl = document.getElementById('jumpNavButterfly');
     const searchEl = document.getElementById('collectionSearch');
     const titleEl = document.getElementById('collectionTitle');
     const blurbEl = document.getElementById('collectionBlurb');
@@ -37,6 +41,16 @@
         return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
 
+    // Charm photos are served full-resolution (some 250KB+) but only ever
+    // render at ~80px in the grid. The charm builder app already runs
+    // Next.js's built-in image optimizer at /_next/image — route through it
+    // to get a properly-sized, format-negotiated (webp/avif) copy instead of
+    // the raw original, cutting most tiles down to a few KB.
+    function charmImageUrl(file) {
+        const path = '/charms/' + file;
+        return `https://navillera.vercel.app/_next/image?url=${encodeURIComponent(path)}&w=256&q=75`;
+    }
+
     function parseItem(raw) {
         if (raw && typeof raw === 'object') {
             return { label: raw.label, soldOut: !!raw.soldOut, file: raw.file || null };
@@ -63,7 +77,7 @@
         if (hasPhoto) {
             const img = document.createElement('img');
             img.className = 'charm-photo';
-            img.src = encodeURI(CHARM_IMG_BASE + item.file);
+            img.src = charmImageUrl(item.file);
             img.alt = item.label;
             img.loading = 'lazy';
             tile.appendChild(img);
@@ -156,9 +170,22 @@
         });
     }
 
+    function updateJumpNavThumb() {
+        if (!jumpNavThumbEl || jumpNavEl.scrollWidth <= 0) return;
+        const widthPct = Math.max((jumpNavEl.clientWidth / jumpNavEl.scrollWidth) * 100, 8);
+        const maxScroll = jumpNavEl.scrollWidth - jumpNavEl.clientWidth;
+        const leftPct = maxScroll > 0 ? (jumpNavEl.scrollLeft / maxScroll) * (100 - widthPct) : 0;
+        jumpNavThumbEl.style.width = widthPct + '%';
+        jumpNavThumbEl.style.left = leftPct + '%';
+        // Butterfly rides at the leading (right) edge of the trail
+        if (jumpNavButterflyEl) jumpNavButterflyEl.style.left = (leftPct + widthPct) + '%';
+    }
+
     function updateJumpNavFade() {
         const overflowing = jumpNavEl.scrollWidth > jumpNavEl.clientWidth + 1;
         jumpNavEl.classList.toggle('is-scrollable', overflowing);
+        if (jumpNavScrollbarEl) jumpNavScrollbarEl.classList.toggle('is-visible', overflowing);
+        updateJumpNavThumb();
     }
 
     function applySearch(query) {
@@ -191,5 +218,41 @@
     if (searchEl) {
         searchEl.addEventListener('input', () => applySearch(searchEl.value));
     }
+    jumpNavEl.addEventListener('scroll', updateJumpNavThumb, { passive: true });
     window.addEventListener('resize', updateJumpNavFade);
+
+    // Desktop convenience: a vertical mouse-wheel over the chip row scrolls
+    // it horizontally instead of doing nothing (trackpads' native
+    // horizontal swipe still passes through untouched).
+    jumpNavEl.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+        e.preventDefault();
+        jumpNavEl.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    // Click or drag the trail itself to scroll — the mouse-friendly
+    // equivalent of swiping the chip row on touch.
+    if (jumpNavTrackEl) {
+        let dragging = false;
+
+        const scrollToClientX = (clientX) => {
+            const rect = jumpNavTrackEl.getBoundingClientRect();
+            const maxScroll = jumpNavEl.scrollWidth - jumpNavEl.clientWidth;
+            if (maxScroll <= 0 || rect.width <= 0) return;
+            const fraction = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+            jumpNavEl.scrollLeft = fraction * maxScroll;
+        };
+
+        jumpNavTrackEl.addEventListener('pointerdown', (e) => {
+            dragging = true;
+            jumpNavTrackEl.setPointerCapture(e.pointerId);
+            scrollToClientX(e.clientX);
+        });
+        jumpNavTrackEl.addEventListener('pointermove', (e) => {
+            if (dragging) scrollToClientX(e.clientX);
+        });
+        ['pointerup', 'pointercancel'].forEach(evt => {
+            jumpNavTrackEl.addEventListener(evt, () => { dragging = false; });
+        });
+    }
 })();

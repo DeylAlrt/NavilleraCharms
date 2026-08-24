@@ -246,6 +246,14 @@
     render(category);
     updateJumpNavFade();
 
+    // The chip row's width can shift once the real webfont swaps in
+    // (font-display: swap renders a fallback font first) — re-check
+    // overflow after that settles, otherwise the scrollbar can end up
+    // permanently hidden if the fallback font happened to fit.
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(updateJumpNavFade);
+    }
+
     if (searchEl) {
         searchEl.addEventListener('input', () => applySearch(searchEl.value));
     }

@@ -111,10 +111,17 @@ body {
 .collection-jumpnav {
     display: flex;
     gap: 8px;
+    min-width: 0;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    /* Promotes this row to its own compositing layer — works around an iOS
+       Safari bug where a horizontally-scrollable element nested under a
+       position:sticky ancestor (the toolbar) can end up untouchable/frozen
+       for touch scrolling. */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
 }
 
 .collection-jumpnav::-webkit-scrollbar {
@@ -411,6 +418,17 @@ body {
     .collection-toolbar {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    /* Force a definite, viewport-bound width on the jump-nav chain rather
+       than relying on flex stretch to shrink it — on iOS Safari the chip
+       row was rendering as wide as its content instead of being clipped to
+       the container, which is why it wasn't scrolling and the "overflow"
+       check (scrollWidth vs clientWidth) never found a difference. */
+    .collection-jumpnav-wrap,
+    .collection-jumpnav {
+        width: 100%;
+        max-width: 100%;
     }
 }
 

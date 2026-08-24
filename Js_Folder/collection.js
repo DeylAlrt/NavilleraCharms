@@ -67,12 +67,35 @@
         return 'charm-tile--neutral';
     }
 
-    function buildTile(item, matClass) {
+    function buildTile(item, matClass, sub) {
         const tile = document.createElement('div');
         const hasPhoto = !!item.file;
-        tile.className = `charm-tile ${matClass}${hasPhoto ? ' has-photo' : ''}${item.soldOut ? ' is-sold-out' : ''}`;
-        tile.title = item.soldOut ? `${item.label} — Sold out` : item.label;
+        const addable = !item.soldOut;
+        tile.className = `charm-tile ${matClass}${hasPhoto ? ' has-photo' : ''}${item.soldOut ? ' is-sold-out' : ''}${addable ? ' is-addable' : ''}`;
+        tile.title = item.soldOut ? `${item.label} — Sold out` : `Tap to add ${item.label} to cart`;
         tile.dataset.label = item.label.toLowerCase();
+
+        if (addable) {
+            tile.setAttribute('role', 'button');
+            tile.setAttribute('tabindex', '0');
+            const addToCart = () => {
+                if (!window.NavilleraCart) return;
+                window.NavilleraCart.add({
+                    file: item.file,
+                    label: item.label,
+                    price: sub.price,
+                    subcollection: sub.name,
+                    img: item.file ? charmImageUrl(item.file) : null,
+                });
+            };
+            tile.addEventListener('click', addToCart);
+            tile.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    addToCart();
+                }
+            });
+        }
 
         if (hasPhoto) {
             const img = document.createElement('img');
@@ -80,6 +103,7 @@
             img.src = charmImageUrl(item.file);
             img.alt = item.label;
             img.loading = 'lazy';
+            img.decoding = 'async';
             tile.appendChild(img);
         } else {
             const glyph = item.label.length === 1 ? item.label : (glyphFor(item.label) || item.label.charAt(0));
@@ -102,6 +126,13 @@
             badge.className = 'sold-out-badge';
             badge.textContent = 'Sold Out';
             tile.appendChild(badge);
+        } else {
+            // Visual-only indicator — the whole tile is the tap target, not this.
+            const addBadge = document.createElement('span');
+            addBadge.className = 'charm-tile__add-badge';
+            addBadge.setAttribute('aria-hidden', 'true');
+            addBadge.textContent = '+';
+            tile.appendChild(addBadge);
         }
 
         return tile;
@@ -126,7 +157,7 @@
         const matClass = materialClass(sub.name);
 
         sub.items.map(parseItem).forEach(item => {
-            grid.appendChild(buildTile(item, matClass));
+            grid.appendChild(buildTile(item, matClass, sub));
         });
 
         section.appendChild(grid);

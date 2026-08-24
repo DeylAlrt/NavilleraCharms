@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="Css_Folder/FAQs.css">
     <link rel="stylesheet" href="Css_Folder/navbar.css">
     <link rel="stylesheet" href="Css_Folder/footer.css">
+    <link rel="stylesheet" href="Css_Folder/cart.css">
 
 </head>
 
@@ -24,7 +25,7 @@
                 <!-- Logo -->
                 <div class="logo-container">
                     <a href="index.html" aria-label="NavilleraCharms Home">
-                        <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="logo" alt="NavilleraCharms Logo">
+                        <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="logo" alt="NavilleraCharms Logo" decoding="async">
                     </a>
                 </div>
 
@@ -38,14 +39,8 @@
                 <!-- Desktop Action Icons -->
                 <div class="nav-right">
                     <div class="nav-icons">
-                        <button class="icon-btn" aria-label="Search">
-                            <img src="https://img.icons8.com/?size=100&id=82712&format=png&color=FFFFFF" alt="">
-                        </button>
-                        <button class="icon-btn" aria-label="Shopping Cart">
-                            <img src="https://img.icons8.com/?size=100&id=22167&format=png&color=FFFFFF" alt="">
-                        </button>
-                        <button class="icon-btn account-btn" aria-label="Account">
-                            <img src="https://img.icons8.com/?size=100&id=98957&format=png&color=FFFFFF" alt="">
+                        <button class="icon-btn" id="cartBtn" aria-label="Shopping Cart">
+                            <img src="https://img.icons8.com/?size=100&id=22167&format=png&color=FFFFFF" alt="" loading="lazy" decoding="async">
                         </button>
                     </div>
                 </div>
@@ -63,32 +58,32 @@
         <aside class="mobile-sidebar" id="sidebar" aria-label="Mobile navigation" aria-hidden="true">
             <div class="sidebar-content">
                 <div class="sidebar-top">
-                    <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="sidebar-logo" alt="Navillera Logo">
+                    <img src="https://ik.imagekit.io/jdwr5wztm/LogoNavbar.png" class="sidebar-logo" alt="Navillera Logo" decoding="async">
                 </div>
 
                 <nav class="nav-list" aria-label="Mobile navigation links">
                     <a href="index.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/home--v1.png" class="nav-icon" alt="Home icon">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/home--v1.png" class="nav-icon" alt="Home icon" loading="lazy" decoding="async">
                         Home
                     </a>
 
                     <a href="about-us.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/info--v1.png" class="nav-icon" alt="About icon">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/info--v1.png" class="nav-icon" alt="About icon" loading="lazy" decoding="async">
                         About Us
                     </a>
 
                     <a href="FAQs.html" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/chat--v1.png" class="nav-icon" alt="FAQs icon">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/chat--v1.png" class="nav-icon" alt="FAQs icon" loading="lazy" decoding="async">
                         FAQs
                     </a>
 
                     <a href="https://navillera.my.canva.site/charmcollection-volume1-2026" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/shopping-bag--v1.png" class="nav-icon" alt="Shop icon">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/shopping-bag--v1.png" class="nav-icon" alt="Shop icon" loading="lazy" decoding="async">
                         Shop
                     </a>
 
                     <a href="https://navillera.my.canva.site/charmcollection-volume1-2026" class="nav-item">
-                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/star--v1.png" class="nav-icon" alt="Charm collection icon">
+                        <img src="https://img.icons8.com/material-outlined/24/b6b6b6/star--v1.png" class="nav-icon" alt="Charm collection icon" loading="lazy" decoding="async">
                         Charm Collection
                     </a>
                 </nav>
@@ -96,7 +91,7 @@
                 <div class="sidebar-footer">
                     <div class="dark-mode-row">
                         <div class="dark-mode-label">
-                            <img src="https://img.icons8.com/?size=100&id=i5MtCbn9kxgc&format=png&color=b6b6b6" class="nav-icon" alt="Dark mode icon">
+                            <img src="https://img.icons8.com/?size=100&id=i5MtCbn9kxgc&format=png&color=b6b6b6" class="nav-icon" alt="Dark mode icon" loading="lazy" decoding="async">
                             Dark Mode
                         </div>
                         <label class="switch" aria-label="Toggle dark mode">
@@ -192,29 +187,30 @@
         <h2 class="email-text">Send Us an Email</h2>
 
         <div class="contact-form">
-            <form>
+            <form id="contactForm">
                 <div class="form-row">
                     <div class="form-group">
                         <label class="form-label">First Name</label>
-                        <input type="text" class="form-input" placeholder="Enter first name" required>
+                        <input type="text" name="first_name" class="form-input" placeholder="Enter first name" required>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Last Name</label>
-                        <input type="text" class="form-input" placeholder="Enter last name" required>
+                        <input type="text" name="last_name" class="form-input" placeholder="Enter last name" required>
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" placeholder="Example@gmail.com" required>
+                    <input type="email" name="email" class="form-input" placeholder="Example@gmail.com" required>
                 </div>
-                
+
                 <div class="form-group">
                     <label class="form-label">Message</label>
-                    <textarea class="form-textarea" placeholder="Tell us more..." required></textarea>
+                    <textarea name="message" class="form-textarea" placeholder="Tell us more..." required></textarea>
                 </div>
-                
+
                 <button type="submit" class="submit-btn">SUBMIT</button>
+                <p class="form-status" id="formStatus" aria-live="polite"></p>
             </form>
         </div>
     </section>
@@ -225,33 +221,21 @@
         <div class="footer-container">
             
             <div class="footer-logo-row">
-                <img src="https://ik.imagekit.io/jdwr5wztm/NavilleraLogo.png?updatedAt=1774607310193&tr=w-400,q-75" alt="Navillera Charm Studio" class="footer-logo">
+                <img src="https://ik.imagekit.io/jdwr5wztm/NavilleraLogo.png?updatedAt=1774607310193&tr=w-400,q-75" alt="Navillera Charm Studio" class="footer-logo" loading="lazy" decoding="async">
             </div>
 
             <div class="footer-links-row">
                 <div class="link-column">
                     <h3>Shop</h3>
                     <a href="https://navillera.my.canva.site/charmcollection-volume1-2026?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGnpmrZHQ--iiYsLEgXoPcbE4Yay5lAT9n0IvK1J1iPz6WxtqaTaE1jTYcK7GY_aem_GwedFBbzllOoDMFOWTsfmw">Charm Collection</a>
-                    <a href="#">Italian Charm Bracelet</a>
-                    <a href="#">Bangle Charm Bracelet</a>
-                    <a href="#">New Arrivals</a>
                 </div>
                 <div class="link-column">
                     <h3>Customer Support</h3>
                     <a href="FAQs.html">FAQ</a>
-                    <a href="#">Shipping & Delivery</a>
-                    <a href="#">Returns & Exchanges</a>
-                    <a href="#">Track Your Order</a>
-                </div>
-                <div class="link-column">
-                    <h3>Legal</h3>
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms & Conditions</a>
                 </div>
                 <div class="link-column">
                     <h3>About</h3>
                     <a href="about-us.html">About Us</a>
-                    <a href="services.html">Services</a>
                     <a href="about-us.html#contact">Contact Us</a>
                 </div>
             </div>
@@ -261,26 +245,26 @@
                     <h3>Connect With Us</h3>
                     <div class="social-icons">
                         <a href="https://www.facebook.com/profile.php?id=61583464207854">
-                            <img src="https://img.icons8.com/?size=100&id=S4chJiAOlGiU&format=png&color=FFFFFF" alt="Facebook">
+                            <img src="https://img.icons8.com/?size=100&id=S4chJiAOlGiU&format=png&color=FFFFFF" alt="Facebook" loading="lazy" decoding="async">
                         </a>
                         <a href="https://www.instagram.com/navilleracharms.ae/">
-                            <img src="https://img.icons8.com/?size=100&id=Iatym1CIDVkh&format=png&color=FFFFFF" alt="Instagram">
+                            <img src="https://img.icons8.com/?size=100&id=Iatym1CIDVkh&format=png&color=FFFFFF" alt="Instagram" loading="lazy" decoding="async">
                         </a>
                         <a href="https://www.tiktok.com/@navilleracharms.ae?lang=en">
-                            <img src="https://img.icons8.com/?size=100&id=aaoukT8evpOE&format=png&color=FFFFFF" alt="Tiktok">
+                            <img src="https://img.icons8.com/?size=100&id=aaoukT8evpOE&format=png&color=FFFFFF" alt="Tiktok" loading="lazy" decoding="async">
                         </a>
                     </div>
                         <p class="copyright">&copy; 2026, Navillera Charm Studio</p>
                 </div>
                 <div class="contact-box">
                     <div class="contact-line">
-                        <img src="https://img.icons8.com/?size=100&id=br7VK5sjdFtf&format=png&color=FFFFFF" alt="Email Icon">
-                        <p>navilleracharms@gmail.com</p>
+                        <img src="https://img.icons8.com/?size=100&id=br7VK5sjdFtf&format=png&color=FFFFFF" alt="Email Icon" loading="lazy" decoding="async">
+                        <a href="mailto:navilleracharmstudio@gmail.com">navilleracharmstudio@gmail.com</a>
                     </div>
 
                     <div class="contact-line">
-                        <img src="https://img.icons8.com/?size=100&id=5402&format=png&color=FFFFFF" alt="Phone Icon">
-                        <p>+971 52 143 484</p>
+                        <img src="https://img.icons8.com/?size=100&id=5402&format=png&color=FFFFFF" alt="Phone Icon" loading="lazy" decoding="async">
+                        <a href="tel:+97152143484">+971 52 143 484</a>
                     </div>
                 </div>
             </div>
@@ -288,6 +272,9 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="Js_Folder/contact-form.js" defer></script>
+    <script src="Js_Folder/cart.js" defer></script>
     <script src="Js_Folder/script.js" defer></script>
 </body>
 </html>

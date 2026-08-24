@@ -59,15 +59,30 @@
 }
 
 .nav-menu li a {
+    position: relative;
+    display: inline-block;
     color: #ffffff;
     font-family: 'Poppins', sans-serif;
     font-size: 1.15rem;
     text-decoration: none;
-    transition: opacity var(--anim-speed) ease;
+    padding-bottom: 4px;
 }
 
-.nav-menu li a:hover {
-    opacity: 0.75;
+.nav-menu li a::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--pink-logout);
+    transform: translateX(-50%);
+    transition: width var(--anim-speed) ease;
+}
+
+.nav-menu li a:hover::after {
+    width: 100%;
 }
 
 /* Nav Right */
@@ -80,7 +95,7 @@
 .nav-icons {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 10px;
 }
 
 /* Icon Buttons */
@@ -100,13 +115,9 @@
 }
 
 .icon-btn img {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
 }
-.account-btn {
-    display: flex;
-}
-
 
 /* 3. HAMBURGER BUTTON */
 .hamburger {
@@ -121,11 +132,16 @@
     z-index: 3001;
     width: 44px;
     height: 44px;
-    background: none;
+    background: rgba(255, 158, 198, 0);
     border: none;
+    border-radius: 50%;
     padding: 0;
     cursor: pointer;
-    transition: all var(--anim-speed) ease-in-out;
+    transition: all var(--anim-speed) ease-in-out, background var(--anim-speed) ease;
+}
+
+.hamburger:hover {
+    background: rgba(255, 158, 198, 0.18);
 }
 
 .hamburger .bar {
@@ -333,7 +349,7 @@ body.menu-open {
 
     /* Pill shape on mobile */
     .navbar {
-        border-radius: 120px;
+        border-radius: 0  0 25px 25px;
     }
 
     /* Logo sizing — scaled to fit, never cropped */
@@ -342,8 +358,8 @@ body.menu-open {
         align-items: center;
         flex-shrink: 0;
         width: auto;
-        max-width: 60%;
-        height: 60px;
+        max-width: 100%;
+        height: 100px;
     }
 
     .logo-container a {
@@ -367,18 +383,13 @@ body.menu-open {
 
     /* Slightly smaller icons */
     .nav-icons {
-        gap: 9px;
-        transform: translate(-25%);
+        gap: 10px;
+        transform: translate(-55%, 4%);
     }
 
     .icon-btn img {
-        width: 25px;
-        height: 25px;
-    }
-
-    /* Hide account icon on mobile — sidebar handles it */
-    .account-btn {
-        display: none;
+        width: 28px;
+        height: 28px;
     }
 
     /* Show hamburger on mobile */

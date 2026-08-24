@@ -27,7 +27,7 @@
 }
 .footer-links-row {
     display: grid;
-    grid-template-columns: repeat(4, auto); 
+    grid-template-columns: repeat(3, auto);
     justify-content: flex-end; 
     gap: 15%; 
     width: 100%;
@@ -126,7 +126,7 @@
     height: auto;
 }
 
-.contact-line p {
+.contact-line a {
     margin: 0;
     font-size: 1.3rem;
     font-weight: 300;
@@ -146,5 +146,5 @@
     .social-box h3 { font-size: 1.6rem; }
     .footer-links-row { grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; }
     .link-column { text-align: left; }
-    .contact-line p { font-size: .7rem; }
+    .contact-line a { font-size: .7rem; }
 }

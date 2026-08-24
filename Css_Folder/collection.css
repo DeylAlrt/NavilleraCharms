@@ -87,7 +87,10 @@ body {
     border: 2px solid #a7c7e7;
     border-radius: 999px;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
+    /* Must stay >=16px — iOS Safari auto-zooms the whole page in when a
+       tapped input's font-size is under 16px, which is what was breaking
+       scrolling and pushing the search bar out of view on iPhone. */
+    font-size: 16px;
     min-height: 44px;
     outline: none;
     transition: border-color 0.2s ease;

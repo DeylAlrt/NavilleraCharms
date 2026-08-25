@@ -160,18 +160,13 @@ body {
 
 .jumpnav-scrollbar__butterfly {
     position: absolute;
-    top: 55%;
-    left: 0;
+    top: 54%;
+    left: 2%;
     width: 40px;
     height: 40px;
     object-fit: contain;
     filter: drop-shadow(0 1px 2px rgba(28, 43, 75, 0.25));
-    cursor: grab;
     animation: jumpnav-flutter 1.6s ease-in-out infinite;
-}
-
-.jumpnav-scrollbar__butterfly:active {
-    cursor: grabbing;
 }
 
 @keyframes jumpnav-flutter {
@@ -351,9 +346,10 @@ body {
     position: absolute;
     bottom: 4px;
     right: 4px;
-    width: 20px;
+    min-width: 20px;
     height: 20px;
-    border-radius: 50%;
+    padding: 0 4px;
+    border-radius: 999px;
     background: #1C2B4B;
     color: #ffffff;
     font-size: 0.9rem;
@@ -370,6 +366,18 @@ body {
     background-color: #a7c7e7;
     color: #1C2B4B;
     transform: scale(1.1);
+}
+
+.charm-tile__add-badge.has-qty {
+    background: #90e0a0;
+    color: #1a2a44;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.charm-tile.is-addable:hover .charm-tile__add-badge.has-qty {
+    background-color: #90e0a0;
+    color: #1a2a44;
 }
 
 .collection-empty,

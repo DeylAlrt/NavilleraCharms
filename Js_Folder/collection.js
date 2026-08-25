@@ -69,6 +69,7 @@
         if (addable) {
             tile.setAttribute('role', 'button');
             tile.setAttribute('tabindex', '0');
+            tile.dataset.cartKey = `${sub.name}::${item.file}`;
             const addToCart = () => {
                 if (!window.NavilleraCart) return;
                 window.NavilleraCart.add({
@@ -208,6 +209,18 @@
         updateJumpNavThumb();
     }
 
+    function syncCartBadges() {
+        if (!window.NavilleraCart || !window.NavilleraCart.getQty) return;
+        resultsEl.querySelectorAll('.charm-tile[data-cart-key]').forEach(tile => {
+            const badge = tile.querySelector('.charm-tile__add-badge');
+            if (!badge) return;
+            const qty = window.NavilleraCart.getQty(tile.dataset.cartKey);
+            const inCart = qty > 0;
+            badge.textContent = inCart ? (qty > 99 ? '99+' : String(qty)) : '+';
+            badge.classList.toggle('has-qty', inCart);
+        });
+    }
+
     function applySearch(query) {
         const q = query.trim().toLowerCase();
         let anyVisible = false;
@@ -234,6 +247,8 @@
     const category = (params.get('category') || '').toLowerCase();
     render(category);
     updateJumpNavFade();
+    syncCartBadges();
+    window.addEventListener('navillera-cart-updated', syncCartBadges);
 
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(updateJumpNavFade);

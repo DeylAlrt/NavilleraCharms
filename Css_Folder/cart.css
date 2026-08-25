@@ -121,6 +121,8 @@ body.cart-open {
 
 .cart-drawer__empty {
     padding: 40px 24px;
+    top: 0;
+    transform: translateY(-335%);
     text-align: center;
     color: #5a6b85;
     font-size: 0.95rem;

@@ -23,10 +23,16 @@
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch {}
         renderItems();
         updateBadge();
+        window.dispatchEvent(new CustomEvent('navillera-cart-updated'));
     }
 
     function itemKey(item) {
         return `${item.subcollection}::${item.file}`;
+    }
+
+    function getQty(key) {
+        const item = cart.find(i => itemKey(i) === key);
+        return item ? item.qty : 0;
     }
 
     function addToCart(item) {
@@ -420,5 +426,5 @@
     const cartBtn = document.getElementById('cartBtn');
     if (cartBtn) cartBtn.addEventListener('click', openDrawer);
 
-    window.NavilleraCart = { add: addToCart };
+    window.NavilleraCart = { add: addToCart, getQty };
 })();

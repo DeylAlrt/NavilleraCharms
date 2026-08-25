@@ -26,7 +26,7 @@ const CATALOGUE = {
         {
             name: 'Plain Charms — Colors', price: 1.50, unit: 'each link',
             items: [
-                { label: 'Gold', file: 'Gold_Plain_Charm.png' },
+                { label: 'Gold', file: 'Gold_Plain_Charm.png', },
                 { label: 'Red', file: 'Red_Plain_Charm.png' },
                 { label: 'Blue', file: 'Blue_Plain_Charm.png' },
                 { label: 'Black', file: 'Black_Plain_Charm.png' },
@@ -158,18 +158,37 @@ const CATALOGUE = {
     watch: [
         {
             name: 'Silver Watch Charms', price: 45, unit: 'each',
-            items: ['Black Square Watch', 'White Square Watch', 'Pink Square Watch*', 'Gray Square Watch*', 'Oval Silver Watch', 'Purple Gem Watch*', 'Pink Rectangle Watch*', 'Heart Watch*', 'Black Digital Watch', 'Rose Gold Digital Watch']
+            items: [
+                { label: 'Black Square Watch', file: 'Black Square Watch.png' },
+                { label: 'White Square Watch', file: 'White Square Watch.png' },
+                { label: 'Pink Square Watch', file: 'Pink Square Watch.png', soldOut: true },
+                { label: 'Gray Square Watch', file: 'Gray Square Watch.png', soldOut: true },
+                { label: 'Oval Silver Watch', file: 'Oval Silver Watch.png' },
+                { label: 'Purple Gem Watch', file: 'Purple Gem Watch.png', soldOut: true },
+                { label: 'Pink Rectangle Watch', file: 'Pink Rectangle Watch.png', soldOut: true },
+                { label: 'Heart Watch', file: 'Heart Watch.png', soldOut: true },
+                { label: 'Black Digital Watch', file: 'Black Digital Watch.png' },
+                { label: 'Rose Gold Digital Watch', file: 'Rose Gold Digital Watch.png' }
+            ]
         },
         {
             name: 'Gold Watch Charms', price: 55, unit: 'each',
-            items: ['Heart Gold Watch*', 'Pink Gold Watch*', 'Cream Gold Watch*', 'Oval Gold Watch']
+            items: [
+                { label: 'Heart Gold Watch', file: 'Heart Gold Watch.png', soldOut: true },
+                { label: 'Pink Gold Watch', file: 'Pink Gold Watch.png', soldOut: true },
+                { label: 'Cream Gold Watch', file: 'Cream Gold Watch.png', soldOut: true },
+                { label: 'Oval Gold Watch', file: 'Oval Gold Watch.png' }
+            ]
         }
     ],
 
     keychain: [
         {
             name: 'Keychain Links', price: 12, unit: 'each',
-            items: ['Gold Keychain Clip', 'Silver Keychain Clip*']
+            items: [
+                { label: 'Gold Keychain Clip', file: 'Gold Keychain.png' },
+                { label: 'Silver Keychain Clip', file: 'Silver Keychain.png', soldOut: true }
+            ]
         }
     ],
 

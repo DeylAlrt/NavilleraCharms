@@ -1,6 +1,3 @@
-// ========================================
-// 1. CAROUSEL SLIDE ANIMATION
-// ========================================
 const grid = document.querySelector('.collections__grid');
 const dots = document.querySelectorAll('.dot');
 
@@ -19,17 +16,11 @@ if (grid) {
     });
 }
 
-// ========================================
-// 2. MOBILE SIDEBAR MANAGEMENT
-// ========================================
-
-// Get sidebar elements
 const hamBtn = document.getElementById('hamBtn');
 const sidebar = document.getElementById('sidebar');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 const navItems = document.querySelectorAll('.nav-item');
 
-// Function to set sidebar state
 function setSidebarState(isOpen) {
     document.body.classList.toggle('menu-open', isOpen);
 
@@ -48,7 +39,6 @@ function setSidebarState(isOpen) {
     }
 }
 
-// Hamburger button toggle
 if (hamBtn && sidebar) {
     hamBtn.addEventListener('click', () => {
         const isCurrentlyOpen = sidebar.classList.contains('active');
@@ -56,43 +46,37 @@ if (hamBtn && sidebar) {
     });
 }
 
-// Overlay click to close sidebar
 if (sidebarOverlay) {
     sidebarOverlay.addEventListener('click', () => {
         setSidebarState(false);
     });
 }
 
-// Nav item clicks to close sidebar
 navItems.forEach(item => {
     item.addEventListener('click', () => {
         setSidebarState(false);
     });
 });
 
-// Escape key to close sidebar
 document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && sidebar.classList.contains('active')) {
         setSidebarState(false);
     }
 });
 
-// ========================================
-// 3. 3D IMAGE GALLERY
-// ========================================
 (function () {
     const gallery = document.querySelector('.image-gallery');
     if (!gallery) return;
 
     const isMobile = window.innerWidth <= 768;
     const slots = isMobile ? [
-        { x: '-220%', scale: 1.75, zIndex: 1 },  // left
-        { x: '0%',   scale: 2.4, zIndex: 3,  },  // mid
-        { x: '220%',  scale: 1.75, zIndex: 0 },  // right
+        { x: '-220%', scale: 1.75, zIndex: 1 },
+        { x: '0%',   scale: 2.4, zIndex: 3,  },
+        { x: '220%',  scale: 1.75, zIndex: 0 },
     ] : [
-        { x: '-103%', scale: 0.82, zIndex: 1 }, // left
-        { x: '0%',    scale: 1.08, zIndex: 3 }, // mid
-        { x: '103%',  scale: 0.82, zIndex: 0 }, // right
+        { x: '-103%', scale: 0.82, zIndex: 1 },
+        { x: '0%',    scale: 1.08, zIndex: 3 },
+        { x: '103%',  scale: 0.82, zIndex: 0 },
     ];
 
     const images = [
@@ -153,9 +137,9 @@ document.addEventListener('keydown', (event) => {
     });
 
     function rotate() {
-        applySlot(cards[0], 2, true);   // left → right
-        applySlot(cards[1], 0, true);   // mid → left
-        applySlot(cards[2], 1, true);   // right → mid
+        applySlot(cards[0], 2, true);
+        applySlot(cards[1], 0, true);
+        applySlot(cards[2], 1, true);
 
         setTimeout(() => {
             cards = [cards[1], cards[2], cards[0]];
@@ -165,20 +149,14 @@ document.addEventListener('keydown', (event) => {
     setInterval(rotate, 2000);
 })();
 
-// ========================================
-// 4. FAQ ACCORDION
-// ========================================
 const faqButtons = document.querySelectorAll('.faq-question');
 
 faqButtons.forEach(button => {
     button.addEventListener('click', () => {
-        // Toggle 'active' class on the button itself
         button.classList.toggle('active');
 
-        // Find the answer box immediately after the button
         const answer = button.nextElementSibling;
 
-        // Show/Hide the answer
         if (button.classList.contains('active')) {
             answer.style.display = 'block';
         } else {
@@ -187,9 +165,6 @@ faqButtons.forEach(button => {
     });
 });
 
-// ========================================
-// 5. DARK MODE
-// ========================================
 (function () {
     const THEME_KEY = 'navillera-theme';
     const toggle = document.getElementById('darkModeToggle');
@@ -199,7 +174,6 @@ faqButtons.forEach(button => {
         if (toggle) toggle.checked = isDark;
     }
 
-    // Restore saved preference on load
     applyTheme(localStorage.getItem(THEME_KEY) === 'dark');
 
     if (toggle) {

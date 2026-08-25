@@ -1,18 +1,3 @@
-// ========================================
-// CONTACT FORM — EmailJS
-// ========================================
-// One-time setup (free, ~5 minutes):
-//   1. Sign up at https://www.emailjs.com/
-//   2. Email Services → Add New Service → Gmail → connect the business
-//      Gmail account. Copy the resulting Service ID below.
-//   3. Email Templates → your template's variables should be {{name}},
-//      {{title}}, {{time}}, {{email}}, {{message}} — that's what's sent
-//      below, matching EmailJS's own default "Contact Us" template, so
-//      the template itself needs no editing. Copy the Template ID below.
-//   4. Account → General → copy the Public Key below.
-//
-// Until all three are filled in, the form shows a friendly notice instead
-// of silently failing.
 const EMAILJS_PUBLIC_KEY = '-2tCjwFJUnT97N93w';
 const EMAILJS_SERVICE_ID = 'service_vc0fhb9';
 const EMAILJS_TEMPLATE_ID = 'template_ljnicp3';

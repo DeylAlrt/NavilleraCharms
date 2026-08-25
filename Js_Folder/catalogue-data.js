@@ -1,6 +1,4 @@
 function letterLinkItems(material) {
-    // material: 'Silver' | 'Gold'. File (1) uses a different filename
-    // prefix than the rest — a quirk of how they were exported.
     return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter, i) => {
         const n = i + 1;
         const file = n === 1
@@ -157,9 +155,6 @@ const CATALOGUE = {
         }
     ],
 
-    // NOTE: no product photos yet for these two — still glyph/text
-    // placeholders built from a reference pricing photo. Swap to the
-    // { label, file } photo format above once real photos exist.
     watch: [
         {
             name: 'Silver Watch Charms', price: 45, unit: 'each',
@@ -178,7 +173,6 @@ const CATALOGUE = {
         }
     ],
 
-    // No product data provided yet — the page shows a "coming soon" state.
     bracelets: []
 };
 

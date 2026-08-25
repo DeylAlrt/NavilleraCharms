@@ -1,50 +1,12 @@
-// ========================================
-// CART — shared across every page
-// ========================================
-// Cart state lives in localStorage so it persists across pages and
-// reloads. This file builds its own drawer UI and injects it into the
-// page rather than requiring matching markup in every HTML file — any
-// page that loads this script automatically gets a working cart icon
-// (as long as it has a #cartBtn) and drawer.
-//
-// Order submission uses its own dedicated EmailJS template — matching the
-// polished "Order Confirmation" design already used by the charm-builder
-// app (gradient header, Customer Details section, item photos) rather than
-// reusing the plain-text contact-form template, since the two have very
-// different fields (this one needs phone/pickup/delivery/photos; the
-// contact form has none of that).
-//
-// ONE-TIME SETUP: duplicate the charm-builder's "Order Confirmation"
-// template in the EmailJS dashboard, keep its header + Customer Details
-// section as-is (this sends the exact fields it already expects:
-// customer_name, phone, pickup_time, meetup_place, delivery_date), and
-// replace its "Bracelet Layout" section with a "Charm Order Items"
-// section containing this ONE line, in "Edit Content" (source/HTML) mode:
-//     {{{items_html}}}
-// Must be triple braces {{{ }}} — double braces {{ }} HTML-escape the
-// content, which would print the raw <table> markup as visible text
-// instead of rendering it as an actual photo grid.
-// Then paste the resulting template ID below.
 (function () {
     const STORAGE_KEY = 'navillera-cart';
     const EMAILJS_PUBLIC_KEY = '-2tCjwFJUnT97N93w';
     const EMAILJS_SERVICE_ID = 'service_vc0fhb9';
 
-    // The order-confirmation template lives in a SEPARATE EmailJS account
-    // (alertadale@gmail.com) from the contact-form template above (which is
-    // on the navillera account) — free-tier EmailJS accounts cap out at 2
-    // templates each, so the order template was created on a second account.
-    // Templates/services/keys never cross accounts, so this send must use
-    // this account's own Service ID + Public Key, passed as a per-call
-    // override (4th arg) rather than the global emailjs.init() below, which
-    // stays pointed at the navillera account for the contact form.
     const EMAILJS_ORDER_SERVICE_ID = 'service_ff6chqi';
     const EMAILJS_ORDER_TEMPLATE_ID = 'template_k1boxcg';
     const EMAILJS_ORDER_PUBLIC_KEY = 'vvg-sBt7pyZ2SOfHk';
 
-    // ---------------------------------------------------------------------
-    // State
-    // ---------------------------------------------------------------------
     function readCart() {
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
@@ -109,9 +71,6 @@
         return 0;
     }
 
-    // ---------------------------------------------------------------------
-    // DOM: drawer is built once and injected into <body>
-    // ---------------------------------------------------------------------
     let overlayEl, drawerEl, itemsEl, emptyMsgEl, summaryEl;
     let subtotalValueEl, summaryTotalValueEl;
     let formEl, statusEl, deliveryFeeValueEl, totalValueEl;
@@ -272,9 +231,6 @@
             itemsEl.appendChild(row);
         });
 
-        // Delivery fee isn't known until a location is picked in the order
-        // form, so this step only shows the product total — the full
-        // breakdown (with delivery) appears once they proceed to that form.
         const subtotal = cartSubtotal();
         if (subtotalValueEl) subtotalValueEl.textContent = `${subtotal.toFixed(2)} AED`;
         if (summaryTotalValueEl) summaryTotalValueEl.textContent = `${subtotal.toFixed(2)} AED`;
@@ -317,10 +273,6 @@
         document.body.classList.add('cart-open');
     }
 
-    // ---------------------------------------------------------------------
-    // "Added to cart" toast — shown instead of popping the drawer open on
-    // every add, so browsing/adding several items in a row stays smooth.
-    // ---------------------------------------------------------------------
     let toastEl, toastLabelEl, toastHideTimer;
 
     function buildToast() {
@@ -375,21 +327,7 @@
         statusEl.className = 'cart-order-status';
     }
 
-    /**
-     * A self-contained HTML snippet (inline styles only, table-based layout)
-     * showing each ordered charm's actual photo next to its name/qty/price —
-     * so whoever receives the order email can see exactly which charm was
-     * ordered instead of only reading a text description. Meant to be
-     * injected into the EmailJS template via the UNESCAPED {{{items_html}}}
-     * variable (triple braces) — see the setup note in EMAILJS_TEMPLATE_ID's
-     * comment above.
-     */
     function buildOrderItemsHtml() {
-        // Table-based layout (not flexbox/grid) on purpose — many email
-        // clients, Outlook especially, strip modern CSS layout entirely,
-        // so tables remain the one reliably-rendering approach. Each item
-        // gets its own bordered "card" table, stacked with a spacer row
-        // between them (email-safe substitute for a flex gap).
         const cards = cart.map(item => `
             <tr><td style="padding:0 0 10px;">
                 <table style="width:100%; border-collapse:collapse; background:#f7f9fc; border-radius:12px; overflow:hidden;">
@@ -471,9 +409,6 @@
             });
     }
 
-    // ---------------------------------------------------------------------
-    // Init
-    // ---------------------------------------------------------------------
     buildDrawer();
     renderItems();
     updateBadge();

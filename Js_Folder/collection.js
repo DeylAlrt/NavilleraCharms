@@ -1,6 +1,3 @@
-// ========================================
-// COLLECTION PAGE RENDERER
-// ========================================
 (function () {
     const resultsEl = document.getElementById('collectionResults');
     const emptyEl = document.getElementById('collectionEmpty');
@@ -18,7 +15,6 @@
 
     if (!resultsEl) return;
 
-    // Glyph shown on each tile, matched by keyword found in the item label.
     const GLYPH_MAP = [
         [/heart/i, '❤'], [/star/i, '★'], [/flower|rose/i, '✿'], [/paw/i, '🐾'],
         [/butterfly/i, '🦋'], [/moon/i, '🌙'], [/cherr/i, '🍒'], [/bow/i, '🎀'],
@@ -41,11 +37,6 @@
         return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
 
-    // Charm photos are served full-resolution (some 250KB+) but only ever
-    // render at ~80px in the grid. The charm builder app already runs
-    // Next.js's built-in image optimizer at /_next/image — route through it
-    // to get a properly-sized, format-negotiated (webp/avif) copy instead of
-    // the raw original, cutting most tiles down to a few KB.
     function charmImageUrl(file) {
         const path = '/charms/' + file;
         return `https://navillera.vercel.app/_next/image?url=${encodeURIComponent(path)}&w=256&q=75`;
@@ -127,7 +118,6 @@
             badge.textContent = 'Sold Out';
             tile.appendChild(badge);
         } else {
-            // Visual-only indicator — the whole tile is the tap target, not this.
             const addBadge = document.createElement('span');
             addBadge.className = 'charm-tile__add-badge';
             addBadge.setAttribute('aria-hidden', 'true');
@@ -208,7 +198,6 @@
         const leftPct = maxScroll > 0 ? (jumpNavEl.scrollLeft / maxScroll) * (100 - widthPct) : 0;
         jumpNavThumbEl.style.width = widthPct + '%';
         jumpNavThumbEl.style.left = leftPct + '%';
-        // Butterfly rides at the leading (right) edge of the trail
         if (jumpNavButterflyEl) jumpNavButterflyEl.style.left = (leftPct + widthPct) + '%';
     }
 
@@ -246,10 +235,6 @@
     render(category);
     updateJumpNavFade();
 
-    // The chip row's width can shift once the real webfont swaps in
-    // (font-display: swap renders a fallback font first) — re-check
-    // overflow after that settles, otherwise the scrollbar can end up
-    // permanently hidden if the fallback font happened to fit.
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(updateJumpNavFade);
     }
@@ -260,17 +245,12 @@
     jumpNavEl.addEventListener('scroll', updateJumpNavThumb, { passive: true });
     window.addEventListener('resize', updateJumpNavFade);
 
-    // Desktop convenience: a vertical mouse-wheel over the chip row scrolls
-    // it horizontally instead of doing nothing (trackpads' native
-    // horizontal swipe still passes through untouched).
     jumpNavEl.addEventListener('wheel', (e) => {
         if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
         e.preventDefault();
         jumpNavEl.scrollLeft += e.deltaY;
     }, { passive: false });
 
-    // Click or drag the trail itself to scroll — the mouse-friendly
-    // equivalent of swiping the chip row on touch.
     if (jumpNavTrackEl) {
         let dragging = false;
 

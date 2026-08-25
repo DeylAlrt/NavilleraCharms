@@ -1,6 +1,4 @@
-/* ========================================
-   CART — shared drawer, injected by cart.js on every page
-   ======================================== */
+
 
 #cartBtn {
     position: relative;
@@ -26,7 +24,6 @@
     pointer-events: none;
 }
 
-/* --- Overlay + drawer shell --- */
 .cart-overlay {
     position: fixed;
     inset: 0;
@@ -56,8 +53,8 @@ body.cart-open {
     right: -420px;
     width: 400px;
     max-width: 92vw;
-    height: 100vh; /* fallback for browsers without dvh support */
-    height: 100dvh; /* real visible viewport on mobile — avoids the drawer extending under the browser's address bar */
+    height: 100vh;
+    height: 100dvh;
     background: #ffffff;
     box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
     z-index: 4001;
@@ -108,17 +105,13 @@ body.cart-open {
     background: rgba(255, 255, 255, 0.12);
 }
 
-/* --- Items --- */
 .cart-drawer__items[hidden] {
     display: none;
 }
 
 .cart-drawer__items {
     flex: 1 1 auto;
-    min-height: 0; /* without this, a flex child with overflow won't actually
-                       scroll — it grows to fit all content instead, pushing
-                       the summary/checkout button off-screen and making it
-                       look like only one item exists */
+    min-height: 0;
     overflow-y: auto;
     padding: 16px 20px;
     display: flex;
@@ -172,7 +165,7 @@ body.cart-open {
     flex-direction: column;
     gap: 3px;
     min-width: 0;
-    padding-right: 24px; /* keeps text clear of the remove button */
+    padding-right: 24px;
 }
 
 .cart-item__label {
@@ -229,8 +222,6 @@ body.cart-open {
     transition: background 0.2s ease;
 }
 
-/* Expands the tap target to a full 44px without growing the visible button
-   any further than it already needs to be for comfortable reading. */
 .cart-item__qty-btn::before {
     content: '';
     position: absolute;
@@ -272,7 +263,6 @@ body.cart-open {
     inset: -8px;
 }
 
-/* --- Summary (Price Details + Back/Proceed) --- */
 .cart-drawer__summary {
     flex-shrink: 0;
     padding: 18px 20px 22px;
@@ -295,7 +285,6 @@ body.cart-open {
     margin-top: 8px;
 }
 
-/* --- Order form --- */
 .cart-order-form[hidden] {
     display: none;
 }
@@ -368,8 +357,6 @@ body.cart-open {
     margin: 0 0 10px;
 }
 
-/* --- Shared Back / primary-action button pair (used on both the cart
-   step and the order-details step) --- */
 .cart-actions {
     display: flex;
     gap: 12px;
@@ -433,7 +420,6 @@ body.cart-open {
     color: #d1293d;
 }
 
-/* --- "Added to cart" toast --- */
 .cart-toast {
     position: fixed;
     left: 50%;
@@ -506,7 +492,6 @@ body.cart-open {
     background: rgba(255, 255, 255, 0.28);
 }
 
-/* --- Responsive --- */
 @media (max-width: 480px) {
     .cart-drawer {
         width: 100%;
@@ -528,7 +513,6 @@ body.cart-open {
     }
 }
 
-/* --- Dark mode --- */
 html.dark-mode .cart-drawer {
     background: #0f172a;
     color: #e5e7eb;

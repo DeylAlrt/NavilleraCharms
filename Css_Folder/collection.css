@@ -1,4 +1,4 @@
-/* 1. GLOBAL SETTINGS & RESET */
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -17,7 +17,6 @@ body {
     color: #1a2a44;
 }
 
-/* 2. HERO / BREADCRUMB */
 .collection-hero {
     padding: 140px 6% 20px;
     text-align: center;
@@ -57,7 +56,6 @@ body {
     font-size: 1.05rem;
 }
 
-/* 3. TOOLBAR: SEARCH + JUMP NAV */
 .collection-toolbar {
     position: sticky;
     top: 85px;
@@ -87,9 +85,7 @@ body {
     border: 2px solid #a7c7e7;
     border-radius: 999px;
     font-family: 'Poppins', sans-serif;
-    /* Must stay >=16px — iOS Safari auto-zooms the whole page in when a
-       tapped input's font-size is under 16px, which is what was breaking
-       scrolling and pushing the search bar out of view on iPhone. */
+
     font-size: 16px;
     min-height: 44px;
     outline: none;
@@ -116,10 +112,7 @@ body {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    /* Promotes this row to its own compositing layer — works around an iOS
-       Safari bug where a horizontally-scrollable element nested under a
-       position:sticky ancestor (the toolbar) can end up untouchable/frozen
-       for touch scrolling. */
+
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
@@ -128,16 +121,11 @@ body {
     display: none;
 }
 
-/* Fade the trailing edge to hint there are more chips to scroll to —
-   only applied when the row actually overflows (see collection.js) */
 .collection-jumpnav.is-scrollable {
     mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
     -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
 }
 
-/* Custom "cute" scroll indicator — a little pill track + thumb, since
-   native mobile scrollbars are invisible overlay bars that don't reliably
-   signal "there's more here" to a user. Hidden unless there's overflow. */
 .jumpnav-scrollbar {
     display: none;
     position: relative;
@@ -166,7 +154,7 @@ body {
     height: 100%;
     min-width: 24px;
     border-radius: 999px;
-    /* light blue trail, fading in behind the mark at its leading edge */
+
     background: linear-gradient(90deg, rgba(167, 199, 231, 0), #a7c7e7 85%);
 }
 
@@ -212,7 +200,6 @@ body {
     background: #a7c7e7;
 }
 
-/* 4. RESULTS / SUB-COLLECTIONS */
 .collection-results {
     padding: 30px 6% 60px;
     display: flex;
@@ -252,7 +239,6 @@ body {
     white-space: nowrap;
 }
 
-/* 5. CHARM GRID + TILES */
 .charm-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(78px, 1fr));
@@ -386,7 +372,6 @@ body {
     transform: scale(1.1);
 }
 
-/* 6. EMPTY / NO-RESULTS STATES */
 .collection-empty,
 .collection-no-results {
     text-align: center;
@@ -395,7 +380,6 @@ body {
     font-size: 1.1rem;
 }
 
-/* 7. RESPONSIVE */
 @media (max-width: 768px) {
     .collection-hero {
         padding: 120px 5% 16px;
@@ -420,11 +404,7 @@ body {
         align-items: stretch;
     }
 
-    /* Force a definite, viewport-bound width on the jump-nav chain rather
-       than relying on flex stretch to shrink it — on iOS Safari the chip
-       row was rendering as wide as its content instead of being clipped to
-       the container, which is why it wasn't scrolling and the "overflow"
-       check (scrollWidth vs clientWidth) never found a difference. */
+
     .collection-jumpnav-wrap,
     .collection-jumpnav {
         width: 100%;
@@ -432,7 +412,6 @@ body {
     }
 }
 
-/* --- DARK MODE --- */
 html.dark-mode body {
     background-color: #0f172a;
     color: #e5e7eb;

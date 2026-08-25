@@ -1,4 +1,4 @@
-/*  1. GLOBAL SETTINGS & RESET */
+
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +15,6 @@ body {
     font-family: 'Poppins', system-ui, sans-serif;
 }
 
-/* 2. INTRO SECTION */
 .intro {
     position: relative;
     display: flex;
@@ -29,9 +28,9 @@ body {
     width: 100%;
     position: relative;
     border-radius: 12%;
-    background-size: cover;      
-    background-position: center;  
-    background-repeat: no-repeat; 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .build {
@@ -60,7 +59,6 @@ body {
     box-shadow: 0 6px 16px rgba(167, 199, 231, 0.45);
 }
 
-/*  3. SECTION 1 (BRACELET AREA) */
 .section_1 {
     position: relative;
     display: flex;
@@ -83,7 +81,7 @@ body {
     position: absolute;
     width: 40%;
     right: 23%;
-    transform: rotate(-10deg); 
+    transform: rotate(-10deg);
     height: auto;
     max-width: 600px;
     z-index: 3;
@@ -185,7 +183,6 @@ body {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 4. SECTION 2 (COLLECTIONS GRID) */
 .collections {
   background-color: #b8d8ea;
   border-radius: 12px;
@@ -261,11 +258,10 @@ body {
   box-sizing: border-box;
 }
 
-/* 5. SECTION 3 (INFO POINTS) */
 .info {
     position: relative;
     width: 100%;
-    height: 700px; 
+    height: 700px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -330,7 +326,6 @@ body {
 .info__text h3 { font-size: 1.5rem; font-weight: 700; font-style: italic; margin-bottom: 5px; font-family: 'Source Serif 4', serif;}
 .info__text p { width: 120%; font-size: 1.1rem; line-height: 1.4; color: #333; font-family: 'Source Serif 4', serif; }
 
-/* 6. SECTION 4 (DISCOUNT AREA) */
 .discount-area {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -412,7 +407,7 @@ body {
     font-size: 6.4vw;
     font-weight: 900;
     color: #FD9AC8;
-    -webkit-text-stroke: 12px white; 
+    -webkit-text-stroke: 12px white;
     paint-order: stroke fill;
     filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.1));
 }
@@ -437,11 +432,10 @@ body {
     font-weight: 700;
 }
 
-/* 7. RESPONSIVE DESIGN (MOBILE) */
 @media (max-width: 768px) {
     .build { height: 7%; width: 40%; bottom: 9%; left: 8%; font-size: 1rem; }
 
-    /* Section 1 Mobile */
+
     .section_1 { height: 480px; }
     .anim-container { width: 80%; top: -8%;}
     .container { width: 100%; }
@@ -451,9 +445,9 @@ body {
     .subtitle_effect { text-shadow: 0 3px 1px #000000; -webkit-text-stroke: 5px #FFFFFF; }
     .text-container { scale: 120%; top: 0; }
     .text-container2 { right: 5%; bottom: 5%; scale: 90%;}
-    .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; } 
+    .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; }
 
-    /* Section 2 Mobile */
+
     .collection { font-size: 1rem; padding: 8px 16px; width: 150%; }
     .collections { padding: 28px 24px 42px; }
     .collections__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
@@ -465,7 +459,7 @@ body {
     .dot { width: 10px; height: 10px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.5); transition: all 0.3s ease; }
     .dot.active { background-color: #fff; transform: scale(1.2); }
 
-    /* Section 3 Mobile */
+
     .info { height: auto; padding: 60px 20px; }
     .info__wrapper { flex-direction: column; align-items: flex-start; gap: 40px; }
     .info__main-img { order: -1; width: 100%; margin-bottom: 20px; }
@@ -478,7 +472,7 @@ body {
     .glow--pink { width: 70%; bottom: 10%; left: -20%; }
     .glow--blue { width: 90%; top: 30%; right: -30%; }
 
-    /* Section 4 Mobile */
+
     .discount-area { grid-template-columns: 1fr; gap: 20px; padding: 5%; }
     .left-image { width: 100%; transform: translate(0); border-radius: 40px; }
     .discount-container { width: 100%; transform: translate(0); border-radius: 40px; padding: 30px 10px; min-height: auto; }
@@ -493,7 +487,6 @@ body {
     .promo-text { scale: 1; width: 80%; height: 45px; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; border-radius: 12px; margin-top: 15px; }
 }
 
-/* 8. DARK MODE */
 html.dark-mode {
     background-color: #0f172a;
 }

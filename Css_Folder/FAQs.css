@@ -67,7 +67,6 @@ h2, h3{
     margin: auto;
 }
 
-
 .title-logo {
   position: relative;
   display: flex;
@@ -75,7 +74,7 @@ h2, h3{
   margin-top: 5em;
   margin-inline: 3em;
   font-family: 'KantumruyPro', system-ui, sans-serif;
-  color: #1a2a44; /* Dark blue */
+  color: #1a2a44;
   font-weight: 700;
   font-size: 1.3rem;
   line-height: 2;
@@ -83,7 +82,7 @@ h2, h3{
 
 .bigletter {
   font-family: 'Kapakana', cursive;
-  font-size: 6rem; /* Larger first letters */
+  font-size: 6rem;
   line-height: 1;
 }
 
@@ -125,7 +124,7 @@ details .faq-question::-webkit-details-marker {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; /* Add this to stop it from disappearing */
+  flex-shrink: 0;
   margin-left: 10px;
   transition: transform 0.4s ease;
 }
@@ -142,13 +141,13 @@ details .faq-question::-webkit-details-marker {
 }
 
 .faq-question:hover {
-    background-color: #ff85c2; /* Slightly darker pink */
-    transform: translateY(-3px); /* Lifts the pill up */
-    box-shadow: 0 5px 15px rgba(255, 153, 204, 0.4); /* Soft pink glow */
+    background-color: #ff85c2;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 153, 204, 0.4);
 }
 
 .faq-question:active {
-    transform: translateY(-1px); /* Slight 'press' feel when clicked */
+    transform: translateY(-1px);
 }
 
 .faq-question:hover .icon-circle {
@@ -160,7 +159,6 @@ details .faq-question::-webkit-details-marker {
     animation: slideDown 0.4s ease-out forwards;
 }
 
-/* Contact Form Area */
 .contact-form-section {
     width: 57%;
     max-width: 100%;
@@ -187,7 +185,6 @@ details .faq-question::-webkit-details-marker {
     margin-bottom: 30px;
 }
 
-/* --- FORM FIELDS --- */
 .form-row {
     display: flex;
     gap: 15px;
@@ -196,7 +193,7 @@ details .faq-question::-webkit-details-marker {
 .form-group {
     margin-bottom: 15px;
     width: 100%;
-    text-align: left; /* Labels stay left-aligned */
+    text-align: left;
 }
 
 .form-label {
@@ -223,7 +220,6 @@ details .faq-question::-webkit-details-marker {
     resize: none;
 }
 
-/* SUBMIT BUTTON */
 .submit-btn {
     background-color: #1C2B4B;
     color: white;
@@ -276,7 +272,7 @@ details .faq-question::-webkit-details-marker {
 }
 
 @media (max-width: 768px) {
-    
+
     .title1 { line-height:1.2; justify-content: center; margin-top:1em; }
     .title2 { line-height:1.7; margin-left: 0; margin-top: -2em; }
     .title3 { line-height:1.7; margin-left: 0; margin-top: -5.5em; }
@@ -285,7 +281,6 @@ details .faq-question::-webkit-details-marker {
 
 }
 
-/* --- DARK MODE --- */
 html.dark-mode body {
     background-color: #0f172a;
     color: #e5e7eb;

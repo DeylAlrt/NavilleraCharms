@@ -1,4 +1,4 @@
-/* 1. GLOBAL SETTINGS & RESET */
+
 *, *::before, *::after {
     margin: 0;
     padding: 0;
@@ -16,7 +16,7 @@ body {
     overflow-x: hidden;
 }
 
-/* --- ABOUT US TOP BANNER --- */
+
 .aboutus-container {
     width: 100%;
     display: flex;
@@ -37,7 +37,7 @@ body {
     object-fit: cover;
 }
 
-/* Decorative Blur Overlay */
+
 .image-wrapper::after {
     content: "";
     position: absolute;
@@ -92,7 +92,7 @@ body {
 .big-star { width: 7%; bottom: 30%; left: 33%; }
 .small-star { width: 4%; bottom: 36%; left: 30%; }
 
-/* --- WELCOME SECTION --- */
+
 .welcome-section {
     margin: 5vh;
     display: flex;
@@ -132,7 +132,7 @@ body {
     text-align: center;
 }
 
-/* --- HER STORY SECTION --- */
+
 .her-story {
     width: 100%;
     margin-top: 9%;
@@ -213,7 +213,7 @@ body {
     display: block; 
 }
 
-/* --- STAR BANNER --- */
+
 .star-banner {
     width: 100%;
     height: 310px; 
@@ -248,12 +248,12 @@ body {
     z-index: 3;
 }
 
-/* RIGHT STARS */
+
 .right-stars img:nth-child(1) { width: 4vw; transform: translate(28vw, -4vw); }  
 .right-stars img:nth-child(2) { width: 5vw; transform: translate(22vw, -9vw); }
 .right-stars img:nth-child(3) { width: 3.5vw; transform: translate(23vw, -7vw); }
 
-/* LEFT STARS */
+
 .left-stars img:nth-child(1) { width: 5vw; transform: translate(-21vw, -9vw); }
 .left-stars img:nth-child(2) { width: 3.5vw; transform: translate(-30vw, -13vw); }
 
@@ -261,7 +261,7 @@ body {
 .gallery-item.side { width: 23%; aspect-ratio: 3/4; }
 .gallery-item.middle { width: 32%; aspect-ratio: 3/4; transform: scale(1.1); }
 
-/* --- CAROUSEL TEXT & GRID --- */
+
 .carousel-text {
     display: flex;
     flex-direction: column;
@@ -290,11 +290,11 @@ body {
     margin: 0 auto;
 }
 
-/* --- FIXED GALLERY STYLES --- */
+
 .gallery {
-    display: flex;       /* Use flex instead of columns to stop breaking */
+    display: flex;       
     gap: 15px;
-    flex: 1 1 480px;     /* Keeps gallery big, but lets it shrink instead of forcing overflow */
+    flex: 1 1 480px;     
     max-width: 600px;
     min-width: 280px;
 }
@@ -320,7 +320,7 @@ body {
     object-fit: cover;
 }
 
-/* Contact Form Area */
+
 .contact-form-section {
     flex: 1;
     max-width: 500px;
@@ -344,7 +344,7 @@ body {
     margin-bottom: 30px;
 }
 
-/* --- FORM FIELDS --- */
+
 .form-row {
     display: flex;
     gap: 15px;
@@ -353,7 +353,7 @@ body {
 .form-group {
     margin-bottom: 15px;
     width: 100%;
-    text-align: left; /* Labels stay left-aligned */
+    text-align: left; 
 }
 
 .form-label {
@@ -380,7 +380,7 @@ body {
     resize: none;
 }
 
-/* SUBMIT BUTTON */
+
 .submit-btn {
     background-color: #1C2B4B;
     color: white;
@@ -421,21 +421,21 @@ body {
     color: #d1293d;
 }
 
-/* MOBILE RESPONSIVENESS */
+
 @media (max-width: 768px) {
 
-    /* Background Section */
+    
     .aboutus-background { height: 70vh; object-fit: cover; } 
     .big-star { width: 14%; top: 68%; left: 27%; }
     .small-star { width: 10%; top: 63%; left: 22%; }
     .aboutus-text { left: 67%; }
 
-    /* Welcome Section */
+    
     .welcome-section { margin: 5vh 0; }
     .welcome-section p { font-size: 1.2rem; width: 90%; }
     .emphasis { font-size: 2rem; }
 
-    /* 1. HER STORY CENTERED TEXT */
+    
     .her-story-content { flex-direction: column !important; padding: 0; gap: 0; width: 100%; align-items: center; }
     .her-story-header { position: relative; text-align: center; margin-bottom: 15px; }
     .her { font-size: 3.5rem !important;}
@@ -449,7 +449,7 @@ body {
     .her-story-image { width: 100% !important; order: 2; }
     .her-story-image img { width: 100% !important; border-radius: 0; }
 
-    /* 2. Gallery Area */
+    
     .star-banner { height: 167px !important; overflow: visible !important; margin-bottom: 300px !important; }
     .image-gallery {
         position: absolute !important; left: 50% !important; transform: translateX(-50%) !important; 
@@ -457,25 +457,25 @@ body {
         }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
     .banner-title { font-size: 1.8rem; padding-top: 15% ;}
-    /* RIGHT STARS */
+    
     .right-stars img:nth-child(1) { width: 10vw; transform: translate(46vw, -17vw); }
     .right-stars img:nth-child(2) { width: 8vw; transform: translate(34vw, -7vw); }
     .right-stars img:nth-child(3) { width: 5vw; transform: translate(34vw, -13vw); }
 
-    /* LEFT STARS */
+    
     .left-stars img:nth-child(1) { width: 8vw; transform: translate(-35vw, -17vw); }
     .left-stars img:nth-child(2) { width: 6vw; transform: translate(-47vw, -25vw); }
     
     .carousel-text p { font-size: 1.2rem; width: 116%;}
 
-    /* 2. ENLARGED GALLERY */
+    
     .gallery {
         flex: none !important;width: 100% !important; display: flex; flex-direction: row; gap: 12px; padding: 0 10px; }
     .gallery-column { gap: 12px; flex: 1; }
 
     .gallery-wrapper-item { border-radius: 15px; }
 
-    /* 3. CENTERED CONTACT FORM */
+    
     .contact-section-container { flex-direction: column !important; align-items: center; padding: 40px 0; gap: 50px; }
     .contact-form-section { width: 100% !important; max-width: 90% !important; margin: 0 auto;
          display: flex; flex-direction: column; align-items: center; 
@@ -486,7 +486,7 @@ body {
     .submit-btn { width: 100% !important; margin: 20px auto 0 auto; }
 }
 
-/* --- DARK MODE --- */
+
 html.dark-mode body {
     background-color: #0f172a;
     color: #e5e7eb;

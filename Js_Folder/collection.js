@@ -7,6 +7,7 @@
     const jumpNavTrackEl = document.getElementById('jumpNavTrack');
     const jumpNavThumbEl = document.getElementById('jumpNavThumb');
     const jumpNavButterflyEl = document.getElementById('jumpNavButterfly');
+    const tabsEl = document.getElementById('collectionTabs');
     const searchEl = document.getElementById('collectionSearch');
     const titleEl = document.getElementById('collectionTitle');
     const blurbEl = document.getElementById('collectionBlurb');
@@ -192,6 +193,42 @@
         });
     }
 
+    let currentCategory = null;
+
+    function updateActiveTab(category) {
+        if (!tabsEl) return;
+        tabsEl.querySelectorAll('.collection-tabs__btn').forEach(btn => {
+            const isActive = btn.dataset.category === category;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+    }
+
+    function switchCategory(category, { pushState = true, scroll = true } = {}) {
+        currentCategory = category;
+
+        resultsEl.innerHTML = '';
+        jumpNavEl.innerHTML = '';
+        if (searchEl) searchEl.value = '';
+        if (noResultsEl) noResultsEl.hidden = true;
+        if (emptyEl) emptyEl.hidden = true;
+        if (toolbarEl) toolbarEl.hidden = false;
+
+        render(category);
+        updateJumpNavFade();
+        syncCartBadges();
+        updateActiveTab(category);
+
+        if (pushState) {
+            const url = `${window.location.pathname}?category=${category}`;
+            history.pushState({ category }, '', url);
+        }
+        if (scroll) {
+            const hero = document.querySelector('.collection-hero');
+            if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
     function updateJumpNavThumb() {
         if (!jumpNavThumbEl || jumpNavEl.scrollWidth <= 0) return;
         const widthPct = Math.max((jumpNavEl.clientWidth / jumpNavEl.scrollWidth) * 100, 8);
@@ -245,10 +282,24 @@
 
     const params = new URLSearchParams(window.location.search);
     const category = (params.get('category') || '').toLowerCase();
-    render(category);
-    updateJumpNavFade();
-    syncCartBadges();
+    switchCategory(category, { pushState: false, scroll: false });
     window.addEventListener('navillera-cart-updated', syncCartBadges);
+
+    if (tabsEl) {
+        tabsEl.querySelectorAll('.collection-tabs__btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const cat = btn.dataset.category;
+                if (cat === currentCategory) return;
+                switchCategory(cat);
+            });
+        });
+    }
+
+    window.addEventListener('popstate', () => {
+        const p = new URLSearchParams(window.location.search);
+        const cat = (p.get('category') || '').toLowerCase();
+        switchCategory(cat, { pushState: false, scroll: false });
+    });
 
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(updateJumpNavFade);

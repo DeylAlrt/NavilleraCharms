@@ -7,6 +7,22 @@
     const EMAILJS_ORDER_TEMPLATE_ID = 'template_k1boxcg';
     const EMAILJS_ORDER_PUBLIC_KEY = 'vvg-sBt7pyZ2SOfHk';
 
+    const PROMO_CODES = {
+        NEWBABE: 0.05,
+    };
+    const HAS_ORDERED_KEY = 'navillera-has-ordered';
+    // --------------------------------------------------------------------
+
+    let appliedPromo = null; // { code, percent } once a valid code is applied
+
+    function hasOrderedBefore() {
+        try { return localStorage.getItem(HAS_ORDERED_KEY) === '1'; } catch { return false; }
+    }
+
+    function markAsOrdered() {
+        try { localStorage.setItem(HAS_ORDERED_KEY, '1'); } catch {}
+    }
+
     function readCart() {
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
@@ -68,6 +84,15 @@
         return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
     }
 
+    function cartDiscount() {
+        if (!appliedPromo) return 0;
+        return cartSubtotal() * appliedPromo.percent;
+    }
+
+    function cartTotalAfterDiscount() {
+        return Math.max(cartSubtotal() - cartDiscount(), 0);
+    }
+
     function getDeliveryFee(place) {
         if (!place) return 0;
         if (place.includes('Mall of the Emirates Metro') || place.includes('DMCC Metro')) return 5;
@@ -80,6 +105,8 @@
     let overlayEl, drawerEl, itemsEl, emptyMsgEl, summaryEl;
     let subtotalValueEl, summaryTotalValueEl;
     let formEl, statusEl, deliveryFeeValueEl, totalValueEl;
+    let promoInputEl, promoApplyBtnEl, promoMsgEl, discountRowEl, discountValueEl;
+    let formDiscountRowEl, formDiscountValueEl;
 
     function buildDrawer() {
         overlayEl = document.createElement('div');
@@ -103,6 +130,17 @@
             <div class="cart-drawer__summary" id="cartSummary">
                 <h3 class="cart-form__totals-heading">Price Details</h3>
                 <div class="cart-drawer__row"><span>Total Product Price</span><span id="cartSubtotalValue">0.00 AED</span></div>
+
+                <div class="cart-promo">
+                    <input type="text" id="cartPromoInput" class="cart-promo__input" placeholder="Promo code" autocomplete="off">
+                    <button type="button" class="cart-promo__btn" id="cartPromoApplyBtn">Apply</button>
+                </div>
+                <p class="cart-promo__msg" id="cartPromoMsg" role="status" aria-live="polite"></p>
+
+                <div class="cart-drawer__row cart-drawer__row--discount" id="cartDiscountRow" hidden>
+                    <span>Discount</span><span id="cartDiscountValue">-0.00 AED</span>
+                </div>
+
                 <div class="cart-drawer__row cart-drawer__row--total"><span>Order Total</span><span id="cartSummaryTotalValue">0.00 AED</span></div>
                 <div class="cart-actions">
                     <button type="button" class="cart-btn cart-btn--secondary" id="cartBackBtn">Back</button>
@@ -166,6 +204,7 @@
                 <div class="cart-form__totals">
                     <h3 class="cart-form__totals-heading">Price Details</h3>
                     <div class="cart-drawer__row"><span>Total Product Price</span><span id="cartFormSubtotal">0.00 AED</span></div>
+                    <div class="cart-drawer__row cart-drawer__row--discount" id="cartFormDiscountRow" hidden><span>Discount</span><span id="cartFormDiscountValue">-0.00 AED</span></div>
                     <div class="cart-drawer__row"><span>Delivery Fee</span><span id="cartDeliveryFeeValue">0.00 AED</span></div>
                     <div class="cart-drawer__row cart-drawer__row--total"><span>Order Total</span><span id="cartTotalValue">0.00 AED</span></div>
                 </div>
@@ -191,6 +230,13 @@
         statusEl = drawerEl.querySelector('#cartOrderStatus');
         deliveryFeeValueEl = drawerEl.querySelector('#cartDeliveryFeeValue');
         totalValueEl = drawerEl.querySelector('#cartTotalValue');
+        promoInputEl = drawerEl.querySelector('#cartPromoInput');
+        promoApplyBtnEl = drawerEl.querySelector('#cartPromoApplyBtn');
+        promoMsgEl = drawerEl.querySelector('#cartPromoMsg');
+        discountRowEl = drawerEl.querySelector('#cartDiscountRow');
+        discountValueEl = drawerEl.querySelector('#cartDiscountValue');
+        formDiscountRowEl = drawerEl.querySelector('#cartFormDiscountRow');
+        formDiscountValueEl = drawerEl.querySelector('#cartFormDiscountValue');
 
         overlayEl.addEventListener('click', closeDrawer);
         drawerEl.querySelector('#cartCloseBtn').addEventListener('click', closeDrawer);
@@ -199,9 +245,51 @@
         drawerEl.querySelector('#cartFormBackBtn').addEventListener('click', hideOrderForm);
         formEl.querySelector('select[name="meetupPlace"]').addEventListener('change', updateFormTotals);
         formEl.addEventListener('submit', handleOrderSubmit);
+        promoApplyBtnEl.addEventListener('click', applyPromoCode);
+        promoInputEl.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); applyPromoCode(); }
+        });
+
+        if (hasOrderedBefore()) {
+            promoInputEl.disabled = true;
+            promoInputEl.placeholder = 'New customers only';
+            promoApplyBtnEl.disabled = true;
+        }
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && drawerEl.classList.contains('is-open')) closeDrawer();
         });
+    }
+
+    function applyPromoCode() {
+        const code = (promoInputEl.value || '').trim().toUpperCase();
+
+        if (hasOrderedBefore()) {
+            appliedPromo = null;
+            promoMsgEl.textContent = "This code is for new customers only — looks like you've already placed an order from this device.";
+            promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
+            renderItems();
+            return;
+        }
+
+        if (!code) {
+            promoMsgEl.textContent = 'Enter a promo code.';
+            promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
+            return;
+        }
+
+        const percent = PROMO_CODES[code];
+        if (percent === undefined) {
+            appliedPromo = null;
+            promoMsgEl.textContent = "That code isn't valid.";
+            promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
+            renderItems();
+            return;
+        }
+
+        appliedPromo = { code, percent };
+        promoMsgEl.textContent = `"${code}" applied — ${Math.round(percent * 100)}% off!`;
+        promoMsgEl.className = 'cart-promo__msg cart-promo__msg--success';
+        renderItems();
     }
 
     function renderItems() {
@@ -238,8 +326,11 @@
         });
 
         const subtotal = cartSubtotal();
+        const discount = cartDiscount();
         if (subtotalValueEl) subtotalValueEl.textContent = `${subtotal.toFixed(2)} AED`;
-        if (summaryTotalValueEl) summaryTotalValueEl.textContent = `${subtotal.toFixed(2)} AED`;
+        if (discountRowEl) discountRowEl.hidden = discount <= 0;
+        if (discountValueEl) discountValueEl.textContent = `-${discount.toFixed(2)} AED`;
+        if (summaryTotalValueEl) summaryTotalValueEl.textContent = `${cartTotalAfterDiscount().toFixed(2)} AED`;
 
         updateFormTotals();
     }
@@ -248,10 +339,14 @@
         if (!formEl) return;
         const place = formEl.querySelector('select[name="meetupPlace"]').value;
         const subtotal = cartSubtotal();
+        const discount = cartDiscount();
         const fee = getDeliveryFee(place);
+        const total = cartTotalAfterDiscount() + fee;
         formEl.querySelector('#cartFormSubtotal').textContent = `${subtotal.toFixed(2)} AED`;
+        if (formDiscountRowEl) formDiscountRowEl.hidden = discount <= 0;
+        if (formDiscountValueEl) formDiscountValueEl.textContent = `-${discount.toFixed(2)} AED`;
         deliveryFeeValueEl.textContent = `${fee.toFixed(2)} AED`;
-        totalValueEl.textContent = `${(subtotal + fee).toFixed(2)} AED`;
+        totalValueEl.textContent = `${total.toFixed(2)} AED`;
     }
 
     function updateBadge() {
@@ -333,7 +428,7 @@
         statusEl.className = 'cart-order-status';
     }
 
-    function buildOrderItemsHtml() {
+    function buildOrderItemsHtml(discount, promoCode) {
         const cards = cart.map(item => `
             <tr><td style="padding:0 0 10px;">
                 <table style="width:100%; border-collapse:collapse; background:#f7f9fc; border-radius:12px; overflow:hidden;">
@@ -357,7 +452,22 @@
             </td></tr>
         `).join('');
 
-        return `<table style="width:100%; border-collapse:collapse;">${cards}</table>`;
+        const discountRow = discount > 0 ? `
+            <tr><td style="padding:0 0 10px;">
+                <table style="width:100%; border-collapse:collapse; background:#e9f7ee; border-radius:12px; overflow:hidden;">
+                    <tr>
+                        <td style="padding:12px; font-family:Arial,sans-serif; color:#2e7d4f;">
+                            <div style="font-size:15px; font-weight:bold;">Promo code applied: ${promoCode}</div>
+                        </td>
+                        <td style="padding:12px; font-family:Arial,sans-serif; font-size:15px; font-weight:bold; color:#2e7d4f; text-align:right; white-space:nowrap;">
+                            -${discount.toFixed(2)} AED
+                        </td>
+                    </tr>
+                </table>
+            </td></tr>
+        ` : '';
+
+        return `<table style="width:100%; border-collapse:collapse;">${cards}${discountRow}</table>`;
     }
 
     function handleOrderSubmit(e) {
@@ -367,7 +477,9 @@
 
         const data = Object.fromEntries(new FormData(formEl).entries());
         const subtotal = cartSubtotal();
+        const discount = cartDiscount();
         const fee = getDeliveryFee(data.meetupPlace);
+        const total = cartTotalAfterDiscount() + fee;
 
         if (typeof emailjs === 'undefined' || EMAILJS_ORDER_TEMPLATE_ID === 'YOUR_ORDER_TEMPLATE_ID') {
             statusEl.textContent = "Order requests aren't connected yet — please DM us on Instagram instead.";
@@ -391,15 +503,22 @@
             meetup_place: data.meetupPlace,
             delivery_date: data.deliveryDate,
             subtotal: subtotal.toFixed(2),
+            promo_code: appliedPromo ? appliedPromo.code : 'None',
+            discount: discount.toFixed(2),
             delivery_fee: fee.toFixed(2),
-            total: (subtotal + fee).toFixed(2),
+            total: total.toFixed(2),
             notes: data.notes || 'None',
-            items_html: buildOrderItemsHtml(),
+            items_html: buildOrderItemsHtml(discount, appliedPromo ? appliedPromo.code : ''),
         }, { publicKey: EMAILJS_ORDER_PUBLIC_KEY })
             .then(() => {
                 statusEl.textContent = 'Thanks! Your order request has been sent — we\'ll confirm within 1–2 days.';
                 statusEl.className = 'cart-order-status cart-order-status--success';
                 cart = [];
+                appliedPromo = null;
+                markAsOrdered();
+                if (promoInputEl) { promoInputEl.value = ''; promoInputEl.disabled = true; promoInputEl.placeholder = 'New customers only'; }
+                if (promoApplyBtnEl) promoApplyBtnEl.disabled = true;
+                if (promoMsgEl) { promoMsgEl.textContent = ''; promoMsgEl.className = 'cart-promo__msg'; }
                 persist();
                 formEl.reset();
                 setTimeout(closeDrawer, 2500);

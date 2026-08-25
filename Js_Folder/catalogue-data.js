@@ -206,7 +206,7 @@ const CATEGORY_META = {
     },
     watch: {
         title: 'Watch Charms',
-        blurb: 'Nomination-style watch faces to complete your bracelet.'
+        blurb: 'Charm-ready watch faces to complete your bracelet.'
     },
     keychain: {
         title: 'Keychains',

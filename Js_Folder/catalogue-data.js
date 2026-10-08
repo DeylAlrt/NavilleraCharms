@@ -93,7 +93,7 @@ const CATALOGUE = {
             name: 'Characters', price: 5.00, unit: 'each link',
             items: [1, 2, 3, 4, 5].map(n => ({
                 label: [
-                    'Buttercup', 'Bubbles', 'Blossom', 'Nick Fox', 'Judy Bunny',
+                    'Buttercup', 'Blossom', 'Bubbles', 'Nick Fox', 'Judy Bunny',
                 ][n - 1],
                 file: `Character_Premium Charms (${n}).png`
             }))

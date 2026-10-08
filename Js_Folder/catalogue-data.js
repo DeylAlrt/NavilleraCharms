@@ -90,14 +90,12 @@ const CATALOGUE = {
             }))
         },
         {
-            name: 'Starter Premium Charms', price: 5.00, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14].map(n => ({
+            name: 'Characters', price: 5.00, unit: 'each link',
+            items: [1, 2, 3, 4, 5].map(n => ({
                 label: [
-                    'Concentric Hearts', 'Game Controller', 'Gold Flower', 'Black Spider',
-                    'Green Gummy Bear', 'Pink & Blue Gummy Bears', 'Coffee Cup', 'Pink Lipstick',
-                    'Pink Telephone', 'Evil Eye', 'Heart Sunglasses', 'Music Note', 'Pearl', 'Evil Eye II'
+                    'Buttercup', 'Bubbles', 'Blossom', 'Nick Fox', 'Judy Bunny',
                 ][n - 1],
-                file: `Starter_Premium_Charms (${n}).png`
+                file: `Character_Premium Charms (${n}).png`
             }))
         },
         {

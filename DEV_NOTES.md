@@ -1,10 +1,5 @@
 # Dev Notes
 
-Internal notes for whoever edits this codebase next. Not linked from any
-page and never shipped to the browser — the `.html`/`.css`/`.js` files
-themselves are kept comment-free on purpose so nothing here shows up in a
-visitor's DevTools/view-source.
-
 ## EmailJS setup — two separate accounts
 
 There are **two separate EmailJS accounts** in play, because the free tier

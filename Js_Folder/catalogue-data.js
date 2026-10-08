@@ -90,22 +90,45 @@ const CATALOGUE = {
             }))
         },
         {
-            name: 'Characters', price: 5.00, unit: 'each link',
-            items: [1, 2, 3, 4, 5].map(n => ({
-                label: [
-                    'Buttercup', 'Blossom', 'Bubbles', 'Nick Fox', 'Judy Bunny',
-                ][n - 1],
-                file: `Character_Premium Charms (${n}).png`
+            name: 'Characters', price: 8.99, unit: 'each link',
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(n => ({
+                label: ['Blossom', 'Bubbles', 'Buttercup', 'Nick Fox', 'Judy Bunny', 'Hello Kitty', 'Missing', 'Cinnamoroll', 'My Melody', 'Kuromi', 'Cinnamoroll II', 'Pompompurin',
+                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', ''][n - 1],
+                file: `Character_Premium_Charms (${n}).png`
             }))
         },
+
         {
-            name: 'Premium Charms', price: 7.00, unit: 'each link',
+            name: 'Animals', price: 8.99, unit: 'each link',
+            items: [1].map(n => ({
+                label: ['None'][n - 1],
+                file: `Animals (${n}).png`
+            }))
+        },
+
+         {
+            name: 'Cars', price: 8.99, unit: 'each link',
+            items: [1].map(n => ({
+                label: ['None'][n - 1],
+                file: `Cars (${n}).png`
+            }))
+        },
+
+         {
+            name: 'Sports', price: 8.99, unit: 'each link',
+            items: [1].map(n => ({
+                label: ['None'][n - 1],
+                file: `Sports (${n}).png`
+            }))
+        },
+
+        {
+            name: 'Premium Charms', price: 8.99, unit: 'each link',
             items: [
                 [30, 'PSG'], [31, 'Real Madrid'], [32, 'Bayern Munich'], [33, 'Juventus'], [34, 'AC Milan'], [35, 'Inter Milan'],
-                [38, 'Barcelona'], [39, 'Manchester United'], [40, 'Fox Character'], [41, 'Bunny Character'], [42, 'Cinnamoroll'],
-                [43, 'My Melody'], [44, 'Hello Kitty'], [45, 'Badtz-Maru'], [46, 'Pink Bunny Character'], [47, 'Cream Cat Character'],
-                [48, 'Glitter Heart'], [49, 'Anti Social'], [50, 'Spiderweb'], [51, 'Vintage Camera'], [52, 'Buttercup'],
-                [53, 'Pink Bunny Girl'], [54, 'Bubbles'], [55, 'Husky'], [56, 'French Bulldog'], [57, 'White Puppy'],
+                [38, 'Barcelona'], [39, 'Manchester United'],
+                [48, 'Glitter Heart'], [49, 'Anti Social'], [50, 'Spiderweb'], [51, 'Vintage Camera'],
+                [55, 'Husky'], [56, 'French Bulldog'], [57, 'White Puppy'],
                 [58, 'Black & White Cat'], [59, 'Volleyball'], [60, 'Soccer Ball'], [61, 'Basketball'], [62, 'Orange Ball Badge'],
                 [63, 'Volleyball II'], [64, 'Corgi'], [65, 'Golden Retriever'], [66, 'Mercedes-Benz Logo'], [67, 'Racing Flags'],
                 [68, 'Red Sports Car'], [69, 'BMW Logo'], [70, 'Ferrari Logo'], [71, 'Porsche Logo'], [72, 'Mercedes-Benz Logo II'],
@@ -115,8 +138,8 @@ const CATALOGUE = {
         },
         {
             name: 'Flags', price: 8.00, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({
-                label: ['Philippines', 'Netherlands', 'South Korea', 'India', 'Egypt', 'Czech Republic', 'UAE', 'Pakistan'][n - 1],
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => ({
+                label: ['Philippines', 'Netherlands', 'South Korea', 'India', 'Egypt', 'Czech Republic', 'UAE', 'Pakistan', 'United Kingdom', 'Palestine', 'Italy'][n - 1],
                 file: `Flags (${n}).png`
             }))
         },

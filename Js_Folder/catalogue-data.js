@@ -8,12 +8,18 @@ function letterLinkItems(material) {
     });
 }
 
-function numberLinkItems() {
+function numberLinkItems(material = 'Silver') {
     const items = [];
     for (let n = 1; n <= 9; n++) {
-        items.push({ label: String(n - 1), file: `Number (${n}).png` });
+        const file = material === 'Gold'
+            ? `Gold_Number (${n}).png`
+            : `Number (${n}).png`;
+        items.push({ label: String(n - 1), file });
     }
-    items.push({ label: '9', file: 'number_number_Number.png' });
+    items.push({
+        label: '9',
+        file: material === 'Gold' ? 'Gold_Number (10).png' : 'number_number_Number.png'
+    });
     return items;
 }
 
@@ -57,12 +63,16 @@ const CATALOGUE = {
             items: letterLinkItems('Silver')
         },
         {
-            name: 'Number Links', price: 3.00, unit: 'each link',
+            name: 'Silver Number Links', price: 3.00, unit: 'each link',
             items: numberLinkItems()
         },
         {
             name: 'Gold Letter Links', price: 3.50, unit: 'each link',
             items: letterLinkItems('Gold')
+        },
+        {
+            name: 'Gold Number Links', price: 3.50, unit: 'each link',
+            items: numberLinkItems('Gold')
         },
         {
             name: 'Outline Classic Charms', price: 3.50, unit: 'each link',
@@ -92,25 +102,26 @@ const CATALOGUE = {
         },
         {
             name: 'Characters', price: 8.99, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(n => ({
-                label: ['Blossom', 'Bubbles', 'Buttercup', 'Nick Fox', 'Judy Bunny', 'Hello Kitty', 'Spider-Kitty', 'Cinnamoroll', 'My Melody', 'Kuromi', 'Cinnamoroll II', 'Pompompurin',
-                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', ''][n - 1],
-                file: `Character_Premium_Charms (${n}).png`
+            items: [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(n => ({
+                label: ['Blossom', 'Bubbles', 'Buttercup', '', '', 'Hello Kitty', 'Spider-Kitty', 'Cinnamoroll', 'My Melody', 'Kuromi', 'Cinnamoroll II', 'Pompompurin',
+                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', 'Spider-Man Logo'][n - 1],
+                file: `Character_Premium_Charms (${n}).png`,
+                soldOut: [2].includes(n)
             }))
         },
 
         {
             name: 'Animals', price: 8.99, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({
-                label: ['Frog', 'Cat I', 'Cat II', 'Maltese', 'French Bulldog', 'Husky', 'Corgi', 'Bunny'][n - 1],
+            items: [1, 2, 4, 5, 6, 7, 8].map(n => ({
+                label: ['Frog', 'Cat I', '', 'Maltese', 'French Bulldog', 'Husky', 'Corgi', 'Bunny'][n - 1],
                 file: `Animal_Premium_Charms (${n}).png`
             }))
         },
 
          {
             name: 'Cars', price: 8.99, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(n => ({
-                label: ['Car', 'BMW', 'Mercedes I', 'Mercedes II', 'Lamborghini', 'Ferrari', 'Porsche', 'Rolls-Royce', 'BMW Pink',
+            items: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12].map(n => ({
+                label: ['Car', 'BMW', 'Mercedes', '', 'Lamborghini', 'Ferrari', 'Porsche', 'Rolls-Royce', 'BMW Pink',
                      'Mercedes Pink', 'Ferrari Pink', 'Porche Pink'][n - 1],
                 file: `Cars_Premium_Charms (${n}).png`
             }))
@@ -128,15 +139,7 @@ const CATALOGUE = {
         {
             name: 'Premium Charms', price: 8.99, unit: 'each link',
             items: [
-                [30, 'PSG'], [31, 'Real Madrid'], [32, 'Bayern Munich'], [33, 'Juventus'], [34, 'AC Milan'], [35, 'Inter Milan'],
-                [38, 'Barcelona'], [39, 'Manchester United'],
-                [48, 'Glitter Heart'], [49, 'Anti Social'], [50, 'Spiderweb'], [51, 'Vintage Camera'],
-                [55, 'Husky'], [56, 'French Bulldog'], [57, 'White Puppy'],
-                [58, 'Black & White Cat'], [59, 'Volleyball'], [60, 'Soccer Ball'], [61, 'Basketball'], [62, 'Orange Ball Badge'],
-                [63, 'Volleyball II'], [64, 'Corgi'], [65, 'Golden Retriever'], [66, 'Mercedes-Benz Logo'], [67, 'Racing Flags'],
-                [68, 'Red Sports Car'], [69, 'BMW Logo'], [70, 'Ferrari Logo'], [71, 'Porsche Logo'], [72, 'Mercedes-Benz Logo II'],
-                [73, 'Rolls-Royce'], [74, 'Pink Mercedes Logo'], [75, 'Pink BMW Logo'], [76, 'Pink Ferrari Horse'],
-                [77, 'Pink Porsche Shield'], [78, 'Lamborghini Logo']
+                [48, 'Glitter Heart'], [49, 'Anti Social'], [50, 'Spiderweb'], [51, 'Vintage Camera'], [67, 'Racing Flags'],
             ].map(([n, label]) => ({ label, file: `Premium Charms (${n}).png` }))
         },
         {

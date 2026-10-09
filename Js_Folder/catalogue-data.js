@@ -24,8 +24,9 @@ const CATALOGUE = {
             items: [{ label: 'Silver', file: 'Silver_Plain_Charm.png' }]
         },
         {
-            name: 'Plain Charms — Colors', price: 1.50, unit: 'each link',
+            name: 'Plain Charms — Colors', price: 2.50, unit: 'each link',
             items: [
+
                 { label: 'Gold', file: 'Gold_Plain_Charm.png', },
                 { label: 'Red', file: 'Red_Plain_Charm.png' },
                 { label: 'Blue', file: 'Blue_Plain_Charm.png' },
@@ -92,7 +93,7 @@ const CATALOGUE = {
         {
             name: 'Characters', price: 8.99, unit: 'each link',
             items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20].map(n => ({
-                label: ['Blossom', 'Bubbles', 'Buttercup', 'Nick Fox', 'Judy Bunny', 'Hello Kitty', 'Missing', 'Cinnamoroll', 'My Melody', 'Kuromi', 'Cinnamoroll II', 'Pompompurin',
+                label: ['Blossom', 'Bubbles', 'Buttercup', 'Nick Fox', 'Judy Bunny', 'Hello Kitty', 'Spider-Kitty', 'Cinnamoroll', 'My Melody', 'Kuromi', 'Cinnamoroll II', 'Pompompurin',
                      'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', ''][n - 1],
                 file: `Character_Premium_Charms (${n}).png`
             }))
@@ -100,25 +101,27 @@ const CATALOGUE = {
 
         {
             name: 'Animals', price: 8.99, unit: 'each link',
-            items: [1].map(n => ({
-                label: ['None'][n - 1],
-                file: `Animals (${n}).png`
+            items: [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({
+                label: ['Frog', 'Cat I', 'Cat II', 'Maltese', 'French Bulldog', 'Husky', 'Corgi', 'Bunny'][n - 1],
+                file: `Animal_Premium_Charms (${n}).png`
             }))
         },
 
          {
             name: 'Cars', price: 8.99, unit: 'each link',
-            items: [1].map(n => ({
-                label: ['None'][n - 1],
-                file: `Cars (${n}).png`
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(n => ({
+                label: ['Car', 'BMW', 'Mercedes I', 'Mercedes II', 'Lamborghini', 'Ferrari', 'Porsche', 'Rolls-Royce', 'BMW Pink',
+                     'Mercedes Pink', 'Ferrari Pink', 'Porche Pink'][n - 1],
+                file: `Cars_Premium_Charms (${n}).png`
             }))
         },
 
          {
             name: 'Sports', price: 8.99, unit: 'each link',
-            items: [1].map(n => ({
-                label: ['None'][n - 1],
-                file: `Sports (${n}).png`
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => ({
+                label: ['Volleyball', 'Basketball', 'Football', 'Paris Saint-Germain', 'Inter Milan', 'Real Madrid',
+                     'Manchester United', 'FC Barcelona', 'FC Bayern München', 'Juventus', 'AC Milan'][n - 1],
+                file: `Sports_Premium_Charms (${n}).png`
             }))
         },
 

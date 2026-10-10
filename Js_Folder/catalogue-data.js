@@ -75,6 +75,10 @@ const CATALOGUE = {
             items: numberLinkItems('Gold')
         },
         {
+            name: 'Classic Charms', price: 3.50, unit: 'each link',
+            items: numberLinkItems('Gold')
+        },
+        {
             name: 'Outline Classic Charms', price: 3.50, unit: 'each link',
             items: [1, 2, 3, 4, 5].map(n => ({
                 label: ['Heart', 'Butterfly', 'Flower', 'Star', 'Double Heart'][n - 1],
@@ -94,17 +98,18 @@ const CATALOGUE = {
             ]
         },
         {
-            name: 'Solid Classic Charms', price: 4.50, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6].map(n => ({
-                label: ['Flower', 'Double Heart', 'Heart Outline', 'Heart', 'Star', 'Paw'][n - 1],
-                file: `Solid_Classic_Charms (${n}).png`
+            name: 'Classic Charms', price: 4.50, unit: 'each link',
+            items: [1].map(n => ({
+                label: ['None'][n - 1],
+                file: `Classic_Charms (${n}).png`
             }))
         },
         {
             name: 'Characters', price: 8.99, unit: 'each link',
-            items: [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21].map(n => ({
-                label: ['Blossom', 'Bubbles', 'Buttercup', '', '', 'Hello Kitty', 'Spider-Kitty', 'Cinnamoroll', 'My Melody', 'Kuromi', 'Cinnamoroll II', 'Pompompurin',
-                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', 'Spider-Man Logo'][n - 1],
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23].map(n => ({
+                label: ['Blossom', 'Bubbles', 'Buttercup', 'My Melody', 'Cinnamoroll I', 'Cinnamoroll II', 'Hello Kitty', 'Spider-Kitty', 'Kuromi', 'Pompompurin',
+                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', 'Groot', 'Doctor Strange', 'Spider-Man Logo',
+                      'Cubone', 'Bulbasaur'][n - 1],
                 file: `Character_Premium_Charms (${n}).png`,
                 soldOut: [2].includes(n)
             }))
@@ -112,8 +117,8 @@ const CATALOGUE = {
 
         {
             name: 'Animals', price: 8.99, unit: 'each link',
-            items: [1, 2, 4, 5, 6, 7, 8].map(n => ({
-                label: ['Frog', 'Cat I', '', 'Maltese', 'French Bulldog', 'Husky', 'Corgi', 'Bunny'][n - 1],
+            items: [1, 2, 4, 5, 6, 7].map(n => ({
+                label: ['Frog', 'Cat I', '', 'Maltese', 'French Bulldog', 'Husky', 'Corgi'][n - 1],
                 file: `Animal_Premium_Charms (${n}).png`
             }))
         },

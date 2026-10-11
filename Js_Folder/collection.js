@@ -1,21 +1,37 @@
 (function () {
+    /* ==========================================================
+       DOM REFERENCES
+       ========================================================== */
+
+    // Results & states
     const resultsEl = document.getElementById('collectionResults');
     const emptyEl = document.getElementById('collectionEmpty');
+    const noResultsEl = document.getElementById('collectionNoResults');
+
+    // Hero / header
+    const titleEl = document.getElementById('collectionTitle');
+    const blurbEl = document.getElementById('collectionBlurb');
+    const crumbEl = document.getElementById('crumbCurrent');
+
+    // Toolbar (tabs + search)
     const toolbarEl = document.getElementById('collectionToolbar');
+    const tabsEl = document.getElementById('collectionTabs');
+    const searchEl = document.getElementById('collectionSearch');
+
+    // Jump nav + custom scrollbar
     const jumpNavEl = document.getElementById('jumpNav');
     const jumpNavScrollbarEl = document.getElementById('jumpNavScrollbar');
     const jumpNavTrackEl = document.getElementById('jumpNavTrack');
     const jumpNavThumbEl = document.getElementById('jumpNavThumb');
     const jumpNavButterflyEl = document.getElementById('jumpNavButterfly');
-    const tabsEl = document.getElementById('collectionTabs');
-    const searchEl = document.getElementById('collectionSearch');
-    const titleEl = document.getElementById('collectionTitle');
-    const blurbEl = document.getElementById('collectionBlurb');
-    const crumbEl = document.getElementById('crumbCurrent');
-    const noResultsEl = document.getElementById('collectionNoResults');
 
     if (!resultsEl) return;
 
+    /* ==========================================================
+       CONSTANTS
+       ========================================================== */
+
+    // Fallback glyphs for charms without a photo, matched by label
     const GLYPH_MAP = [
         [/heart/i, '❤'], [/star/i, '★'], [/flower|rose/i, '✿'], [/paw/i, '🐾'],
         [/butterfly/i, '🦋'], [/moon/i, '🌙'], [/cherr/i, '🍒'], [/bow/i, '🎀'],
@@ -29,6 +45,17 @@
         [/shell|pearl/i, '🐚'], [/lock/i, '🔒'], [/bag|purse/i, '👜'], [/tea|drink/i, '🧋']
     ];
 
+    /* ==========================================================
+       STATE
+       ========================================================== */
+
+    let currentCategory = null;
+
+
+    /* ==========================================================
+       HELPERS
+       ========================================================== */
+
     function glyphFor(label) {
         const hit = GLYPH_MAP.find(([re]) => re.test(label));
         return hit ? hit[1] : null;
@@ -38,11 +65,16 @@
         return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
     }
 
+    function formatPrice(price) {
+        return `${Number(price).toFixed(2)} AED`;
+    }
+
     function charmImageUrl(file) {
         const path = '/charms/' + file;
         return `https://navillera.vercel.app/_next/image?url=${encodeURIComponent(path)}&w=256&q=75`;
     }
 
+    // Items are either { label, soldOut, file } objects or strings ("Label*" = sold out)
     function parseItem(raw) {
         if (raw && typeof raw === 'object') {
             return { label: raw.label, soldOut: !!raw.soldOut, file: raw.file || null };
@@ -59,18 +91,25 @@
         return 'charm-tile--neutral';
     }
 
+    /* ==========================================================
+       BUILDERS — charm tiles & subcollection sections
+       ========================================================== */
+
     function buildTile(item, matClass, sub) {
         const tile = document.createElement('div');
         const hasPhoto = !!item.file;
         const addable = !item.soldOut;
+
         tile.className = `charm-tile ${matClass}${hasPhoto ? ' has-photo' : ''}${item.soldOut ? ' is-sold-out' : ''}${addable ? ' is-addable' : ''}`;
         tile.title = item.soldOut ? `${item.label} — Sold out` : `Tap to add ${item.label} to cart`;
         tile.dataset.label = item.label.toLowerCase();
 
+        // --- Add-to-cart behaviour ---
         if (addable) {
             tile.setAttribute('role', 'button');
             tile.setAttribute('tabindex', '0');
             tile.dataset.cartKey = `${sub.name}::${item.file}`;
+
             const addToCart = () => {
                 if (!window.NavilleraCart) return;
                 window.NavilleraCart.add({
@@ -81,6 +120,7 @@
                     img: item.file ? charmImageUrl(item.file) : null,
                 });
             };
+
             tile.addEventListener('click', addToCart);
             tile.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -90,6 +130,7 @@
             });
         }
 
+        // --- Photo or glyph ---
         if (hasPhoto) {
             const img = document.createElement('img');
             img.className = 'charm-photo';
@@ -107,6 +148,7 @@
             tile.appendChild(glyphSpan);
         }
 
+        // --- Label (skipped for single-character charms like letters) ---
         if (item.label.length > 1) {
             const labelSpan = document.createElement('span');
             labelSpan.className = 'charm-label';
@@ -114,6 +156,7 @@
             tile.appendChild(labelSpan);
         }
 
+        // --- Badge: "Sold Out" or "+" / quantity ---
         if (item.soldOut) {
             const badge = document.createElement('span');
             badge.className = 'sold-out-badge';
@@ -132,34 +175,78 @@
 
     function buildSubcollection(sub) {
         const slug = slugify(sub.name);
+
+        // Subcollections with a `gold` variant get a Silver/Gold toggle
+        const goldSub = sub.gold ? { ...sub, ...sub.gold } : null;
+
+        // --- Section wrapper ---
         const section = document.createElement('section');
         section.className = 'subcollection';
         section.id = slug;
 
+        // --- Header (title, optional Gold/Silver toggle, price) ---
         const header = document.createElement('div');
         header.className = 'subcollection__header';
         header.innerHTML = `
-            <h2>${sub.name}</h2>
-            <span class="subcollection__price">${sub.price} AED &middot; ${sub.unit}</span>
+            <div class="subcollection__title">
+                <h2>${sub.name}</h2>
+                ${goldSub ? '<button type="button" class="gold-toggle-btn">Gold</button>' : ''}
+            </div>
+            <span class="subcollection__price"></span>
         `;
-        section.appendChild(header);
 
+        // --- Grid of tiles ---
         const grid = document.createElement('div');
         grid.className = 'charm-grid';
-        const matClass = materialClass(sub.name);
 
-        sub.items.map(parseItem).forEach(item => {
-            grid.appendChild(buildTile(item, matClass, sub));
-        });
+        const priceEl = header.querySelector('.subcollection__price');
 
-        section.appendChild(grid);
+        const renderItems = (subData) => {
+            priceEl.innerHTML = `${formatPrice(subData.price)} &middot; ${subData.unit}`;
+            grid.innerHTML = '';
+
+            if (subData.items.length === 0) {
+                const soon = document.createElement('p');
+                soon.className = 'charm-grid__empty';
+                soon.textContent = `${subData.name} are coming soon.`;
+                grid.appendChild(soon);
+                return;
+            }
+
+            const matClass = materialClass(subData.name);
+            subData.items.map(parseItem).forEach(item => {
+                grid.appendChild(buildTile(item, matClass, subData));
+            });
+            syncCartBadges();
+        };
+
+        // Render Silver first
+        renderItems(sub);
+
+        // --- Swap between Silver and Gold sets (items, price, cart name) ---
+        if (goldSub) {
+            const btn = header.querySelector('.gold-toggle-btn');
+
+            btn.addEventListener('click', () => {
+                const isGold = btn.classList.toggle('is-gold');
+                btn.textContent = isGold ? 'Silver' : 'Gold';
+                renderItems(isGold ? goldSub : sub);
+            });
+        }
+
+        section.append(header, grid);
         return { section, slug, itemCount: sub.items.length };
     }
+
+    /* ==========================================================
+       RENDERING & CATEGORY SWITCHING
+       ========================================================== */
 
     function render(category) {
         const meta = (typeof CATEGORY_META !== 'undefined') ? CATEGORY_META[category] : null;
         const data = (typeof CATALOGUE !== 'undefined') ? CATALOGUE[category] : null;
 
+        // Unknown category
         if (!meta || !data) {
             titleEl.textContent = 'Collection Not Found';
             blurbEl.textContent = "We couldn't find that collection — pick one from the homepage.";
@@ -175,12 +262,14 @@
         blurbEl.textContent = meta.blurb;
         crumbEl.textContent = meta.title;
 
+        // Known category with no items yet
         if (data.length === 0) {
             if (toolbarEl) toolbarEl.hidden = true;
             emptyEl.hidden = false;
             return;
         }
 
+        // Subcollection sections + matching jump-nav chips
         data.forEach(sub => {
             const { section, slug } = buildSubcollection(sub);
             resultsEl.appendChild(section);
@@ -192,8 +281,6 @@
             jumpNavEl.appendChild(chip);
         });
     }
-
-    let currentCategory = null;
 
     function updateActiveTab(category) {
         if (!tabsEl) return;
@@ -207,6 +294,7 @@
     function switchCategory(category, { pushState = true, scroll = true } = {}) {
         currentCategory = category;
 
+        // Reset page state
         resultsEl.innerHTML = '';
         jumpNavEl.innerHTML = '';
         if (searchEl) searchEl.value = '';
@@ -214,6 +302,7 @@
         if (emptyEl) emptyEl.hidden = true;
         if (toolbarEl) toolbarEl.hidden = false;
 
+        // Draw the new category
         render(category);
         updateJumpNavFade();
         syncCartBadges();
@@ -228,6 +317,52 @@
             if (hero) hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     }
+
+    /* ==========================================================
+       CART BADGES
+       ========================================================== */
+
+    function syncCartBadges() {
+        if (!window.NavilleraCart || !window.NavilleraCart.getQty) return;
+        resultsEl.querySelectorAll('.charm-tile[data-cart-key]').forEach(tile => {
+            const badge = tile.querySelector('.charm-tile__add-badge');
+            if (!badge) return;
+            const qty = window.NavilleraCart.getQty(tile.dataset.cartKey);
+            const inCart = qty > 0;
+            badge.textContent = inCart ? (qty > 99 ? '99+' : String(qty)) : '+';
+            badge.classList.toggle('has-qty', inCart);
+        });
+    }
+
+    /* ==========================================================
+       SEARCH
+       ========================================================== */
+
+    function applySearch(query) {
+        const q = query.trim().toLowerCase();
+        let anyVisible = false;
+
+        resultsEl.querySelectorAll('.subcollection').forEach(section => {
+            let sectionHasMatch = false;
+            section.querySelectorAll('.charm-tile').forEach(tile => {
+                const matches = !q || tile.dataset.label.includes(q);
+                tile.hidden = !matches;
+                if (matches) sectionHasMatch = true;
+            });
+            section.hidden = !sectionHasMatch && !!q;
+            if (sectionHasMatch) anyVisible = true;
+
+            const chip = jumpNavEl.querySelector(`a[href="#${section.id}"]`);
+            if (chip) chip.hidden = !sectionHasMatch;
+        });
+
+        if (noResultsEl) noResultsEl.hidden = anyVisible || !q;
+        updateJumpNavFade();
+    }
+
+    /* ==========================================================
+       JUMP NAV — scroll fade & custom scrollbar
+       ========================================================== */
 
     function updateJumpNavThumb() {
         if (!jumpNavThumbEl || jumpNavEl.scrollWidth <= 0) return;
@@ -246,45 +381,22 @@
         updateJumpNavThumb();
     }
 
-    function syncCartBadges() {
-        if (!window.NavilleraCart || !window.NavilleraCart.getQty) return;
-        resultsEl.querySelectorAll('.charm-tile[data-cart-key]').forEach(tile => {
-            const badge = tile.querySelector('.charm-tile__add-badge');
-            if (!badge) return;
-            const qty = window.NavilleraCart.getQty(tile.dataset.cartKey);
-            const inCart = qty > 0;
-            badge.textContent = inCart ? (qty > 99 ? '99+' : String(qty)) : '+';
-            badge.classList.toggle('has-qty', inCart);
-        });
-    }
-
-    function applySearch(query) {
-        const q = query.trim().toLowerCase();
-        let anyVisible = false;
-
-        resultsEl.querySelectorAll('.subcollection').forEach(section => {
-            let sectionHasMatch = false;
-            section.querySelectorAll('.charm-tile').forEach(tile => {
-                const matches = !q || tile.dataset.label.includes(q);
-                tile.hidden = !matches;
-                if (matches) sectionHasMatch = true;
-            });
-            section.hidden = !sectionHasMatch;
-            if (sectionHasMatch) anyVisible = true;
-
-            const chip = jumpNavEl.querySelector(`a[href="#${section.id}"]`);
-            if (chip) chip.hidden = !sectionHasMatch;
-        });
-
-        if (noResultsEl) noResultsEl.hidden = anyVisible || !q;
-        updateJumpNavFade();
-    }
+    /* ==========================================================
+       INIT
+       ========================================================== */
 
     const params = new URLSearchParams(window.location.search);
     const category = (params.get('category') || '').toLowerCase();
     switchCategory(category, { pushState: false, scroll: false });
+
+    /* ==========================================================
+       EVENT LISTENERS
+       ========================================================== */
+
+    // --- Cart ---
     window.addEventListener('navillera-cart-updated', syncCartBadges);
 
+    // --- Category tabs ---
     if (tabsEl) {
         tabsEl.querySelectorAll('.collection-tabs__btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -295,19 +407,24 @@
         });
     }
 
+    // --- Browser back / forward ---
     window.addEventListener('popstate', () => {
         const p = new URLSearchParams(window.location.search);
         const cat = (p.get('category') || '').toLowerCase();
         switchCategory(cat, { pushState: false, scroll: false });
     });
 
+    // --- Re-measure jump nav once web fonts load ---
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(updateJumpNavFade);
     }
 
+    // --- Search ---
     if (searchEl) {
         searchEl.addEventListener('input', () => applySearch(searchEl.value));
     }
+
+    // --- Jump nav: scroll, resize, vertical wheel → horizontal scroll ---
     jumpNavEl.addEventListener('scroll', updateJumpNavThumb, { passive: true });
     window.addEventListener('resize', updateJumpNavFade);
 
@@ -317,6 +434,7 @@
         jumpNavEl.scrollLeft += e.deltaY;
     }, { passive: false });
 
+    // --- Jump nav: click / drag on the custom scrollbar track ---
     if (jumpNavTrackEl) {
         let dragging = false;
 

@@ -2,8 +2,8 @@ function letterLinkItems(material) {
     return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map((letter, i) => {
         const n = i + 1;
         const file = n === 1
-            ? `letter_Letters ${material} (1).png`
-            : `Letters ${material} (${n}).png`;
+            ? `Letter Links/letter_Letters ${material} (1).png`
+            : `Letter Links/Letters ${material} (${n}).png`
         return { label: letter, file };
     });
 }
@@ -12,13 +12,13 @@ function numberLinkItems(material = 'Silver') {
     const items = [];
     for (let n = 1; n <= 9; n++) {
         const file = material === 'Gold'
-            ? `Gold_Number (${n}).png`
-            : `Number (${n}).png`;
+            ? `Number Links/Gold_Number (${n}).png`
+            : `Number Links/Number (${n}).png`;
         items.push({ label: String(n - 1), file });
     }
     items.push({
         label: '9',
-        file: material === 'Gold' ? 'Gold_Number (10).png' : 'number_number_Number.png'
+        file: material === 'Gold' ? 'Number Links/Gold_Number (10).png' : 'Number Links/number_number_Number.png'
     });
     return items;
 }
@@ -26,67 +26,72 @@ function numberLinkItems(material = 'Silver') {
 const CATALOGUE = {
     links: [
         {
-            name: 'Plain Charms — Silver', price: 1.00, unit: 'each link',
-            items: [{ label: 'Silver', file: 'Silver_Plain_Charm.png' }]
+            name: 'Plain Charms — Silver', price: 1.50, unit: 'each link',
+            items: [{ label: 'Silver', file: 'Plain Links/Silver_Plain_Charm.png' }]
         },
         {
             name: 'Plain Charms — Colors', price: 2.50, unit: 'each link',
-            items: [
-
-                { label: 'Gold', file: 'Gold_Plain_Charm.png', },
-                { label: 'Red', file: 'Red_Plain_Charm.png' },
-                { label: 'Blue', file: 'Blue_Plain_Charm.png' },
-                { label: 'Black', file: 'Black_Plain_Charm.png' },
-                { label: 'Brown', file: 'Brown_Plain_Charm.png' },
-                { label: 'Purple', file: 'Purple_Plain_Charm.png' },
-                { label: 'Pink', file: 'Pink_Plain_Charm.png' }
-            ]
-        },
-        {
-            name: 'Concave Classic Charms', price: 2.50, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7].map(n => ({
-                label: ['Paw', 'Star', 'Heart Outline', 'Heart', 'Star Outline', 'Sparkle', 'Butterfly'][n - 1],
-                file: `Concave_Classic_Charms (${n}).png`
+            items: ['Gold', 'Red', 'Blue', 'Black', 'Brown', 'Purple', 'Pink'].map(color => ({
+                label: color,
+                file: `Plain Links/${color}_Plain_Charm.png`
             }))
         },
+        {
+            name: 'Concave Links', price: 3.00, unit: 'each link',
+            items: [1, 2, 3, 4, 5, 6, 7, 8].map(n => ({
+                label: ['Star', 'Butterfly', 'Sparkle', 'Flower', 'Heart', 'Heart Outline', 'Paw', 'Double Heart'][n - 1],
+                file: `Concave Links/Concave_Silver_Links (${n}).png`
+            })),
+            gold: {
+                name: 'Gold Concave Links', price: 3.50,
+                items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => ({
+                    label: ['Heart', 'Double Heart', 'Star', 'Flower', 'Paw', 'Butterfly', 'Heart Outline', 'Sun', 'Cupid', 'Hello-Kitty'][n - 1],
+                    file: `Concave Links/Concave_Gold_Links (${n}).png`
+                }))
+            }
+        },
+        {
+            name: 'Gold Outline Links', price: 4.00, unit: 'each link',
+                    items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => ({
+                        label: ['Heart', 'Double Heart', 'Star', 'Flower', 'Paw', 'Butterfly', 'Heart Outline', 'Sun', 'Cupid', 'Hello-Kitty'][n - 1],
+                        file: `Golden Outline Links/Gold_Outline_Links (${n}).png`
+                    }))
+        },
+            
         {
             name: 'Gold Classic Charms', price: 3.00, unit: 'each link',
             items: [
                 { label: 'Red Flower', file: 'Gold_Classic_Charms (1).png' },
                 { label: 'Pink Flower', file: 'Gold_Classic_Charms (2).png' },
                 { label: 'Clover Outline', file: 'Gold_Classic_Charms (3).png' },
-                { label: 'Pink Heart', file: 'classic_Gold_Classic_Charms (4).png' }
+                { label: 'Pink Heart', file: 'Gold_Classic_Charms (4).png' }
             ]
         },
         {
-            name: 'Silver Letter Links', price: 3.00, unit: 'each link',
-            items: letterLinkItems('Silver')
+            name: 'Letter Links', price: 3.00, unit: 'each link',
+            items: letterLinkItems('Silver'),
+            gold: { name: 'Gold Letter Links', price: 3.50, items: letterLinkItems('Gold') }
         },
         {
-            name: 'Silver Number Links', price: 3.00, unit: 'each link',
-            items: numberLinkItems()
-        },
-        {
-            name: 'Gold Letter Links', price: 3.50, unit: 'each link',
-            items: letterLinkItems('Gold')
-        },
-        {
-            name: 'Gold Number Links', price: 3.50, unit: 'each link',
-            items: numberLinkItems('Gold')
+            name: 'Number Links', price: 3.00, unit: 'each link',
+            items: numberLinkItems(),
+            gold: { name: 'Gold Number Links', price: 3.50, items: numberLinkItems('Gold') }
         },
         {
             name: 'Classic Charms', price: 3.50, unit: 'each link',
             items: numberLinkItems('Gold')
         },
         {
-            name: 'Outline Classic Charms', price: 3.50, unit: 'each link',
+            name: 'Outline Classic Charms', price: 4.00, unit: 'each link',
             items: [1, 2, 3, 4, 5].map(n => ({
                 label: ['Heart', 'Butterfly', 'Flower', 'Star', 'Double Heart'][n - 1],
                 file: `Outline_Classic_Charms (${n}).png`
             }))
         },
         {
-            name: 'Colored Classic Charms', price: 4.00, unit: 'each link',
+            name: 'Colored Links', price: 4.50, unit: 'each link',
+            // TODO: add gold colored link pictures — the toggle shows "coming soon" until then
+            gold: { name: 'Gold Colored Links', price: 5.00, items: [] },
             items: [
                 { label: 'Pink Heart', file: 'Colored_Classic_Charms (1).png' },
                 { label: 'Pink Clover', file: 'Colored_Classic_Charms (2).png' },
@@ -106,11 +111,11 @@ const CATALOGUE = {
         },
         {
             name: 'Characters', price: 8.99, unit: 'each link',
-            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23].map(n => ({
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25].map(n => ({
                 label: ['Blossom', 'Bubbles', 'Buttercup', 'My Melody', 'Cinnamoroll I', 'Cinnamoroll II', 'Hello Kitty', 'Spider-Kitty', 'Kuromi', 'Pompompurin',
-                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', 'Groot', 'Doctor Strange', 'Spider-Man Logo',
-                      'Cubone', 'Bulbasaur'][n - 1],
-                file: `Character_Premium_Charms (${n}).png`,
+                     'Kirby', 'Badtz-Maru', 'Snoopy', 'Snoopy II', 'Iron-Man', 'Captain America', 'Hulk', 'Spider-Man', 'Venom', 'Groot', 'Doctor Strange', 'Spider-Man Logo',
+                      'Cubone', 'Bulbasaur', 'Pokemon',][n - 1],
+                file: `Character Links/Character_Premium_Charms (${n}).png`,
                 soldOut: [2].includes(n)
             }))
         },
@@ -125,8 +130,8 @@ const CATALOGUE = {
 
          {
             name: 'Cars', price: 8.99, unit: 'each link',
-            items: [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12].map(n => ({
-                label: ['Car', 'BMW', 'Mercedes', '', 'Lamborghini', 'Ferrari', 'Porsche', 'Rolls-Royce', 'BMW Pink',
+            items: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => ({
+                label: ['Car', 'BMW', 'Mercedes', 'Lamborghini', 'Ferrari', 'Porsche', 'BMW Pink', 'Mercedes Pink', '',
                      'Mercedes Pink', 'Ferrari Pink', 'Porche Pink'][n - 1],
                 file: `Cars_Premium_Charms (${n}).png`
             }))
@@ -172,14 +177,14 @@ const CATALOGUE = {
             items: [{ label: 'Baby Blocks', file: 'deluxe_Baby_Deluxe_Charms.png' }]
         },
         {
-            name: 'Silver Dangling Deluxe Charms', price: 12.00, unit: 'each link',
+            name: 'Silver Dangling Deluxe Charms', price: 14.99, unit: 'each link',
             items: [1, 2, 3, 4].map(n => ({
                 label: ['Heart Dangle', 'Heart Dangle II', 'Butterfly Dangle', 'Pearl Shell Dangle'][n - 1],
                 file: `Silver_Dangling_Deluxe_Charms (${n}).png`
             }))
         },
         {
-            name: 'Gold Dangling Deluxe Charms', price: 15.00, unit: 'each link',
+            name: 'Gold Dangling Deluxe Charms', price: 15.99, unit: 'each link',
             items: [1, 2, 3, 4, 5, 6, 7].map(n => ({
                 label: ['Heart Dangle', 'Heart Dangle II', 'Pearl Cluster Dangle', 'Red Heart Cherries Dangle', 'Black Bow Dangle', 'Pastel Butterfly Dangle', 'Red Bow Dangle'][n - 1],
                 file: `Gold_Dangling_Deluxe_Charms (${n}).png`
@@ -189,7 +194,7 @@ const CATALOGUE = {
 
     watch: [
         {
-            name: 'Silver Watch Charms', price: 45, unit: 'each',
+            name: 'Silver Watch Charms', price: 65.50, unit: 'each',
             items: [
                 { label: 'Black Square Watch', file: 'Black Square Watch.png' },
                 { label: 'White Square Watch', file: 'White Square Watch.png' },
@@ -204,7 +209,7 @@ const CATALOGUE = {
             ]
         },
         {
-            name: 'Gold Watch Charms', price: 55, unit: 'each',
+            name: 'Gold Watch Charms', price: 55.50, unit: 'each',
             items: [
                 { label: 'Heart Gold Watch', file: 'Heart Gold Watch.png', soldOut: true },
                 { label: 'Pink Gold Watch', file: 'Pink Gold Watch.png', soldOut: true },
@@ -216,7 +221,7 @@ const CATALOGUE = {
 
     keychain: [
         {
-            name: 'Keychain Links', price: 12, unit: 'each',
+            name: 'Keychain Links', price: 10, unit: 'each',
             items: [
                 { label: 'Gold Keychain Clip', file: 'Gold Keychain.png' },
                 { label: 'Silver Keychain Clip', file: 'Silver Keychain.png', soldOut: true }

@@ -214,7 +214,11 @@
             }
 
             const matClass = materialClass(subData.name);
-            subData.items.map(parseItem).forEach(item => {
+            const items = subData.items.map(parseItem);
+            // Sections marked `sortItems: true` show their links A–Z
+            if (subData.sortItems) items.sort((a, b) => a.label.localeCompare(b.label));
+
+            items.forEach(item => {
                 grid.appendChild(buildTile(item, matClass, subData));
             });
             syncCartBadges();
@@ -270,7 +274,11 @@
         }
 
         // Subcollection sections + matching jump-nav chips
-        data.forEach(sub => {
+        // Sections (and their jump-nav chips) are shown by price, lowest first;
+        // sections with the same price keep their order from catalogue-data.js
+        const sorted = [...data].sort((a, b) => a.price - b.price);
+
+        sorted.forEach(sub => {
             const { section, slug } = buildSubcollection(sub);
             resultsEl.appendChild(section);
 

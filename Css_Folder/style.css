@@ -184,6 +184,7 @@ body {
 }
 
 .collections {
+  scroll-margin-top: 110px;
   background-color: #b8d8ea;
   border-radius: 12px;
   padding: 28px 24px 63px;
@@ -257,6 +258,18 @@ body {
   border: solid;
   border-width: 1px;
   box-sizing: border-box;
+}
+
+/* Desktop only: keep the blue panel full width, but centre the title and
+   cards in a narrower column so the cards aren't huge on big screens. */
+@media (min-width: 769px) {
+  .collections { padding: 28px 24px 44px; }
+  .collections__title,
+  .collections__grid { max-width: 980px; margin-left: auto; margin-right: auto; }
+  .collections__title { font-size: 2.8rem; margin-bottom: 16px; }
+  .collections__plus { width: 44px; }
+  .collections__grid { gap: 16px; }
+  .collections__label { font-size: 1.25rem; }
 }
 
 .info {
@@ -449,7 +462,7 @@ body {
     .primary-text, .secondary-text { width: 300%; font-size: 1.1rem; }
 
 
-    .collection { font-size: 1rem; padding: 8px 16px; width: 150%; }
+    .collection { display: inline-block; width: auto; white-space: nowrap; text-align: center; font-size: 1rem; padding: 10px 24px; margin-top: 16px; }
     .collections { padding: 28px 24px 42px; }
     .collections__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
     .collections__grid::-webkit-scrollbar { display: none; }

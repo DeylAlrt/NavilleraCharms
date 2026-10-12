@@ -56,7 +56,7 @@ body.cart-open {
     height: 100vh;
     height: 100dvh;
     background: #ffffff;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
+    box-shadow: none; /* shadow only while open — otherwise it bleeds onto the page edge */
     z-index: 4001;
     display: flex;
     flex-direction: column;
@@ -66,6 +66,7 @@ body.cart-open {
 
 .cart-drawer.is-open {
     right: 0;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
 }
 
 .cart-drawer__header {
@@ -488,6 +489,176 @@ body.cart-open {
 
 .cart-order-status--error {
     color: #d1293d;
+}
+
+/* --- Order form: 3 numbered steps with big tap-to-choose cards --- */
+.cart-order-form .cart-form__label {
+    font-size: 1rem;
+}
+
+.cart-drawer__row[hidden],
+.cart-form__label[hidden],
+.cart-suboptions[hidden],
+.cart-form__hint[hidden] {
+    display: none;
+}
+
+.cart-form__intro {
+    margin: 0;
+    font-size: 1rem;
+    color: #1C2B4B;
+}
+
+.cart-step {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cart-order-form .cart-step__heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-style: normal;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1C2B4B;
+}
+
+.cart-step__num {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #1C2B4B;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+
+.cart-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cart-option {
+    width: 100%;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 2px solid #d6e4f3;
+    border-radius: 16px;
+    background: #ffffff;
+    text-align: left;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.cart-option:hover {
+    border-color: #a7c7e7;
+}
+
+.cart-option[aria-checked="true"] {
+    border-color: #1C2B4B;
+    background: #f0f6fc;
+}
+
+.cart-option:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.cart-option__icon {
+    flex-shrink: 0;
+    font-size: 1.5rem;
+}
+
+.cart-option__text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.cart-option__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1C2B4B;
+}
+
+.cart-option__detail {
+    font-size: 0.875rem;
+    color: #6b7a90;
+}
+
+.cart-option__price {
+    flex-shrink: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1C2B4B;
+}
+
+.cart-option__price--free {
+    color: #2e7d4f;
+}
+
+.cart-option__check {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #d6e4f3;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    color: #ffffff;
+}
+
+.cart-option[aria-checked="true"] .cart-option__check {
+    background: #1C2B4B;
+    border-color: #1C2B4B;
+}
+
+.cart-option[aria-checked="true"] .cart-option__check::after {
+    content: '✓';
+}
+
+.cart-suboptions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 12px;
+    border-left: 4px solid #d6e4f3;
+}
+
+.cart-form__hint {
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: #6b7a90;
+}
+
+
+
+.cart-form__note {
+    margin: 0;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: #f0f6fc;
+    font-size: 1rem;
+    color: #1C2B4B;
+}
+
+.cart-order-form .cart-order-status {
+    font-size: 1rem;
 }
 
 .cart-toast {

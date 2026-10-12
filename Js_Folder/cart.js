@@ -93,13 +93,64 @@
         return Math.max(cartSubtotal() - cartDiscount(), 0);
     }
 
-    function getDeliveryFee(place) {
-        if (!place) return 0;
-        if (place.includes('Mall of the Emirates Metro') || place.includes('DMCC Metro')) return 5;
-        if (place.includes('Union Metro') || place.includes('Burjuman Metro')) return 10;
-        if (place.includes('Dubai: 20 AED')) return 20;
-        if (place.includes('Other Emirates: 25 AED')) return 25;
-        return 0;
+    // --- Delivery & payment choices (kept in sync with the charm builder's
+    // src/components/charmEditor/orderOptions.ts) ---
+    const DELIVERY_OPTIONS = [
+        { id: 'pickup', method: 'pickup', title: 'Pick up', detail: 'Barsha Heights (Tecom)', fee: 0 },
+        { id: 'metro-dic-sat', method: 'metro', title: 'DIC Metro', detail: 'Saturday', fee: 0 },
+        { id: 'metro-dic', method: 'metro', title: 'DIC Metro', detail: 'Thursday or Friday', fee: 3 },
+        { id: 'metro-moe', method: 'metro', title: 'MOE Metro', detail: 'Thursday or Friday', fee: 6 },
+        { id: 'metro-dmcc', method: 'metro', title: 'DMCC Metro', detail: 'Thursday or Friday', fee: 6 },
+        { id: 'metro-burjuman', method: 'metro', title: 'Burjuman Metro', detail: 'Thursday or Friday', fee: 9 },
+        { id: 'metro-union', method: 'metro', title: 'Union Metro', detail: 'Thursday or Friday', fee: 9 },
+        { id: 'home', method: 'home', title: 'Home delivery', detail: 'Anywhere in the UAE (Jeebly)', fee: 20, needsAddress: true },
+    ];
+    const DELIVERY_METHODS = [
+        { method: 'pickup', icon: '🛍️', title: 'Pick up', detail: 'Barsha Heights (Tecom)', price: 'FREE' },
+        { method: 'metro', icon: '🚇', title: 'Metro meet-up', detail: 'We meet you at a metro station', price: 'FREE – 9 AED' },
+        { method: 'home', icon: '🏠', title: 'Home delivery', detail: 'Anywhere in the UAE (Jeebly)', price: '20 AED' },
+    ];
+    const PAYMENT_OPTIONS = [
+        { id: 'ziina', icon: '💳', title: 'Pay online (Ziina)', detail: "We'll send you a payment link on WhatsApp" },
+        { id: 'cod', icon: '💵', title: 'Cash on Delivery', detail: 'Pay in cash when you get your order' },
+        { id: 'bank', icon: '🏦', title: 'Bank Transfer', detail: "We'll send our bank details on WhatsApp" },
+    ];
+
+    let deliveryMethod = null;   // 'pickup' | 'metro' | 'home'
+    let deliveryOptionId = '';   // one of DELIVERY_OPTIONS (metro needs a station picked too)
+    let paymentMethod = null;    // one of PAYMENT_OPTIONS
+
+    function getDeliveryOption() {
+        return DELIVERY_OPTIONS.find(o => o.id === deliveryOptionId) || null;
+    }
+
+    function getDeliveryFee() {
+        const option = getDeliveryOption();
+        return option ? option.fee : 0;
+    }
+
+    function formatFee(fee) {
+        return fee === 0 ? 'FREE' : `${fee} AED`;
+    }
+
+    function describeDelivery(option, address) {
+        if (option.method === 'pickup') return `Pick up: ${option.detail}`;
+        if (option.method === 'metro') return `Metro meet-up: ${option.title} (${option.detail})`;
+        return `Home delivery (Jeebly) — Address: ${address.trim()}`;
+    }
+
+    /** A big tap-to-choose card that behaves like a radio button. */
+    function optionCardHtml({ group, value, icon, title, detail, price, disabled }) {
+        return `
+            <button type="button" class="cart-option" role="radio" aria-checked="false" data-group="${group}" data-value="${value}"${disabled ? ' disabled' : ''}>
+                ${icon ? `<span class="cart-option__icon" aria-hidden="true">${icon}</span>` : ''}
+                <span class="cart-option__text">
+                    <span class="cart-option__title">${title}</span>
+                    <span class="cart-option__detail">${detail}</span>
+                </span>
+                ${price ? `<span class="cart-option__price${price === 'FREE' ? ' cart-option__price--free' : ''}">${price}</span>` : ''}
+                <span class="cart-option__check" aria-hidden="true"></span>
+            </button>`;
     }
 
     let overlayEl, drawerEl, itemsEl, emptyMsgEl, summaryEl;
@@ -148,72 +199,68 @@
                 </div>
             </div>
 
-            <form class="cart-order-form" id="cartOrderForm" hidden>
-                <h3>Order Details</h3>
+            <form class="cart-order-form" id="cartOrderForm" novalidate hidden>
+                <p class="cart-form__intro">Just 3 easy steps ✨</p>
 
-                <label class="cart-form__label">Name
-                    <input type="text" name="name" class="cart-form__input" required>
+                <section class="cart-step">
+                    <h3 class="cart-step__heading"><span class="cart-step__num">1</span>Your details</h3>
+                    <label class="cart-form__label">Email address
+                        <input type="email" name="email" class="cart-form__input" placeholder="you@example.com" autocomplete="email" required>
+                    </label>
+                    <label class="cart-form__label">Mobile number (WhatsApp)
+                        <input type="tel" name="phone" class="cart-form__input" placeholder="971 5X XXX XXXX" inputmode="numeric" autocomplete="tel" required>
+                        <span class="cart-form__hint">We'll message you on WhatsApp 💬</span>
+                    </label>
+                    <label class="cart-form__label">Your name
+                        <input type="text" name="name" class="cart-form__input" autocomplete="name" required>
+                    </label>
+                </section>
+
+                <section class="cart-step">
+                    <h3 class="cart-step__heading"><span class="cart-step__num">2</span>How do you want to get it?</h3>
+                    <div class="cart-options" role="radiogroup" aria-label="Delivery option">
+                        ${DELIVERY_METHODS.map(m => optionCardHtml({ group: 'method', value: m.method, icon: m.icon, title: m.title, detail: m.detail, price: m.price })).join('')}
+                        ${optionCardHtml({ group: 'method', value: 'international', icon: '✈️', title: 'International shipping', detail: 'Coming soon', disabled: true })}
+                    </div>
+
+                    <div class="cart-suboptions" id="cartMetroStations" hidden>
+                        <span class="cart-form__label">Pick a metro station</span>
+                        <div class="cart-options" role="radiogroup" aria-label="Metro station">
+                            ${DELIVERY_OPTIONS.filter(o => o.method === 'metro').map(o => optionCardHtml({ group: 'station', value: o.id, title: o.title, detail: o.detail, price: formatFee(o.fee) })).join('')}
+                        </div>
+                    </div>
+
+                    <label class="cart-form__label" id="cartAddressField" hidden>Your home address
+                        <textarea name="address" class="cart-form__input cart-form__textarea" placeholder="Building, street, area, emirate"></textarea>
+                    </label>
+                </section>
+
+                <section class="cart-step">
+                    <h3 class="cart-step__heading"><span class="cart-step__num">3</span>How do you want to pay?</h3>
+                    <div class="cart-options" role="radiogroup" aria-label="Payment option">
+                        ${PAYMENT_OPTIONS.map(p => optionCardHtml({ group: 'payment', value: p.id, icon: p.icon, title: p.title, detail: p.detail })).join('')}
+                    </div>
+                </section>
+
+                <label class="cart-form__label"><span>Anything else? <span class="cart-form__optional">(optional)</span></span>
+                    <textarea name="notes" class="cart-form__input cart-form__textarea" placeholder="e.g. a gift message"></textarea>
                 </label>
 
-                <label class="cart-form__label">Phone
-                    <input type="tel" name="phone" class="cart-form__input" placeholder="971XXXXXXXXX" required>
-                </label>
-
-                <label class="cart-form__label">Email <span class="cart-form__optional">(optional)</span>
-                    <input type="email" name="email" class="cart-form__input" placeholder="you@example.com">
-                </label>
-
-                <label class="cart-form__label">Pickup Time
-                    <select name="pickupTime" class="cart-form__input" required>
-                        <option value="">Select time</option>
-                        <option value="Weekdays: 6PM - 8PM">Weekdays: 6PM - 8PM</option>
-                        <option value="Weekends: 3PM - 8PM">Weekends: 3PM - 8PM</option>
-                    </select>
-                </label>
-
-                <label class="cart-form__label">Place of Meet Up / Delivery
-                    <select name="meetupPlace" class="cart-form__input" required>
-                        <option value="">Select location</option>
-                        <optgroup label="Free Delivery">
-                            <option value="Dubai Internet City Metro">Dubai Internet City Metro</option>
-                            <option value="Dubai Knowledge Park (Tuesday at 5:30 PM)">Dubai Knowledge Park (Tuesday at 5:30 PM)</option>
-                        </optgroup>
-                        <optgroup label="5 AED Delivery Fee">
-                            <option value="Mall of the Emirates Metro">Mall of the Emirates Metro</option>
-                            <option value="DMCC Metro">DMCC Metro</option>
-                        </optgroup>
-                        <optgroup label="10 AED Delivery Fee">
-                            <option value="Union Metro">Union Metro</option>
-                            <option value="Burjuman Metro">Burjuman Metro</option>
-                        </optgroup>
-                        <optgroup label="Home Delivery">
-                            <option value="Dubai: 20 AED">Dubai: 20 AED</option>
-                            <option value="Other Emirates: 25 AED">Other Emirates: 25 AED</option>
-                        </optgroup>
-                    </select>
-                </label>
-
-                <label class="cart-form__label">Date of Delivery
-                    <input type="date" name="deliveryDate" class="cart-form__input" required>
-                </label>
-
-                <label class="cart-form__label">Notes <span class="cart-form__optional">(optional)</span>
-                    <textarea name="notes" class="cart-form__input cart-form__textarea" placeholder="Anything else we should know?"></textarea>
-                </label>
+                <p class="cart-form__note">📱 <strong>Note:</strong> Further details will be sent to your WhatsApp number.</p>
 
                 <div class="cart-form__totals">
                     <h3 class="cart-form__totals-heading">Price Details</h3>
-                    <div class="cart-drawer__row"><span>Total Product Price</span><span id="cartFormSubtotal">0.00 AED</span></div>
+                    <div class="cart-drawer__row"><span>Charms</span><span id="cartFormSubtotal">0.00 AED</span></div>
                     <div class="cart-drawer__row cart-drawer__row--discount" id="cartFormDiscountRow" hidden><span>Discount</span><span id="cartFormDiscountValue">-0.00 AED</span></div>
-                    <div class="cart-drawer__row"><span>Delivery Fee</span><span id="cartDeliveryFeeValue">0.00 AED</span></div>
-                    <div class="cart-drawer__row cart-drawer__row--total"><span>Order Total</span><span id="cartTotalValue">0.00 AED</span></div>
+                    <div class="cart-drawer__row"><span>Delivery</span><span id="cartDeliveryFeeValue">—</span></div>
+                    <div class="cart-drawer__row cart-drawer__row--total"><span>Total to pay</span><span id="cartTotalValue">0.00 AED</span></div>
                 </div>
 
+                <p class="cart-order-status" id="cartOrderStatus" role="status" aria-live="polite"></p>
                 <div class="cart-actions">
                     <button type="button" class="cart-btn cart-btn--secondary" id="cartFormBackBtn">Back</button>
-                    <button type="submit" class="cart-btn cart-btn--primary" id="cartFormSubmitBtn">Submit Order</button>
+                    <button type="submit" class="cart-btn cart-btn--primary" id="cartFormSubmitBtn">Place my order</button>
                 </div>
-                <p class="cart-order-status" id="cartOrderStatus" role="status" aria-live="polite"></p>
             </form>
         `;
 
@@ -243,7 +290,10 @@
         drawerEl.querySelector('#cartBackBtn').addEventListener('click', closeDrawer);
         drawerEl.querySelector('#cartProceedBtn').addEventListener('click', showOrderForm);
         drawerEl.querySelector('#cartFormBackBtn').addEventListener('click', hideOrderForm);
-        formEl.querySelector('select[name="meetupPlace"]').addEventListener('change', updateFormTotals);
+        formEl.addEventListener('click', handleOptionClick);
+        formEl.querySelector('input[name="phone"]').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '').slice(0, 15);
+        });
         formEl.addEventListener('submit', handleOrderSubmit);
         promoApplyBtnEl.addEventListener('click', applyPromoCode);
         promoInputEl.addEventListener('keydown', (e) => {
@@ -337,16 +387,62 @@
 
     function updateFormTotals() {
         if (!formEl) return;
-        const place = formEl.querySelector('select[name="meetupPlace"]').value;
         const subtotal = cartSubtotal();
         const discount = cartDiscount();
-        const fee = getDeliveryFee(place);
+        const fee = getDeliveryFee();
         const total = cartTotalAfterDiscount() + fee;
         formEl.querySelector('#cartFormSubtotal').textContent = `${subtotal.toFixed(2)} AED`;
         if (formDiscountRowEl) formDiscountRowEl.hidden = discount <= 0;
         if (formDiscountValueEl) formDiscountValueEl.textContent = `-${discount.toFixed(2)} AED`;
-        deliveryFeeValueEl.textContent = `${fee.toFixed(2)} AED`;
+        deliveryFeeValueEl.textContent = getDeliveryOption() ? formatFee(fee) : '—';
         totalValueEl.textContent = `${total.toFixed(2)} AED`;
+    }
+
+    function handleOptionClick(e) {
+        const card = e.target.closest('.cart-option');
+        if (!card || card.disabled) return;
+        const { group, value } = card.dataset;
+        if (group === 'method') {
+            deliveryMethod = value;
+            deliveryOptionId = value === 'metro' ? '' : DELIVERY_OPTIONS.find(o => o.method === value).id;
+        } else if (group === 'station') {
+            deliveryOptionId = value;
+        } else if (group === 'payment') {
+            paymentMethod = value;
+        }
+        updateDeliveryUI();
+    }
+
+    /** Syncs the option cards, the metro/address/date fields that depend on them, and the totals. */
+    function updateDeliveryUI() {
+        if (!formEl) return;
+        const option = getDeliveryOption();
+        const selectedFor = { method: deliveryMethod, station: deliveryOptionId, payment: paymentMethod };
+        formEl.querySelectorAll('.cart-option').forEach(card => {
+            card.setAttribute('aria-checked', String(selectedFor[card.dataset.group] === card.dataset.value));
+        });
+
+        formEl.querySelector('#cartMetroStations').hidden = deliveryMethod !== 'metro';
+        formEl.querySelector('#cartAddressField').hidden = !(option && option.needsAddress);
+        updateFormTotals();
+    }
+
+    function resetOrderChoices() {
+        deliveryMethod = null;
+        deliveryOptionId = '';
+        paymentMethod = null;
+        updateDeliveryUI();
+    }
+
+    /** Plain-language reason the form can't be sent yet, or null when it's complete. */
+    function findMissingStep(data) {
+        const option = getDeliveryOption();
+        if (!data.email || !data.phone || !data.name) return 'Please fill in your email, WhatsApp number and name (step 1).';
+        if (!deliveryMethod) return 'Please choose how you want to get your order (step 2).';
+        if (!option) return 'Please choose a metro station (step 2).';
+        if (option.needsAddress && !(data.address || '').trim()) return 'Please type your home address (step 2).';
+        if (!paymentMethod) return 'Please choose how you want to pay (step 3).';
+        return null;
     }
 
     function updateBadge() {
@@ -476,9 +572,18 @@
         if (cart.length === 0) return;
 
         const data = Object.fromEntries(new FormData(formEl).entries());
+        const missing = findMissingStep(data);
+        if (missing) {
+            statusEl.textContent = missing;
+            statusEl.className = 'cart-order-status cart-order-status--error';
+            return;
+        }
+
+        const option = getDeliveryOption();
+        const payment = PAYMENT_OPTIONS.find(p => p.id === paymentMethod).title;
         const subtotal = cartSubtotal();
         const discount = cartDiscount();
-        const fee = getDeliveryFee(data.meetupPlace);
+        const fee = getDeliveryFee();
         const total = cartTotalAfterDiscount() + fee;
 
         if (typeof emailjs === 'undefined' || EMAILJS_ORDER_TEMPLATE_ID === 'YOUR_ORDER_TEMPLATE_ID') {
@@ -498,20 +603,22 @@
             to_email: 'navilleracharmstudio@gmail.com',
             customer_name: data.name,
             phone: data.phone,
-            customer_email: data.email || '',
-            pickup_time: data.pickupTime,
-            meetup_place: data.meetupPlace,
-            delivery_date: data.deliveryDate,
+            customer_email: data.email,
+            pickup_time: '',
+            meetup_place: describeDelivery(option, data.address || ''),
+            delivery_date: 'To be arranged on WhatsApp',
+            payment_method: payment,
             subtotal: subtotal.toFixed(2),
             promo_code: appliedPromo ? appliedPromo.code : 'None',
             discount: discount.toFixed(2),
             delivery_fee: fee.toFixed(2),
             total: total.toFixed(2),
-            notes: data.notes || 'None',
+            // Payment is repeated in the notes so it shows even in a template without {{payment_method}}.
+            notes: data.notes ? `Payment: ${payment}\n${data.notes}` : `Payment: ${payment}`,
             items_html: buildOrderItemsHtml(discount, appliedPromo ? appliedPromo.code : ''),
         }, { publicKey: EMAILJS_ORDER_PUBLIC_KEY })
             .then(() => {
-                statusEl.textContent = 'Thanks! Your order request has been sent — we\'ll confirm within 1–2 days.';
+                statusEl.textContent = "Thank you! 🎉 Your order is sent. We'll message you on WhatsApp soon.";
                 statusEl.className = 'cart-order-status cart-order-status--success';
                 cart = [];
                 appliedPromo = null;
@@ -521,7 +628,8 @@
                 if (promoMsgEl) { promoMsgEl.textContent = ''; promoMsgEl.className = 'cart-promo__msg'; }
                 persist();
                 formEl.reset();
-                setTimeout(closeDrawer, 2500);
+                resetOrderChoices();
+                setTimeout(closeDrawer, 3500);
             })
             .catch((err) => {
                 console.error('Order email failed:', err);

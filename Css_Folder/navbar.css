@@ -216,7 +216,7 @@ body.menu-open {
     flex-direction: column;
     background-color: rgba(7, 18, 40, 0.98);
     border-radius: 0 24px 24px 0;
-    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
+    box-shadow: none; /* shadow only while open — otherwise it bleeds onto the page edge */
     z-index: 2000;
     transition: right var(--anim-speed) ease-in-out, transform var(--anim-speed) ease-in-out;
     transform: translateX(0);
@@ -225,6 +225,7 @@ body.menu-open {
 .mobile-sidebar.active {
     right: 0;
     transform: translateX(0);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.25);
 }
 
 .sidebar-content {

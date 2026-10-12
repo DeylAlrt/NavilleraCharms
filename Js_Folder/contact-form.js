@@ -37,11 +37,13 @@ const EMAILJS_TEMPLATE_ID = 'template_ljnicp3';
         submitBtn.textContent = 'SENDING...';
         setStatus('', false);
 
+        // FAQ page has one "Name" field; About Us has First + Last Name
+        const fullName = (form.full_name && form.full_name.value || '').trim();
         const firstName = (form.first_name && form.first_name.value || '').trim();
         const lastName = (form.last_name && form.last_name.value || '').trim();
 
         const templateParams = {
-            name: [firstName, lastName].filter(Boolean).join(' '),
+            name: fullName || [firstName, lastName].filter(Boolean).join(' '),
             title: 'New Contact Form Message',
             time: new Date().toLocaleString(),
             email: form.email.value,

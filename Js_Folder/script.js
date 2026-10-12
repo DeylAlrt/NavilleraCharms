@@ -68,16 +68,18 @@ document.addEventListener('keydown', (event) => {
     const gallery = document.querySelector('.image-gallery');
     if (!gallery) return;
 
-    const isMobile = window.innerWidth <= 768;
-    const slots = isMobile ? [
+    const MOBILE_SLOTS = [
         { x: '-220%', scale: 1.75, zIndex: 1 },
         { x: '0%',   scale: 2.4, zIndex: 3,  },
         { x: '220%',  scale: 1.75, zIndex: 0 },
-    ] : [
+    ];
+    const DESKTOP_SLOTS = [
         { x: '-103%', scale: 0.82, zIndex: 1 },
         { x: '0%',    scale: 1.08, zIndex: 3 },
         { x: '103%',  scale: 0.82, zIndex: 0 },
     ];
+    let isMobile = window.innerWidth <= 768;
+    let slots = isMobile ? MOBILE_SLOTS : DESKTOP_SLOTS;
 
     const images = [
         "https://ik.imagekit.io/jdwr5wztm/Image%201.jpg",
@@ -94,7 +96,7 @@ document.addEventListener('keydown', (event) => {
         align-items: center;
         justify-content: center;
         width: 75%;
-        top: 23%;
+        top: 25%;
         max-width: 100%;
         height: 100%;
     `;
@@ -125,7 +127,7 @@ document.addEventListener('keydown', (event) => {
             ? `transform ${DURATION}ms ${EASING}, opacity ${DURATION}ms ${EASING}`
             : 'none';
         el.style.transform = `translateX(${s.x}) scale(${s.scale})`;
-        el.style.opacity = s.opacity;
+        el.style.opacity = '1';
         el.style.zIndex = s.zIndex;
     }
 
@@ -136,17 +138,42 @@ document.addEventListener('keydown', (event) => {
         return card;
     });
 
+    // Shift every picture one place to the left. The picture leaving on the
+    // left fades out and fades back in on the right, instead of sliding
+    // across (behind) the other two.
     function rotate() {
-        applySlot(cards[0], 2, true);
-        applySlot(cards[1], 0, true);
-        applySlot(cards[2], 1, true);
+        const [left, center, right] = cards;
+        applySlot(center, 0, true);
+        applySlot(right, 1, true);
 
+        const half = DURATION / 2;
+        left.style.transition = `opacity ${half}ms ease`;
+        left.style.opacity = '0';
         setTimeout(() => {
-            cards = [cards[1], cards[2], cards[0]];
-        }, DURATION);
+            applySlot(left, 2, false);
+            left.style.opacity = '0';
+            void left.offsetWidth; // apply the jump before fading back in
+            left.style.transition = `opacity ${half}ms ease`;
+            left.style.opacity = '1';
+        }, half);
+
+        cards = [center, right, left];
     }
 
-    setInterval(rotate, 2000);
+    // Don't rotate while the tab is hidden, so animations never pile up.
+    setInterval(() => { if (!document.hidden) rotate(); }, 2000);
+
+    // Switch between the phone and desktop layout if the screen size changes.
+    window.addEventListener('resize', () => {
+        const nowMobile = window.innerWidth <= 768;
+        if (nowMobile === isMobile) return;
+        isMobile = nowMobile;
+        slots = isMobile ? MOBILE_SLOTS : DESKTOP_SLOTS;
+        cards.forEach((card, i) => {
+            card.style.borderRadius = isMobile ? '12px' : '28px';
+            applySlot(card, i, false);
+        });
+    });
 })();
 
 const faqButtons = document.querySelectorAll('.faq-question');
@@ -181,5 +208,48 @@ faqButtons.forEach(button => {
             applyTheme(toggle.checked);
             localStorage.setItem(THEME_KEY, toggle.checked ? 'dark' : 'light');
         });
+    }
+})();
+
+// "Charm Collection" / "Shop" links glide down to the Collections section.
+// The scroll is animated here (not with CSS) so it is smooth on every
+// device, even when the computer has animations turned off.
+(function () {
+    const target = document.getElementById('collections');
+    if (!target) return; // only the Home page has the section
+
+    const NAVBAR_GAP = 110;  // stop just below the fixed navbar
+    const DURATION = 900;    // ms
+
+    function glideTo(el) {
+        const start = window.scrollY;
+        const end = el.getBoundingClientRect().top + window.scrollY - NAVBAR_GAP;
+        const startTime = performance.now();
+        const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+        function step(now) {
+            const t = Math.min((now - startTime) / DURATION, 1);
+            window.scrollTo({ top: start + (end - start) * ease(t), behavior: 'instant' });
+            if (t < 1) requestAnimationFrame(step);
+            else history.replaceState(null, '', '#collections');
+        }
+        requestAnimationFrame(step);
+    }
+
+    // Clicking a link to #collections while on the Home page
+    document.querySelectorAll('a[href="#collections"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            // let the mobile sidebar close (and unlock scrolling) first
+            requestAnimationFrame(() => glideTo(target));
+        });
+    });
+
+    // Arriving from another page via index.html#to-collections (a name the
+    // browser won't jump to on its own): glide down once the page has loaded.
+    if (location.hash === '#to-collections') {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        window.scrollTo({ top: 0, behavior: 'instant' });
+        window.addEventListener('load', () => setTimeout(() => glideTo(target), 200));
     }
 })();

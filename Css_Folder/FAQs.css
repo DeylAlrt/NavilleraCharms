@@ -16,227 +16,234 @@ body {
     overflow-x: hidden;
 }
 
-h2, h3{
+h2, h3 {
     font-family: 'SourceSerif';
     font-style: italic;
     font-weight: 500;
 }
 
-.faq-container {
-    margin: 1em;
-}
-
-.faq-question {
-  align-items: center;
-  list-style: none;
-  background-color: #ff99cc;
-  color: white;
-  width: 70%;
-  padding: 15px;
-  border: none;
-  border-radius: 25px;
-  text-align: left;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  z-index: 2;
-  position: relative;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-.faq-question.active {
-  border-radius: 30px 30px 0 0;
-}
-
-.faq-answer {
-    display: none;
-    background-color: #d0e7ff;
-    width: 70%;
-    border-radius: 0 0 30px 30px;
-    padding: 15px 20px 20px;
-    color: #2c3e50;
-    font-style: italic;
-    font-size: 0.9em;
-    position: relative;
-    z-index: 1;
-}
-
-.faq-question, .faq-answer {
-    margin: auto;
-}
-
+/* ==============================================================
+   TITLE — "Frequently / Asked Questions" with script capitals
+   ============================================================== */
 .title-logo {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  margin-top: 5em;
-  margin-inline: 3em;
-  font-family: 'KantumruyPro', system-ui, sans-serif;
-  color: #1a2a44;
-  font-weight: 700;
-  font-size: 1.3rem;
-  line-height: 2;
+    margin-top: clamp(100px, 12vw, 140px);
+    padding-inline: 16px;
+    color: #1c2b4b;
+}
+
+.faq-title {
+    display: inline-flex;
+    flex-direction: column;
+    font-family: 'Kantumruy Pro', system-ui, sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.3rem, 7.5vw, 4.2rem);
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+.faq-title__line {
+    display: block;
+    white-space: nowrap;
+}
+
+.faq-title__line:first-child {
+    padding-left: 1.4em;   /* "Frequently" sits a little to the right, like the mockup */
 }
 
 .bigletter {
-  font-family: 'Kapakana', cursive;
-  font-size: 6rem;
-  line-height: 1;
+    font-family: 'Kapakana', cursive;
+    font-weight: 400;
+    font-size: 1.9em;
+    line-height: 0.8;
+    letter-spacing: 0;
 }
 
-.title1, .title2, .title3{
+/* ==============================================================
+   QUESTIONS & ANSWERS
+   ============================================================== */
+.FAQs {
+    width: min(90%, 760px);
+    margin: clamp(36px, 5vw, 60px) auto 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    gap: 18px;
 }
 
-.title1{
-    line-height:1.4;
-    margin-top:1em;
-}
-
-.title2{
-    line-height:1.7;
-    margin-left:-11em;
-    margin-top: -2em;
-}
-
-.title3{
-    line-height:1.7;
-    margin-left:7em;
-    margin-top:-5.5em;
-}
-
-details .faq-question::-webkit-details-marker {
-  display: none;
-}
-
-.faq-question.active .icon-circle {
-    transform: rotate(180deg);
-}
-
-.icon-circle {
-  width: 35px;
-  height: 35px;
-  background-color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  margin-left: 10px;
-  transition: transform 0.4s ease;
-}
-
-.chevron {
-    width: 10px;
-    height: 10px;
-    border-right: 3px solid #ff99cc;
-    border-bottom: 3px solid #ff99cc;
-    transform: rotate(45deg);
-    transition: all 0.3s ease;
-    display: inline-block;
-    margin-top: -5px;
+.faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 10px 10px 22px;
+    background-color: #ff99cc;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .faq-question:hover {
     background-color: #ff85c2;
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 153, 204, 0.4);
 }
 
-.faq-question:active {
-    transform: translateY(-1px);
+.faq-question:focus-visible {
+    box-shadow: 0 0 0 3px #1c2b4b;
+}
+
+.icon-circle {
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
 }
 
 .faq-question:hover .icon-circle {
     box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
 }
 
-.faq-question.active + .faq-answer {
-    display: block;
-    animation: slideDown 0.4s ease-out forwards;
+/* chevron points down when closed, up when open */
+.chevron {
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+    border-right: 3px solid #ff99cc;
+    border-bottom: 3px solid #ff99cc;
+    transform: rotate(45deg);
 }
 
+.faq-question.active .icon-circle {
+    transform: rotate(180deg);
+}
+
+.faq-answer {
+    display: none;
+    margin-top: 8px;
+    padding: 14px 22px;
+    background-color: #cfe3fb;
+    color: #1c2b4b;
+    border-radius: 16px;
+    font-style: italic;
+    font-size: clamp(0.78rem, 1.4vw, 0.95rem);
+    line-height: 1.5;
+    text-align: left;
+}
+
+.faq-answer ol {
+    padding-left: 1.2em;
+}
+
+.faq-question.active + .faq-answer {
+    display: block;
+    animation: slideDown 0.35s ease-out forwards;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==============================================================
+   CONTACT FORM
+   ============================================================== */
 .contact-form-section {
-    width: 57%;
-    max-width: 100%;
-    left: 21%;
-    position: relative;
-    text-align: center;
-    padding: 2em;
+    width: min(90%, 520px);
+    margin: clamp(56px, 8vw, 96px) auto clamp(56px, 8vw, 96px);
 }
 
 .partner-text {
     font-family: 'Source Serif 4', serif;
     font-style: italic;
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 5px;
+    font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+    color: #1c2b4b;
 }
 
 .email-text {
     font-family: 'Source Serif 4', serif;
-    font-weight: 900;
-    font-size: 2.2rem;
-    color: #1C2B4B;
+    font-weight: 800;
     font-style: italic;
-    margin-bottom: 30px;
+    font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+    color: #0f1d36;
+    line-height: 1.15;
 }
 
-.form-row {
+.help-text {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+    color: #1c2b4b;
+    margin-bottom: 22px;
+}
+
+#contactForm {
     display: flex;
-    gap: 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 }
 
-.form-group {
-    margin-bottom: 15px;
+.form-input,
+.form-textarea {
     width: 100%;
-    text-align: left;
-}
-
-.form-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: #333;
-}
-
-.form-input, .form-textarea {
-    width: 100%;
-    padding: 12px 20px;
-    border: 2px solid #1C2B4B;
-    border-radius: 12px;
+    padding: 11px 18px;
+    border: 1.5px solid #1c2b4b;
+    border-radius: 14px;
+    background: #ffffff;
+    color: #1c2b4b;
     font-family: 'Poppins', sans-serif;
     font-style: italic;
-    font-size: 1.1rem;
+    font-size: 1rem;
     outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    border-color: #2d79ba;
+    box-shadow: 0 0 0 3px rgba(45, 121, 186, 0.15);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+    color: #9aa6b8;
 }
 
 .form-textarea {
-    min-height: 160px;
+    min-height: 140px;
     resize: none;
 }
 
 .submit-btn {
-    background-color: #1C2B4B;
-    color: white;
+    margin-top: 6px;
+    padding: 9px 46px;
+    background-color: #1c2b4b;
+    color: #ffffff;
     border: none;
-    border-radius: 15px;
-    padding: 14px 40px;
-    font-weight: 800;
-    font-size: 1.2rem;
-    text-transform: uppercase;
+    border-radius: 999px;
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1rem;
     cursor: pointer;
-    margin-top: 10px;
     transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .submit-btn:hover {
     background-color: #a7c7e7;
-    color: #1C2B4B;
+    color: #1c2b4b;
     box-shadow: 0 6px 16px rgba(167, 199, 231, 0.45);
 }
 
@@ -246,47 +253,26 @@ details .faq-question::-webkit-details-marker {
 }
 
 .form-status {
-    margin-top: 14px;
     font-size: 0.9rem;
     font-weight: 600;
     min-height: 1.2em;
 }
 
-.form-status--success {
-    color: #2e7d4f;
-}
+.form-status--success { color: #2e7d4f; }
+.form-status--error   { color: #d1293d; }
 
-.form-status--error {
-    color: #d1293d;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 768px) {
-
-    .title1 { line-height:1.2; justify-content: center; margin-top:1em; }
-    .title2 { line-height:1.7; margin-left: 0; margin-top: -2em; }
-    .title3 { line-height:1.7; margin-left: 0; margin-top: -5.5em; }
-    .faq-answer { text-align: left; }
-    .contact-form-section { width: 100%; left: 0; }
-
-}
-
+/* ==============================================================
+   DARK MODE
+   ============================================================== */
 html.dark-mode body {
     background-color: #0f172a;
     color: #e5e7eb;
 }
 
-html.dark-mode .title-logo {
+html.dark-mode .title-logo,
+html.dark-mode .partner-text,
+html.dark-mode .email-text,
+html.dark-mode .help-text {
     color: #e5e7eb;
 }
 
@@ -300,9 +286,4 @@ html.dark-mode .form-textarea {
     background-color: #1c2b4b;
     color: #ffffff;
     border-color: #3a5a82;
-}
-
-html.dark-mode .form-label,
-html.dark-mode .partner-text {
-    color: #cbd5e1;
 }

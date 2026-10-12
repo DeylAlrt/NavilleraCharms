@@ -1,48 +1,66 @@
+/* ==============================================================
+   FOOTER
+   Desktop: two columns
+     left  → logo, Connect With Us, copyright
+     right → links (2 × 2), email & phone
+   Phones: everything stacks in one column
+   ============================================================== */
+
 .main-footer {
-    background-color: #1a2740;
+    background-color: #1c2b4b;
     color: #ffffff;
-    padding: 37px 60px 40px 60px;
+    padding: 56px 6% 48px;
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
-    font-family: 'Playfair Display', serif;
+    font-family: 'Source Serif 4', serif;
+    text-align: left;    
+}
+
+.main-footer h3 {
+    font-family: 'Source Serif 4', serif;
+    font-style: normal;  
 }
 
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+        "logo   links"
+        "social contact"
+        "copy   .";
+    column-gap: 60px;
+    row-gap: 48px;
+    align-items: start;
 }
 
+/* --- Logo --- */
 .footer-logo-row {
-    width: 100%;
+    grid-area: logo;
 }
 
 .footer-logo {
     width: 100%;
-    max-width: 320px;
+    max-width: 360px;
     height: auto;
     display: block;
 }
-.footer-links-row {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: flex-end;
-    gap: 15%;
-    width: 100%;
-    padding-bottom: 40px;
-}
 
-.link-column {
-    text-align: right;
+/* --- Links (2 × 2) --- */
+.footer-links-row {
+    grid-area: links;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 40px;
+    row-gap: 32px;
+    padding-top: 16px;
 }
 
 .link-column h3 {
     font-size: 1.1rem;
     font-weight: 700;
-    margin-bottom: 20px;
-    letter-spacing: 0.5px;
+    margin-bottom: 12px;
     color: #ffffff;
 }
 
@@ -51,8 +69,8 @@
     color: #cbd5e1;
     text-decoration: none;
     font-size: 0.95rem;
-    margin-bottom: 12px;
     font-style: italic;
+    margin-bottom: 8px;
     transition: color 0.3s ease;
 }
 
@@ -60,31 +78,26 @@
     color: #ffffff;
 }
 
-.footer-bottom-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    flex-wrap: wrap;
+/* --- Connect With Us --- */
+.social-box {
+    grid-area: social;
 }
 
-.social-box h3 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    font-family: 'Source Serif Pro';
+.main-footer .social-box h3 {
+    font-size: 1.7rem;
     font-style: italic;
+    font-weight: 700;
+    margin-bottom: 14px;
 }
 
 .social-icons {
     display: flex;
-    gap: 15px;
-    margin-bottom: 25px;
-    max-width: 100%;
+    gap: 18px;
 }
 
 .social-icons img {
-    width: 55px;
-    max-width: 100%;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
     transition: transform 0.3s ease;
 }
@@ -93,54 +106,83 @@
     transform: scale(1.1);
 }
 
-.social-icons a {
-    color: #ffffff;
-    font-size: 1.8rem;
-    text-decoration: none;
-}
-
-.copyright {
-    font-size: 0.85rem;
-    opacity: 0.6;
-    margin-top: 10px;
-}
-
+/* --- Email & phone --- */
 .contact-box {
+    grid-area: contact;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 18px;
+    padding-top: 8px;
 }
 
 .contact-line {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 22px;
 }
 
 .contact-line img {
-    width: 13%;
-    max-width: 100%;
-    height: auto;
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .contact-line a {
-    margin: 0;
-    font-size: 1.3rem;
-    font-weight: 300;
-    font-family: 'Source Serif 4';
-    text-decoration: underline;
-    font-style: italic;
     color: #ffffff;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 300;
+    text-decoration: none;
+    overflow-wrap: anywhere;
 }
 
+.contact-line a[href^="mailto:"] {
+    text-decoration: underline;
+}
+
+/* --- Copyright --- */
+.copyright {
+    grid-area: copy;
+    font-size: 1rem;
+    font-style: italic;
+    opacity: 0.7;
+    margin: 0;
+}
+
+/* --- Phones --- */
 @media (max-width: 768px) {
-    .main-footer { padding: 40px 20px; border-top-left-radius: 50px; border-top-right-radius: 50px; }
-    .footer-bottom-row { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 20px; }
-    .copyright { width: 100%; text-align: left; margin-top: 30px; order: 3; }
-    .social-box, .contact-box { flex: 1; min-width: 140px; }
-    .social-icons img { width: 60px; }
-    .social-box h3 { font-size: 1.6rem; }
-    .footer-links-row { grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; }
-    .link-column { text-align: left; }
-    .contact-line a { font-size: .7rem; }
+    .main-footer {
+        padding: 44px 24px 36px;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 50px;
+    }
+
+    .footer-container {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas:
+            "logo"
+            "links"
+            "social"
+            "contact"
+            "copy";
+        row-gap: 36px;
+    }
+
+    .footer-logo {
+        max-width: 240px;
+    }
+
+    .footer-links-row {
+        column-gap: 24px;
+        padding-top: 0;
+    }
+
+    .main-footer .social-box h3 {
+        font-size: 1.5rem;
+    }
+
+    .contact-line a {
+        font-size: 1rem;
+    }
 }

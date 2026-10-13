@@ -696,7 +696,7 @@
         statusEl.className = 'cart-order-status';
 
         emailjs.send(EMAILJS_ORDER_SERVICE_ID, EMAILJS_ORDER_TEMPLATE_ID, {
-            to_email: 'navilleracharmstudio@gmail.com',
+            to_email: 'sales.navilleracharms@gmail.com',
             customer_name: data.name,
             phone: data.phone,
             customer_email: data.email,

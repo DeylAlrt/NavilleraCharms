@@ -163,7 +163,7 @@ const SHOP = {
         },
         {
             name: 'Magnet Hearts', price: 12.50,
-            picture: 'Magnet Hearts/Silver_Dangling_Deluxe_Charms ({n}).png',
+            picture: 'Magnet Hearts/Silver_Dangling_Deluxe_Charms  ({n}).png', // two spaces before ( — matches the file names
             items: ['Magnet Heart I', 'Magnet Heart II'],
             soldOut: [],
             gold: {
@@ -175,14 +175,30 @@ const SHOP = {
         {
             name: 'Dangling Links', price: 14.99, sortAZ: true,
             picture: 'Dangling Links/Dangling_Silver_Links ({n}).png',
-            items: ['Pearl Shell Dangle', 'Butterfly Dangle'],
+            items: ['Sparkle Chain', 'Angel Wings Purple Drop', 'Pink Star Coral', 'Pearl Bow Chain', 'Moon Pearl', 'Crystal Bow Pearls',
+                    'Twin Stars', 'Crystal Butterfly Star', 'Pearl Bow', 'Green Flower Pearls', 'Crystal Heart Pearl', 'Crystal Bow Drop',
+                    'Crystal Safety Pin', 'Heart Lock', 'Airplane', 'Crystal Butterfly Outline', 'Bow Outline', 'Ribbon Bow',
+                    'Jellyfish', 'Opal Planet', 'Opal Butterfly', 'Blue Star Moon', 'Moon & Stars', 'Lavender Crystal Butterfly',
+                    'Pink Paw', 'Pink Crystal Bow', 'Pink Sparkle Star', 'Eiffel Tower', 'Pink Moon', 'Pink Sakura',
+                    'Pink Star Gem', 'Pink Planet Heart', 'Pink Butterfly', 'Pink Cherries', 'Pink Crystal Heart',
+                    'Pearl Shell', 'Butterfly'],
             soldOut: [],
             gold: {
                 price: 15.99,
-                picture: 'Dangling Links/Dangling_Gold_Links ({n}).png',
-                items: ['Red Bow Dangle', 'Crystal Leaf Dangle', 'Red Heart Cherries Dangle', 'Black Bow Dangle', 'Pastel Butterfly Dangle'],
+                picture: 'Dangling Links/Dangling_Gold_Links ({n}).png', startAt: 5,   // pictures 2–5 don't exist
+                oddPictures: { 'Pink Heart Wings': 'Dangling Links/Dangling_Gold_Links (1).png' },
+                items: ['Pink Heart Wings', 'Crystal Butterfly Pearl', 'Twin Crystal Hearts', 'Pink Heart Drop', 'Heart Pearl',
+                        'Crystal Safety Pin', 'Sparkle Star', 'Paw', 'Bow', 'Airplane', 'Crystal Fish', 'Textured Bow',
+                        'Blue Jellyfish', 'Pink Jellyfish', 'Lavender Flower', 'Pink Flower', 'Blue Flower', 'Red Flower',
+                        'Pink Heart Crown', 'Starfish', 'Crystal Leaf', 'Red Heart Cherries', 'Black Bow', 'Pastel Butterfly', 'Red Bow'],
                 soldOut: [],
             },
+        },
+        {
+            name: 'Twin Chain Links', price: 20.00, unit: 'each',
+            picture: 'Chain Links/Chain_Silver_Links ({n}).png',
+            items: ['Planet & Star', 'Bow & Key', 'Star & Moon', 'Bow & Butterfly', 'Planet & Mermaid Tail', 'Pink Paw & Star'],
+            soldOut: [],
         },
     ],
 
@@ -203,14 +219,13 @@ const SHOP = {
         {
             name: 'Watch Charms', price: 65.50, unit: 'each', sortAZ: true,
             picture: 'Watches/{name}.png',
-            items: ['Black Square Watch', 'White Square Watch', 'Pink Square Watch', 'Gray Square Watch', 'Oval Silver Watch',
-                    'Purple Gem Watch', 'Pink Rectangle Watch', 'Heart Watch', 'Black Digital Watch', 'Rose Gold Digital Watch'],
-            soldOut: ['Pink Square Watch', 'Gray Square Watch', 'Purple Gem Watch', 'Pink Rectangle Watch', 'Heart Watch'],
+            items: ['White Square Watch', 'Heart Watch', 'Rose Gold Digital Watch'],
+            soldOut: ['Heart Watch'],
             gold: {
                 price: 55.50,
                 picture: 'Watches/{name}.png',
-                items: ['Heart Gold Watch', 'Pink Gold Watch', 'Cream Gold Watch', 'Oval Gold Watch'],
-                soldOut: ['Heart Gold Watch', 'Pink Gold Watch', 'Cream Gold Watch'],
+                items: ['Oval Gold Watch'],
+                soldOut: [],
             },
         },
     ],

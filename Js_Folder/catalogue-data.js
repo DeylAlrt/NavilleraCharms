@@ -12,6 +12,7 @@
                {n} = the charm's place in the list (1st, 2nd, 3rd...)
                {name} = the charm's name
    • startAt   Number of the first picture, if it isn't 1
+   • skip      Picture numbers that don't exist, e.g. skip: [12]
    • oddPictures   Pictures that don't follow the pattern
    • sortAZ    true = shown A–Z on the website
    • unit      Text after the price (default: 'each link')
@@ -175,14 +176,15 @@ const SHOP = {
         {
             name: 'Dangling Links', price: 14.99, sortAZ: true,
             picture: 'Dangling Links/Dangling_Silver_Links ({n}).png',
+            skip: [12],   // picture 12 (Crystal Bow Drop) moved to gold as Dangling_Gold_Links (30)
             items: ['Sparkle Chain', 'Angel Wings Purple Drop', 'Pink Star Coral', 'Pearl Bow Chain', 'Moon Pearl', 'Crystal Bow Pearls',
-                    'Twin Stars', 'Crystal Butterfly Star', 'Pearl Bow', 'Green Flower Pearls', 'Crystal Heart Pearl', 'Crystal Bow Drop',
+                    'Twin Stars', 'Crystal Butterfly Star', 'Pearl Bow', 'Green Flower Pearls', 'Crystal Heart Pearl',
                     'Crystal Safety Pin', 'Heart Lock', 'Airplane', 'Crystal Butterfly Outline', 'Bow Outline', 'Ribbon Bow',
                     'Jellyfish', 'Opal Planet', 'Opal Butterfly', 'Blue Star Moon', 'Moon & Stars', 'Lavender Crystal Butterfly',
                     'Pink Paw', 'Pink Crystal Bow', 'Pink Sparkle Star', 'Eiffel Tower', 'Pink Moon', 'Pink Sakura',
                     'Pink Star Gem', 'Pink Planet Heart', 'Pink Butterfly', 'Pink Cherries', 'Pink Crystal Heart',
                     'Pearl Shell', 'Butterfly'],
-            soldOut: [],
+            soldOut: ['Pearl Shell', 'Butterfly'],
             gold: {
                 price: 15.99,
                 picture: 'Dangling Links/Dangling_Gold_Links ({n}).png', startAt: 5,   // pictures 2–5 don't exist
@@ -190,8 +192,9 @@ const SHOP = {
                 items: ['Pink Heart Wings', 'Crystal Butterfly Pearl', 'Twin Crystal Hearts', 'Pink Heart Drop', 'Heart Pearl',
                         'Crystal Safety Pin', 'Sparkle Star', 'Paw', 'Bow', 'Airplane', 'Crystal Fish', 'Textured Bow',
                         'Blue Jellyfish', 'Pink Jellyfish', 'Lavender Flower', 'Pink Flower', 'Blue Flower', 'Red Flower',
-                        'Pink Heart Crown', 'Starfish', 'Crystal Leaf', 'Red Heart Cherries', 'Black Bow', 'Pastel Butterfly', 'Red Bow'],
-                soldOut: [],
+                        'Pink Heart Crown', 'Starfish', 'Crystal Leaf', 'Red Heart Cherries', 'Black Bow', 'Pastel Butterfly', 'Red Bow',
+                        'Crystal Bow Drop'],
+                soldOut: ['Black Bow', 'Crystal Leaf', 'Pastel Butterfly', 'Red Bow', 'Red Heart Cherries'],
             },
         },
         {
@@ -217,12 +220,12 @@ const SHOP = {
             soldOut: [],
         },
         {
-            name: 'Watch Charms', price: 65.50, unit: 'each', sortAZ: true,
+            name: 'Watch Charms', price: 55.50, unit: 'each', sortAZ: true,
             picture: 'Watches/{name}.png',
             items: ['White Square Watch', 'Heart Watch', 'Rose Gold Digital Watch'],
-            soldOut: ['Heart Watch'],
+            soldOut: ['White Square Watch'],
             gold: {
-                price: 55.50,
+                price: 65.50,
                 picture: 'Watches/{name}.png',
                 items: ['Oval Gold Watch'],
                 soldOut: [],
@@ -234,9 +237,9 @@ const SHOP = {
     keychain: [
         {
             name: 'Keychain Links', price: 10.00, unit: 'each',
-            oddPictures: { 'Gold Keychain Clip': 'Keychains/Gold Keychain.png', 'Silver Keychain Clip': 'Keychains/Silver Keychain.png' },
-            items: ['Gold Keychain Clip', 'Silver Keychain Clip'],
-            soldOut: ['Silver Keychain Clip'],
+            oddPictures: { 'Gold Keychain Link': 'Keychains/Gold Keychain.png', 'Silver Keychain Link': 'Keychains/Silver Keychain.png' },
+            items: ['Gold Keychain Link', 'Silver Keychain Link'],
+            soldOut: ['Silver Keychain Link'],
         },
     ],
 
@@ -259,7 +262,7 @@ const CATEGORY_META = {
     },
     keychain: {
         title: 'Keychains',
-        blurb: 'Charm-ready keychain clips.'
+        blurb: 'Charm-ready keychain links.'
     }
 };
 
@@ -269,12 +272,20 @@ function buildItems(list, sectionName) {
         console.warn(`[catalogue] "${name}" is in soldOut but not in the items of "${sectionName}" — check the spelling.`);
     });
 
-    return list.items.map((label, i) => ({
-        label,
-        file: (list.oddPictures && list.oddPictures[label]) ||
-              list.picture.replace('{n}', (list.startAt || 1) + i).replace('{name}', label),
-        soldOut: soldOut.includes(label),
-    }));
+    // Picture numbers count up from startAt, jumping over any numbers in `skip`
+    const skip = list.skip || [];
+    let n = (list.startAt || 1) - 1;
+    const nextNumber = () => { do { n++; } while (skip.includes(n)); return n; };
+
+    return list.items.map(label => {
+        const number = nextNumber();
+        return {
+            label,
+            file: (list.oddPictures && list.oddPictures[label]) ||
+                  list.picture.replace('{n}', number).replace('{name}', label),
+            soldOut: soldOut.includes(label),
+        };
+    });
 }
 
 const CATALOGUE = Object.fromEntries(Object.entries(SHOP).map(([category, sections]) => [

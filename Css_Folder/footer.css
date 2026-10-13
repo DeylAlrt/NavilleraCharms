@@ -66,16 +66,20 @@
 
 .link-column a {
     display: block;
+    width: fit-content;
     color: #cbd5e1;
     text-decoration: none;
     font-size: 0.95rem;
     font-style: italic;
     margin-bottom: 8px;
-    transition: color 0.3s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
-.link-column a:hover {
+/* Hovered link brightens and nudges right */
+.link-column a:hover,
+.link-column a:focus-visible {
     color: #ffffff;
+    transform: translateX(4px);
 }
 
 /* --- Connect With Us --- */
@@ -102,8 +106,9 @@
     transition: transform 0.3s ease;
 }
 
-.social-icons a:hover img {
-    transform: scale(1.1);
+.social-icons a:hover img,
+.social-icons a:focus-visible img {
+    transform: translateY(-3px) scale(1.12);
 }
 
 /* --- Email & phone --- */
@@ -135,6 +140,21 @@
     font-weight: 300;
     text-decoration: none;
     overflow-wrap: anywhere;
+    transition: color 0.2s ease;
+}
+
+.contact-line img {
+    transition: transform 0.2s ease;
+}
+
+/* Email / phone: soft pink text, icon pops slightly */
+.contact-line:hover a,
+.contact-line a:focus-visible {
+    color: #ffc6de;
+}
+
+.contact-line:hover img {
+    transform: scale(1.1);
 }
 
 .contact-line a[href^="mailto:"] {

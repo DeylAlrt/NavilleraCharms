@@ -572,3 +572,20 @@ html.dark-mode .collection-tabs__btn.is-active {
     border-color: #a7c7e7;
     color: #0f172a;
 }
+
+/* --- Hover lift on the category tabs and jump-nav chips --- */
+.collection-tabs__btn,
+.jumpnav__chip {
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.collection-tabs__btn:hover,
+.jumpnav__chip:hover,
+.collection-tabs__btn:focus-visible,
+.jumpnav__chip:focus-visible {
+    transform: translateY(-2px);
+}
+
+.breadcrumb a {
+    transition: color 0.2s ease;
+}

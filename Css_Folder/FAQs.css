@@ -287,3 +287,13 @@ html.dark-mode .form-textarea {
     color: #ffffff;
     border-color: #3a5a82;
 }
+
+/* --- Hover lift on the Submit button --- */
+.submit-btn {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled),
+.submit-btn:focus-visible {
+    transform: translateY(-2px);
+}

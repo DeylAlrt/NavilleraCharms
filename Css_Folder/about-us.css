@@ -447,7 +447,7 @@ body {
         }
     .her-story-text p { font-size: 1.1rem !important; text-align: center !important; max-width: 90%; }
     .her-story-image { width: 100% !important; order: 2; }
-    .her-story-image img { width: 100% !important; border-radius: 0; }
+    .her-story-image img { width: 100% !important; max-width: 100% !important; border-radius: 0; }
 
     
     .star-banner { height: 167px !important; overflow: visible !important; margin-bottom: 300px !important; }
@@ -568,4 +568,14 @@ html.dark-mode .form-textarea {
 html.dark-mode .form-label,
 html.dark-mode .partner-text {
     color: #cbd5e1;
+}
+
+/* --- Hover lift on the Submit button --- */
+.submit-btn {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.submit-btn:hover:not(:disabled),
+.submit-btn:focus-visible {
+    transform: translateY(-2px);
 }

@@ -536,3 +536,16 @@ html.dark-mode .discount-container {
 html.dark-mode .promo-text {
     background-color: #3a5a82;
 }
+
+/* --- Hover lift on the hero / section buttons --- */
+.build,
+.collection {
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.build:hover,
+.collection:hover,
+.build:focus-visible,
+.collection:focus-visible {
+    transform: translateY(-3px);
+}

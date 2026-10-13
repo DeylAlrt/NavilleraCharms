@@ -66,6 +66,28 @@
     font-size: 1.15rem;
     text-decoration: none;
     padding-bottom: 4px;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* Hovered link turns soft pink and lifts slightly (underline grows below) */
+.nav-menu li a:hover,
+.nav-menu li a:focus-visible {
+    color: #ffc6de;
+    transform: translateY(-2px);
+}
+
+.nav-menu li a:focus-visible::after {
+    width: 100%;
+}
+
+/* Logo: gentle grow on hover */
+.logo,
+.sidebar-logo {
+    transition: transform 0.25s ease;
+}
+
+.logo-container a:hover .logo {
+    transform: scale(1.04);
 }
 
 .nav-menu li a::after {
@@ -92,6 +114,55 @@
     gap: 20px;
 }
 
+/* "Build Now" — the main call to action, a cream pill like the Home page button */
+.nav-build {
+    display: inline-flex;
+    align-items: center;
+    padding: 9px 22px;
+    border-radius: 999px;
+    background-color: #FCF5BE;
+    color: #1c2b4b;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-build:hover,
+.nav-build:focus-visible {
+    background-color: #a7c7e7;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(167, 199, 231, 0.45);
+}
+
+/* Small laptops / tablets: tighter links so they don't run into Build Now */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .nav-menu { gap: 20px; }
+    .nav-menu li a { font-size: 0.95rem; }
+    .nav-build { padding: 7px 14px; font-size: 0.82rem; }
+}
+
+/* Highlighted first item in the mobile menu */
+.nav-item.nav-item--build {
+    color: #FCF5BE;
+    background: rgba(252, 245, 190, 0.1);
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.nav-item.nav-item--build .nav-icon {
+    filter: none;   /* keep the cream sparkle colour */
+}
+
+.nav-item.nav-item--build:hover,
+.nav-item.nav-item--build:focus-visible {
+    color: #FCF5BE;
+    background: rgba(252, 245, 190, 0.18);
+}
+
 .nav-icons {
     display: flex;
     align-items: center;
@@ -107,11 +178,12 @@
     border: none;
     padding: 8px;
     cursor: pointer;
-    transition: opacity var(--anim-speed) ease;
+    transition: transform 0.2s ease;
 }
 
-.icon-btn:hover {
-    opacity: 0.75;
+.icon-btn:hover,
+.icon-btn:focus-visible {
+    transform: scale(1.1);
 }
 
 .icon-btn img {
@@ -255,13 +327,24 @@ body.menu-open {
     font-weight: 600;
     border-radius: 16px;
     border-bottom: 1.5px solid rgba(0, 0, 0, 0.08);
-    transition: opacity var(--anim-speed) ease;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
 }
 
-.nav-item:hover {
+/* Hovered item lights up and nudges right (instead of fading out) */
+.nav-item:hover,
+.nav-item:focus-visible {
     background: rgba(255, 255, 255, 0.08);
-    opacity: 0.7;
-    transform: translateX(4px);
+    color: #ffffff;
+    transform: translateX(6px);
+}
+
+.nav-item .nav-icon {
+    transition: transform 0.2s ease;
+}
+
+.nav-item:hover .nav-icon,
+.nav-item:focus-visible .nav-icon {
+    transform: scale(1.15);
 }
 
 .nav-icon {
@@ -382,7 +465,12 @@ body.menu-open {
         gap: 0;
     }
 
-    
+    /* Phones: Build Now lives in the menu instead (first, highlighted) */
+    .nav-build {
+        display: none;
+    }
+
+
     .nav-icons {
         gap: 10px;
         transform: translate(-55%, 4%);

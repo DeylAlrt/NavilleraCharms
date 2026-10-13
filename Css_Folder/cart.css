@@ -787,3 +787,53 @@ html.dark-mode .cart-promo__input {
     color: #ffffff;
     border-color: #3a5a82;
 }
+
+/* --- Result after coming back from Ziina's payment page --- */
+.cart-result {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.cart-result__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(28, 43, 75, 0.6);
+}
+
+.cart-result__box {
+    position: relative;
+    width: min(100%, 340px);
+    padding: 26px 24px 22px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 42, 79, 0.35);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.cart-result__title {
+    margin: 0 0 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #d1293d;
+}
+
+.cart-result__box--success .cart-result__title {
+    color: #2e7d4f;
+}
+
+.cart-result__text {
+    margin: 0 0 18px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #1c2b4b;
+}
+
+.cart-result__btn {
+    min-width: 120px;
+}

@@ -11,6 +11,9 @@
         NEWBABE: 0.05,
     };
     const HAS_ORDERED_KEY = 'navillera-has-ordered';
+    // Ziina payments are created by the charm builder's server, which prices
+    // the cart itself from the catalogue — prices in the browser are never trusted.
+    const ZIINA_PAYMENT_ENDPOINT = 'https://navillera.vercel.app/api/shop-payment-intent';
     // --------------------------------------------------------------------
 
     let appliedPromo = null; // { code, percent } once a valid code is applied
@@ -111,7 +114,7 @@
         { method: 'home', icon: '🏠', title: 'Home delivery', detail: 'Anywhere in the UAE (Jeebly)', price: '20 AED' },
     ];
     const PAYMENT_OPTIONS = [
-        { id: 'ziina', icon: '💳', title: 'Pay online (Ziina)', detail: "We'll send you a payment link on WhatsApp" },
+        { id: 'ziina', icon: '💳', title: 'Pay online now (Ziina)', detail: "You'll be redirected to Ziina to pay securely (card, Apple Pay or Google Pay)" },
         { id: 'cod', icon: '💵', title: 'Cash on Delivery', detail: 'Pay in cash when you get your order' },
         { id: 'bank', icon: '🏦', title: 'Bank Transfer', detail: "We'll send our bank details on WhatsApp" },
     ];
@@ -396,6 +399,8 @@
         if (formDiscountValueEl) formDiscountValueEl.textContent = `-${discount.toFixed(2)} AED`;
         deliveryFeeValueEl.textContent = getDeliveryOption() ? formatFee(fee) : '—';
         totalValueEl.textContent = `${total.toFixed(2)} AED`;
+        const submitBtn = document.getElementById('cartFormSubmitBtn');
+        if (submitBtn && !submitBtn.disabled) submitBtn.textContent = paymentMethod === 'ziina' ? 'Continue to payment' : 'Place my order';
     }
 
     function handleOptionClick(e) {
@@ -566,6 +571,92 @@
         return `<table style="width:100%; border-collapse:collapse;">${cards}${discountRow}</table>`;
     }
 
+    /** Pay online: ask the server for a Ziina payment, then go to Ziina's page. */
+    function startZiinaPayment(data, option) {
+        const submitBtn = document.getElementById('cartFormSubmitBtn');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Opening Ziina...';
+        statusEl.textContent = '';
+        statusEl.className = 'cart-order-status';
+
+        fetch(ZIINA_PAYMENT_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: data.name,
+                phone: data.phone,
+                email: data.email,
+                address: data.address || '',
+                notes: data.notes || '',
+                deliveryOptionId: option.id,
+                promoCode: appliedPromo ? appliedPromo.code : '',
+                items: cart.map(i => ({ subcollection: i.subcollection, file: i.file, qty: i.qty })),
+                returnPath: window.location.pathname + window.location.search,
+            }),
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (!result.success) throw new Error(result.error || 'Could not start online payment.');
+                // The cart stays saved until Ziina confirms the payment, so cancelling keeps it.
+                window.location.assign(result.redirect_url);
+            })
+            .catch(err => {
+                console.error('Ziina payment failed to start:', err);
+                statusEl.textContent = 'Could not start online payment: ' + err.message;
+                statusEl.className = 'cart-order-status cart-order-status--error';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Continue to payment';
+            });
+    }
+
+    /** Back from Ziina (?ziina=success / cancel / failed): show the result and tidy the address bar. */
+    function handleZiinaReturn() {
+        const params = new URLSearchParams(window.location.search);
+        const outcome = params.get('ziina');
+        if (!outcome) return;
+
+        params.delete('ziina');
+        const query = params.toString();
+        window.history.replaceState(null, '', window.location.pathname + (query ? '?' + query : '') + window.location.hash);
+
+        const messages = {
+            success: ['Payment successful! 🎉', "Thank you! Your order is confirmed. We'll message you on WhatsApp soon."],
+            cancel: ['Payment canceled', 'No payment was taken. Your cart is still saved — you can try again, or choose Cash on Delivery or Bank Transfer.'],
+            failed: ['Payment failed', 'No payment was taken. Your cart is still saved — please try again or choose another way to pay.'],
+        };
+        const message = messages[outcome];
+        if (!message) return;
+
+        if (outcome === 'success') {
+            // Only the webhook confirms the order (after re-checking with Ziina); this just clears the cart.
+            cart = [];
+            appliedPromo = null;
+            markAsOrdered();
+            persist();
+        }
+
+        const modal = document.createElement('div');
+        modal.className = 'cart-result';
+        modal.setAttribute('role', 'dialog');
+        modal.setAttribute('aria-modal', 'true');
+        modal.innerHTML = `
+            <div class="cart-result__backdrop"></div>
+            <div class="cart-result__box cart-result__box--${outcome}">
+                <p class="cart-result__title"></p>
+                <p class="cart-result__text"></p>
+                <button type="button" class="cart-btn cart-btn--primary cart-result__btn">Close</button>
+            </div>`;
+        modal.querySelector('.cart-result__title').textContent = message[0];
+        modal.querySelector('.cart-result__text').textContent = message[1];
+        const close = () => {
+            modal.remove();
+            if (outcome !== 'success') openDrawer();
+        };
+        modal.querySelector('.cart-result__btn').addEventListener('click', close);
+        modal.querySelector('.cart-result__backdrop').addEventListener('click', close);
+        document.body.appendChild(modal);
+    }
+
     function handleOrderSubmit(e) {
         e.preventDefault();
 
@@ -585,6 +676,11 @@
         const discount = cartDiscount();
         const fee = getDeliveryFee();
         const total = cartTotalAfterDiscount() + fee;
+
+        if (paymentMethod === 'ziina') {
+            startZiinaPayment(data, option);
+            return;
+        }
 
         if (typeof emailjs === 'undefined' || EMAILJS_ORDER_TEMPLATE_ID === 'YOUR_ORDER_TEMPLATE_ID') {
             statusEl.textContent = "Order requests aren't connected yet — please DM us on Instagram instead.";
@@ -652,6 +748,8 @@
 
     const cartBtn = document.getElementById('cartBtn');
     if (cartBtn) cartBtn.addEventListener('click', openDrawer);
+
+    handleZiinaReturn();
 
     window.NavilleraCart = { add: addToCart, getQty };
 })();

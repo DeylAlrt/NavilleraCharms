@@ -239,7 +239,7 @@ const SHOP = {
             name: 'Keychain Links', price: 10.00, unit: 'each',
             oddPictures: { 'Gold Keychain Link': 'Keychains/Gold Keychain.png', 'Silver Keychain Link': 'Keychains/Silver Keychain.png' },
             items: ['Gold Keychain Link', 'Silver Keychain Link'],
-            soldOut: ['Silver Keychain Link'],
+            soldOut: [],
         },
     ],
 

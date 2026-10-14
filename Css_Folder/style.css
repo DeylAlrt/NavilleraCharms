@@ -464,8 +464,9 @@ body {
 
     .collection { display: inline-block; width: auto; white-space: nowrap; text-align: center; font-size: 1rem; padding: 10px 24px; margin-top: 16px; }
     .collections { padding: 28px 24px 42px; }
-    .collections__grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
+    .collections__grid { display: flex; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 15px; -webkit-overflow-scrolling: touch;}
     .collections__grid::-webkit-scrollbar { display: none; }
+    .collections__grid .reveal { translate: none; } /* fade only: the row clips anything sliding up */
     .collections__card { flex: 0 0 calc(50% - 6px); scroll-snap-align: start; }
     .collections__title { font-size: 2.5rem; }
     .collections__plus { width: 10%; }

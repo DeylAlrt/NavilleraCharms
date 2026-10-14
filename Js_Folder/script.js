@@ -1,3 +1,16 @@
+// Loading skeletons (Css_Folder/skeleton.css): pictures with class "sk"
+// shimmer until they load. One listener covers pictures added later too.
+(function () {
+    const markLoaded = (e) => {
+        if (e.target.classList && e.target.classList.contains('sk')) e.target.classList.add('is-loaded');
+    };
+    document.addEventListener('load', markLoaded, true);
+    document.addEventListener('error', markLoaded, true);
+    document.querySelectorAll('img.sk').forEach(img => {
+        if (img.complete) img.classList.add('is-loaded');
+    });
+})();
+
 const grid = document.querySelector('.collections__grid');
 const dots = document.querySelectorAll('.dot');
 
@@ -115,6 +128,7 @@ document.addEventListener('keydown', (event) => {
             margin-left: -14%;
         `;
         const img = document.createElement('img');
+        img.className = 'sk';
         img.src = src;
         img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
         card.appendChild(img);

@@ -133,7 +133,7 @@
         // --- Photo or glyph ---
         if (hasPhoto) {
             const img = document.createElement('img');
-            img.className = 'charm-photo';
+            img.className = 'charm-photo sk';
             img.src = charmImageUrl(item.file);
             img.alt = item.label;
             img.loading = 'lazy';

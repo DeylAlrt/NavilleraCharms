@@ -550,3 +550,19 @@ html.dark-mode .promo-text {
 .collection:focus-visible {
     transform: translateY(-3px);
 }
+
+.intro picture { display: contents; }
+.background-image { width: 100%; height: auto; }
+
+@media (min-width: 769px) {
+    .intro { padding-top: 60px; }
+    .intro__frame { position: relative; width: 100%; }
+    .background-image { display: block; border-radius: 0 0 28px 28px; }
+    .intro__frame .build { bottom: 24%; width: auto; white-space: nowrap; padding: 0.5em 1.4em; font-size: clamp(1rem, 1.5vw, 1.5rem); }
+}
+
+@media (max-width: 768px) {
+    .intro { padding-top: 70px; }
+    .intro__frame { width: 100%; }
+    .background-image { border-radius: 0 0 22px 22px; }
+}

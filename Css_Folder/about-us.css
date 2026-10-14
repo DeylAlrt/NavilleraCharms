@@ -34,64 +34,8 @@ body {
     display: block;
     width: 100%;
     max-width: 100vw;
-    object-fit: cover;
+    height: auto; 
 }
-
-
-.image-wrapper::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    background: linear-gradient(to bottom, transparent 40%, rgba(42, 120, 189, 0.7) 100%);
-    backdrop-filter: blur(15px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 40%, black 90%);
-    mask-image: linear-gradient(to bottom, transparent 40%, black 90%);
-}
-
-.aboutus-text {
-    position: absolute;
-    bottom: 12%;
-    left: 70%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    gap: 1.3vw;
-    z-index: 10;
-    width: 100%;
-    color: white;
-}
-
-.about {
-    font-family: 'Kantumruy Pro', sans-serif;
-    font-size: 12vw;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    line-height: 1;
-}
-
-.us {
-    font-family: 'Source Serif 4', serif;
-    font-style: italic;
-    font-size: 16vw;
-    font-weight: 500;
-    text-transform: lowercase;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-
-.star {
-    top: 60%;
-    position: absolute;
-    z-index: 11;
-    pointer-events: none;
-}
-
-.big-star { width: 7%; bottom: 30%; left: 33%; }
-.small-star { width: 4%; bottom: 36%; left: 30%; }
-
 
 .welcome-section {
     margin: 5vh;
@@ -425,10 +369,6 @@ body {
 @media (max-width: 768px) {
 
     
-    .aboutus-background { height: 70vh; object-fit: cover; } 
-    .big-star { width: 14%; top: 68%; left: 27%; }
-    .small-star { width: 10%; top: 63%; left: 22%; }
-    .aboutus-text { left: 67%; }
 
     
     .welcome-section { margin: 5vh 0; }
@@ -493,18 +433,7 @@ body {
 @media (min-width: 769px) {
 
     /* --- Hero: photo stays clear, soft blue fade only along the bottom --- */
-    .image-wrapper { width: 100%; }
-    .aboutus-background { width: 100%; max-width: none; height: min(52vw, 85vh); object-fit: cover; object-position: center 40%; }
-    .image-wrapper::after {
-        background: linear-gradient(to bottom, transparent 65%, rgba(42, 120, 189, 0.5) 100%);
-        backdrop-filter: blur(8px);
-        -webkit-mask-image: linear-gradient(to bottom, transparent 72%, black 100%);
-        mask-image: linear-gradient(to bottom, transparent 72%, black 100%);
-    }
-    .aboutus-text { left: auto; right: 4%; bottom: 9%; transform: none; width: auto; }
-    .star { top: auto; }
-    .big-star { width: 11%; left: 7%; bottom: 12%; }
-    .small-star { width: 7%; left: 3%; bottom: 40%; }
+    .aboutus-background { max-width: none; }
 
     /* --- Welcome --- */
     .welcome-section { margin: clamp(28px, 4vw, 56px) auto 0; }
@@ -578,4 +507,9 @@ html.dark-mode .partner-text {
 .submit-btn:hover:not(:disabled),
 .submit-btn:focus-visible {
     transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .aboutus-container { padding-top: 70px; }
+    .image-wrapper { width: 100%; border-radius: 0 0 22px 22px; }
 }

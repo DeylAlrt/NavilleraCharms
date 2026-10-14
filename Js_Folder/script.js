@@ -11,6 +11,62 @@
     });
 })();
 
+// Press feedback (Css_Folder/interactions.css): buttons, cards and charm
+// tiles give a quick squeeze when tapped or clicked, on phones too.
+(function () {
+    const PRESSABLE = 'button, .charm-tile.is-addable, .collections__card, .nav-build, .nav-item, .jumpnav-link, a[class*="btn"]';
+    document.addEventListener('pointerdown', (e) => {
+        const el = e.target.closest(PRESSABLE);
+        if (!el || el.disabled) return;
+        el.classList.remove('is-pressed');
+        void el.offsetWidth; // restart the animation on quick repeat taps
+        el.classList.add('is-pressed');
+    });
+    document.addEventListener('animationend', (e) => {
+        if (e.animationName === 'press') e.target.classList.remove('is-pressed');
+    });
+})();
+
+// Fade-up on scroll (home + About Us only). Only sections still below the
+// screen when the page opens are hidden, so nothing visible ever blinks.
+// Once a section has faded in, its classes are removed so its own hover
+// effects work as before.
+(function () {
+    const REVEAL = [
+        '.section_1', '.collections__card', '.info__main-img', '.info__point', '.left-image', '.discount-container',
+        '.welcome-section', '.her-story-text', '.her-story-image', '.gallery-wrapper-item', '.contact-form-section',
+    ].join(', ');
+    const page = location.pathname.split('/').pop(); // "", "index", "about-us.html", ...
+    if (!/^(index|about-us)?(\.html)?$/.test(page) || !('IntersectionObserver' in window)) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            observer.unobserve(el);
+            el.classList.add('is-visible');
+            const done = (e) => {
+                if (e.target !== el) return; // ignore transitions inside it
+                el.removeEventListener('transitionend', done);
+                el.classList.remove('reveal', 'is-visible');
+                el.style.transitionDelay = '';
+            };
+            el.addEventListener('transitionend', done);
+        });
+    }, { rootMargin: '0px 0px -10% 0px' });
+
+    // Cards side by side fade in one after another
+    const siblingCount = new Map();
+    document.querySelectorAll(REVEAL).forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) return;
+        const n = siblingCount.get(el.parentElement) || 0;
+        siblingCount.set(el.parentElement, n + 1);
+        el.style.transitionDelay = Math.min(n, 4) * 0.1 + 's';
+        el.classList.add('reveal');
+        observer.observe(el);
+    });
+})();
+
 const grid = document.querySelector('.collections__grid');
 const dots = document.querySelectorAll('.dot');
 

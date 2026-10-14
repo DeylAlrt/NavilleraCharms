@@ -118,7 +118,7 @@
                     price: sub.price,
                     subcollection: sub.name,
                     img: item.file ? charmImageUrl(item.file) : null,
-                });
+                }, tile.querySelector('.charm-photo'));
             };
 
             tile.addEventListener('click', addToCart);

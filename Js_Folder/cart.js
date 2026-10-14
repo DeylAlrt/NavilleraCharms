@@ -54,7 +54,9 @@
         return item ? item.qty : 0;
     }
 
-    function addToCart(item) {
+    // `fromEl` (optional) is the tapped charm's picture: a copy of it flies
+    // into the cart icon, then the icon bounces (Css_Folder/interactions.css).
+    function addToCart(item, fromEl) {
         const key = itemKey(item);
         const existing = cart.find(i => itemKey(i) === key);
         if (existing) {
@@ -64,6 +66,42 @@
         }
         persist();
         showToast(item.label);
+        flyToCart(fromEl, bumpCartIcon);
+    }
+
+    function bumpCartIcon() {
+        const btn = document.getElementById('cartBtn');
+        if (!btn) return;
+        btn.classList.remove('is-bumped');
+        void btn.offsetWidth; // restart the animation on quick repeat taps
+        btn.classList.add('is-bumped');
+    }
+
+    function flyToCart(fromEl, onArrive) {
+        const btn = document.getElementById('cartBtn');
+        const from = fromEl && fromEl.getBoundingClientRect();
+        const to = btn && btn.getBoundingClientRect();
+        if (!from || !to || !from.width || !to.width || !fromEl.animate) { onArrive(); return; }
+
+        const fly = fromEl.cloneNode(true);
+        fly.className = 'cart-fly';
+        fly.removeAttribute('loading');
+        fly.style.left = from.left + 'px';
+        fly.style.top = from.top + 'px';
+        fly.style.width = from.width + 'px';
+        fly.style.height = from.height + 'px';
+        document.body.appendChild(fly);
+
+        const dx = (to.left + to.width / 2) - (from.left + from.width / 2);
+        const dy = (to.top + to.height / 2) - (from.top + from.height / 2);
+        fly.animate([
+            { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+            { transform: `translate(${dx * 0.45}px, ${dy * 0.45 - 60}px) scale(0.75)`, opacity: 1, offset: 0.45 },
+            { transform: `translate(${dx}px, ${dy}px) scale(0.2)`, opacity: 0.4 },
+        ], { duration: 650, easing: 'ease-in-out' }).onfinish = () => {
+            fly.remove();
+            onArrive();
+        };
     }
 
     function removeFromCart(key) {

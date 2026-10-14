@@ -97,7 +97,7 @@ const SHOP = {
             },
         },
         {
-            name: 'Flags', price: 8.00, sortAZ: true,
+            name: 'Flags', price: 8.99, sortAZ: true,
             picture: 'Flag Links/Flags ({n}).png',
             items: ['Philippines', 'Netherlands', 'South Korea', 'India', 'Egypt', 'Czech Republic',
                     'UAE', 'Pakistan', 'United Kingdom', 'Palestine', 'Italy'],

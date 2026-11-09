@@ -51,6 +51,9 @@
 
     let currentCategory = null;
 
+    // The products: from Supabase (Js_Folder/products.js), or catalogue-data.js if it can't be reached
+    let catalogue = (typeof CATALOGUE !== 'undefined') ? CATALOGUE : {};
+
 
     /* ==========================================================
        HELPERS
@@ -70,6 +73,7 @@
     }
 
     function charmImageUrl(file) {
+        if (/^https?:\/\//i.test(file)) return file;   // a full photo link (e.g. ImageKit) set in Supabase
         const path = '/charms/' + file;
         return `https://navillera.vercel.app/_next/image?url=${encodeURIComponent(path)}&w=256&q=75`;
     }
@@ -77,7 +81,7 @@
     // Items are either { label, soldOut, file } objects or strings ("Label*" = sold out)
     function parseItem(raw) {
         if (raw && typeof raw === 'object') {
-            return { label: raw.label, soldOut: !!raw.soldOut, file: raw.file || null };
+            return { label: raw.label, soldOut: !!raw.soldOut, file: raw.file || null, price: raw.price };
         }
         const soldOut = raw.trim().endsWith('*');
         const label = soldOut ? raw.trim().slice(0, -1).trim() : raw.trim();
@@ -115,7 +119,7 @@
                 window.NavilleraCart.add({
                     file: item.file,
                     label: item.label,
-                    price: sub.price,
+                    price: item.price ?? sub.price,
                     subcollection: sub.name,
                     img: item.file ? charmImageUrl(item.file) : null,
                 }, tile.querySelector('.charm-photo'));
@@ -202,7 +206,9 @@
         const priceEl = header.querySelector('.subcollection__price');
 
         const renderItems = (subData) => {
-            priceEl.innerHTML = `${formatPrice(subData.price)} &middot; ${subData.unit}`;
+            // A section whose charms have different prices (set in Supabase) shows its lowest
+            const from = subData.samePrice === false ? 'from ' : '';
+            priceEl.innerHTML = `${from}${formatPrice(subData.price)} &middot; ${subData.unit}`;
             grid.innerHTML = '';
 
             if (subData.items.length === 0) {
@@ -248,7 +254,7 @@
 
     function render(category) {
         const meta = (typeof CATEGORY_META !== 'undefined') ? CATEGORY_META[category] : null;
-        const data = (typeof CATALOGUE !== 'undefined') ? CATALOGUE[category] : null;
+        const data = catalogue[category] || null;
 
         // Unknown category
         if (!meta || !data) {
@@ -395,7 +401,11 @@
 
     const params = new URLSearchParams(window.location.search);
     const category = (params.get('category') || '').toLowerCase();
-    switchCategory(category, { pushState: false, scroll: false });
+    const productsReady = window.NavilleraProducts ? window.NavilleraProducts.load() : Promise.resolve(null);
+    productsReady.then(rows => {
+        if (rows) catalogue = window.NavilleraProducts.toCatalogue(rows);
+        switchCategory(currentCategory ?? category, { pushState: false, scroll: false });
+    });
 
     /* ==========================================================
        EVENT LISTENERS

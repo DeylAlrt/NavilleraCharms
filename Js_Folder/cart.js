@@ -1,30 +1,20 @@
 (function () {
     const STORAGE_KEY = 'navillera-cart';
-    const EMAILJS_PUBLIC_KEY = '-2tCjwFJUnT97N93w';
-    const EMAILJS_SERVICE_ID = 'service_vc0fhb9';
 
-    const EMAILJS_ORDER_SERVICE_ID = 'service_ff6chqi';
-    const EMAILJS_ORDER_TEMPLATE_ID = 'template_k1boxcg';
-    const EMAILJS_ORDER_PUBLIC_KEY = 'vvg-sBt7pyZ2SOfHk';
+    // Orders, promo codes and online payments go through the charm builder's
+    // server, which prices the cart itself from the products in Supabase and
+    // emails the shop — prices and names in the browser are never trusted.
+    const API = 'https://navillera.vercel.app/api';
+    const ZIINA_PAYMENT_ENDPOINT = `${API}/shop-payment-intent`;
+    const ORDER_ENDPOINT = `${API}/shop-order`;
+    const PROMO_ENDPOINT = `${API}/check-promo`;
 
-    const PROMO_CODES = {
-        NEWBABE: 0.05,
-    };
-    const HAS_ORDERED_KEY = 'navillera-has-ordered';
-    // Ziina payments are created by the charm builder's server, which prices
-    // the cart itself from the catalogue — prices in the browser are never trusted.
-    const ZIINA_PAYMENT_ENDPOINT = 'https://navillera.vercel.app/api/shop-payment-intent';
+    // Spam protection (Js_Folder/human-check.js): set up when the order form first opens.
+    const humanCheckTools = window.NavilleraHumanCheck || { honeypotHtml: () => '', mount: () => ({ enabled: false, getToken: () => '', reset() {} }) };
+    let humanCheck = null;
     // --------------------------------------------------------------------
 
-    let appliedPromo = null; // { code, percent } once a valid code is applied
-
-    function hasOrderedBefore() {
-        try { return localStorage.getItem(HAS_ORDERED_KEY) === '1'; } catch { return false; }
-    }
-
-    function markAsOrdered() {
-        try { localStorage.setItem(HAS_ORDERED_KEY, '1'); } catch {}
-    }
+    let appliedPromo = null; // { code, percent } once the server accepts a code
 
     function readCart() {
         try {
@@ -297,6 +287,9 @@
                     <div class="cart-drawer__row cart-drawer__row--total"><span>Total to pay</span><span id="cartTotalValue">0.00 AED</span></div>
                 </div>
 
+                ${humanCheckTools.honeypotHtml()}
+                <div id="cartHumanCheck"></div>
+
                 <p class="cart-order-status" id="cartOrderStatus" role="status" aria-live="polite"></p>
                 <div class="cart-actions">
                     <button type="button" class="cart-btn cart-btn--secondary" id="cartFormBackBtn">Back</button>
@@ -341,45 +334,51 @@
             if (e.key === 'Enter') { e.preventDefault(); applyPromoCode(); }
         });
 
-        if (hasOrderedBefore()) {
-            promoInputEl.disabled = true;
-            promoInputEl.placeholder = 'New customers only';
-            promoApplyBtnEl.disabled = true;
-        }
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && drawerEl.classList.contains('is-open')) closeDrawer();
         });
     }
 
+    /** Asks the server about the code (Supabase). "First order only" is checked again when ordering. */
     function applyPromoCode() {
         const code = (promoInputEl.value || '').trim().toUpperCase();
-
-        if (hasOrderedBefore()) {
-            appliedPromo = null;
-            promoMsgEl.textContent = "This code is for new customers only — looks like you've already placed an order from this device.";
-            promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
-            renderItems();
-            return;
-        }
-
         if (!code) {
             promoMsgEl.textContent = 'Enter a promo code.';
             promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
             return;
         }
 
-        const percent = PROMO_CODES[code];
-        if (percent === undefined) {
-            appliedPromo = null;
-            promoMsgEl.textContent = "That code isn't valid.";
-            promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
-            renderItems();
-            return;
-        }
+        promoApplyBtnEl.disabled = true;
+        fetch(PROMO_ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code }),
+        })
+            .then(res => res.json().catch(() => ({ success: false })))
+            .then(result => {
+                if (!result.success) {
+                    appliedPromo = null;
+                    promoMsgEl.textContent = result.error || "That code isn't valid.";
+                    promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
+                } else {
+                    appliedPromo = { code: result.code, percent: result.percent };
+                    promoMsgEl.textContent = `"${result.code}" applied — ${Math.round(result.percent * 100)}% off!`;
+                    promoMsgEl.className = 'cart-promo__msg cart-promo__msg--success';
+                }
+                renderItems();
+            })
+            .catch(() => {
+                promoMsgEl.textContent = "We couldn't check the code right now — please try again.";
+                promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error';
+            })
+            .finally(() => { promoApplyBtnEl.disabled = false; });
+    }
 
-        appliedPromo = { code, percent };
-        promoMsgEl.textContent = `"${code}" applied — ${Math.round(percent * 100)}% off!`;
-        promoMsgEl.className = 'cart-promo__msg cart-promo__msg--success';
+    /** The server turned the code down when ordering: take it off, so the next try goes through without it. */
+    function dropPromo(message) {
+        appliedPromo = null;
+        if (promoInputEl) promoInputEl.value = '';
+        if (promoMsgEl) { promoMsgEl.textContent = message; promoMsgEl.className = 'cart-promo__msg cart-promo__msg--error'; }
         renderItems();
     }
 
@@ -485,6 +484,7 @@
         if (!option) return 'Please choose a metro station (step 2).';
         if (option.needsAddress && !(data.address || '').trim()) return 'Please type your home address (step 2).';
         if (!paymentMethod) return 'Please choose how you want to pay (step 3).';
+        if (humanCheck && humanCheck.enabled && !humanCheck.getToken()) return 'Please tick the "I\'m human" check.';
         return null;
     }
 
@@ -556,6 +556,7 @@
         summaryEl.hidden = true;
         itemsEl.hidden = true;
         formEl.hidden = false;
+        if (!humanCheck) humanCheck = humanCheckTools.mount(formEl.querySelector('#cartHumanCheck'));
         updateFormTotals();
     }
 
@@ -567,46 +568,41 @@
         statusEl.className = 'cart-order-status';
     }
 
-    function buildOrderItemsHtml(discount, promoCode) {
-        const cards = cart.map(item => `
-            <tr><td style="padding:0 0 10px;">
-                <table style="width:100%; border-collapse:collapse; background:#f7f9fc; border-radius:12px; overflow:hidden;">
-                    <tr>
-                        <td style="width:72px; padding:12px;">
-                            ${item.img
-                                ? `<img src="${item.img}" alt="${item.label}" width="60" height="60" style="width:60px;height:60px;object-fit:contain;border-radius:8px;background:#ffffff;display:block;">`
-                                : `<div style="width:60px;height:60px;border-radius:8px;background:#e9edf3;"></div>`
-                            }
-                        </td>
-                        <td style="padding:12px 12px 12px 0; font-family:Arial,sans-serif; color:#1a2a44;">
-                            <div style="font-size:16px; font-weight:bold;">${item.label}</div>
-                            <div style="font-size:12px; color:#6b7a90; margin-top:2px;">${item.subcollection}</div>
-                            <div style="font-size:13px; margin-top:6px;">Qty: ${item.qty} &middot; ${item.price.toFixed(2)} AED each</div>
-                        </td>
-                        <td style="padding:12px; font-family:Arial,sans-serif; font-size:15px; font-weight:bold; color:#1a2a44; text-align:right; white-space:nowrap; vertical-align:middle;">
-                            ${(item.price * item.qty).toFixed(2)} AED
-                        </td>
-                    </tr>
-                </table>
-            </td></tr>
-        `).join('');
+    /** What the server needs for an order; it prices and describes the cart itself. */
+    function orderBody(data, option) {
+        return {
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            address: data.address || '',
+            notes: data.notes || '',
+            deliveryOptionId: option.id,
+            paymentMethod,
+            promoCode: appliedPromo ? appliedPromo.code : '',
+            items: cart.map(i => ({ subcollection: i.subcollection, file: i.file, qty: i.qty })),
+            website: data.website || '',
+            turnstileToken: humanCheck ? humanCheck.getToken() : '',
+        };
+    }
 
-        const discountRow = discount > 0 ? `
-            <tr><td style="padding:0 0 10px;">
-                <table style="width:100%; border-collapse:collapse; background:#e9f7ee; border-radius:12px; overflow:hidden;">
-                    <tr>
-                        <td style="padding:12px; font-family:Arial,sans-serif; color:#2e7d4f;">
-                            <div style="font-size:15px; font-weight:bold;">Promo code applied: ${promoCode}</div>
-                        </td>
-                        <td style="padding:12px; font-family:Arial,sans-serif; font-size:15px; font-weight:bold; color:#2e7d4f; text-align:right; white-space:nowrap;">
-                            -${discount.toFixed(2)} AED
-                        </td>
-                    </tr>
-                </table>
-            </td></tr>
-        ` : '';
+    /** Sends the order to the server and returns its answer. Each "I'm human" pass is good for one send. */
+    function postOrder(url, body) {
+        return fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
+        })
+            .then(res => res.json().catch(() => ({ success: false, error: 'No answer from the server — please try again.' })))
+            .finally(() => { if (humanCheck) humanCheck.reset(); });
+    }
 
-        return `<table style="width:100%; border-collapse:collapse;">${cards}${discountRow}</table>`;
+    /** The promo code was refused when ordering: say why and take it off. True if that happened. */
+    function handlePromoRefused(result) {
+        if (!result.promoInvalid) return false;
+        dropPromo(result.error);
+        statusEl.textContent = `${result.error} The code has been removed — press the button again to continue without it.`;
+        statusEl.className = 'cart-order-status cart-order-status--error';
+        return true;
     }
 
     /** Pay online: ask the server for a Ziina payment, then go to Ziina's page. */
@@ -617,23 +613,10 @@
         statusEl.textContent = '';
         statusEl.className = 'cart-order-status';
 
-        fetch(ZIINA_PAYMENT_ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                name: data.name,
-                phone: data.phone,
-                email: data.email,
-                address: data.address || '',
-                notes: data.notes || '',
-                deliveryOptionId: option.id,
-                promoCode: appliedPromo ? appliedPromo.code : '',
-                items: cart.map(i => ({ subcollection: i.subcollection, file: i.file, qty: i.qty })),
-                returnPath: window.location.pathname + window.location.search,
-            }),
-        })
-            .then(res => res.json())
+        const resetButton = () => { submitBtn.disabled = false; submitBtn.textContent = 'Continue to payment'; };
+        postOrder(ZIINA_PAYMENT_ENDPOINT, { ...orderBody(data, option), returnPath: window.location.pathname + window.location.search })
             .then(result => {
+                if (handlePromoRefused(result)) { resetButton(); return; }
                 if (!result.success) throw new Error(result.error || 'Could not start online payment.');
                 // The cart stays saved until Ziina confirms the payment, so cancelling keeps it.
                 window.location.assign(result.redirect_url);
@@ -642,8 +625,7 @@
                 console.error('Ziina payment failed to start:', err);
                 statusEl.textContent = 'Could not start online payment: ' + err.message;
                 statusEl.className = 'cart-order-status cart-order-status--error';
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Continue to payment';
+                resetButton();
             });
     }
 
@@ -669,7 +651,6 @@
             // Only the webhook confirms the order (after re-checking with Ziina); this just clears the cart.
             cart = [];
             appliedPromo = null;
-            markAsOrdered();
             persist();
         }
 
@@ -709,20 +690,9 @@
         }
 
         const option = getDeliveryOption();
-        const payment = PAYMENT_OPTIONS.find(p => p.id === paymentMethod).title;
-        const subtotal = cartSubtotal();
-        const discount = cartDiscount();
-        const fee = getDeliveryFee();
-        const total = cartTotalAfterDiscount() + fee;
 
         if (paymentMethod === 'ziina') {
             startZiinaPayment(data, option);
-            return;
-        }
-
-        if (typeof emailjs === 'undefined' || EMAILJS_ORDER_TEMPLATE_ID === 'YOUR_ORDER_TEMPLATE_ID') {
-            statusEl.textContent = "Order requests aren't connected yet — please DM us on Instagram instead.";
-            statusEl.className = 'cart-order-status cart-order-status--error';
             return;
         }
 
@@ -733,32 +703,17 @@
         statusEl.textContent = '';
         statusEl.className = 'cart-order-status';
 
-        emailjs.send(EMAILJS_ORDER_SERVICE_ID, EMAILJS_ORDER_TEMPLATE_ID, {
-            to_email: 'sales.navilleracharms@gmail.com',
-            customer_name: data.name,
-            phone: data.phone,
-            customer_email: data.email,
-            pickup_time: '',
-            meetup_place: describeDelivery(option, data.address || ''),
-            delivery_date: 'To be arranged on WhatsApp',
-            payment_method: payment,
-            subtotal: subtotal.toFixed(2),
-            promo_code: appliedPromo ? appliedPromo.code : 'None',
-            discount: discount.toFixed(2),
-            delivery_fee: fee.toFixed(2),
-            total: total.toFixed(2),
-            // Payment is repeated in the notes so it shows even in a template without {{payment_method}}.
-            notes: data.notes ? `Payment: ${payment}\n${data.notes}` : `Payment: ${payment}`,
-            items_html: buildOrderItemsHtml(discount, appliedPromo ? appliedPromo.code : ''),
-        }, { publicKey: EMAILJS_ORDER_PUBLIC_KEY })
-            .then(() => {
-                statusEl.textContent = "Thank you! 🎉 Your order is sent. We'll message you on WhatsApp soon.";
+        postOrder(ORDER_ENDPOINT, orderBody(data, option))
+            .then(result => {
+                if (handlePromoRefused(result)) return;
+                if (!result.success) throw new Error(result.error || 'Something went wrong sending your order.');
+                statusEl.textContent = result.orderNumber
+                    ? `Thank you! 🎉 Your order #${result.orderNumber} is sent. We'll message you on WhatsApp soon.`
+                    : "Thank you! 🎉 Your order is sent. We'll message you on WhatsApp soon.";
                 statusEl.className = 'cart-order-status cart-order-status--success';
                 cart = [];
                 appliedPromo = null;
-                markAsOrdered();
-                if (promoInputEl) { promoInputEl.value = ''; promoInputEl.disabled = true; promoInputEl.placeholder = 'New customers only'; }
-                if (promoApplyBtnEl) promoApplyBtnEl.disabled = true;
+                if (promoInputEl) promoInputEl.value = '';
                 if (promoMsgEl) { promoMsgEl.textContent = ''; promoMsgEl.className = 'cart-promo__msg'; }
                 persist();
                 formEl.reset();
@@ -766,8 +721,10 @@
                 setTimeout(closeDrawer, 3500);
             })
             .catch((err) => {
-                console.error('Order email failed:', err);
-                statusEl.textContent = 'Something went wrong sending your order — please try again or DM us on Instagram.';
+                console.error('Order failed to send:', err);
+                statusEl.textContent = (err && err.message && err.message !== 'Failed to fetch')
+                    ? err.message + ' — or DM us on Instagram.'
+                    : 'Something went wrong sending your order — please try again or DM us on Instagram.';
                 statusEl.className = 'cart-order-status cart-order-status--error';
             })
             .finally(() => {
@@ -776,13 +733,26 @@
             });
     }
 
+    /** Prices in a saved cart can be out of date: refresh them from Supabase. */
+    function refreshCartFromSupabase() {
+        if (!window.NavilleraProducts || cart.length === 0) return;
+        window.NavilleraProducts.load().then(rows => {
+            if (!rows) return;
+            const latest = window.NavilleraProducts.byCartKey(rows);
+            let changed = false;
+            cart.forEach(item => {
+                const now = latest.get(itemKey(item));
+                if (now && now.price !== item.price) { item.price = now.price; changed = true; }
+            });
+            if (changed) persist();
+        });
+    }
+
     buildDrawer();
     renderItems();
     updateBadge();
 
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-    }
+    refreshCartFromSupabase();
 
     const cartBtn = document.getElementById('cartBtn');
     if (cartBtn) cartBtn.addEventListener('click', openDrawer);

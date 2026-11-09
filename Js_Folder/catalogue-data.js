@@ -1,4 +1,11 @@
 /* ==============================================================
+   BACKUP LIST — products now live in Supabase.
+   Change prices, sold out, hiding and new products in the Supabase
+   dashboard (Table Editor → products); the site shows them within
+   about a minute (Js_Folder/products.js). This file is only used if
+   Supabase can't be reached. The section settings below (unit, sortAZ)
+   are still used for how sections are shown.
+
    Catalougue Edits
 
    QUICK EDITS

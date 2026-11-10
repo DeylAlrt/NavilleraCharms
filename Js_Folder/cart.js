@@ -124,6 +124,27 @@
         return Math.max(cartSubtotal() - cartDiscount(), 0);
     }
 
+    // --- Line icons (same set and style as the charm builder's Icon.tsx): 24px grid,
+    // rounded strokes, drawn in the text colour ---
+    const ICON_PATHS = {
+        sparkles: '<path d="M11 3.5l1.7 4.8 4.8 1.7-4.8 1.7L11 16.5l-1.7-4.8L4.5 10l4.8-1.7L11 3.5z"/><path d="M18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/>',
+        message: '<path d="M12 4a8 8 0 1 1-4 14.9L4 20l1.1-3.9A8 8 0 0 1 12 4z"/>',
+        plane: '<path d="M12 2.5c.9 0 1.5.8 1.5 1.8v5.2l7.5 4.5v2l-7.5-2.3V18l2 1.5V21L12 20l-3.5 1v-1.5l2-1.5v-4.3L3 16v-2l7.5-4.5V4.3c0-1 .6-1.8 1.5-1.8z"/>',
+        phone: '<rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/>',
+        bag: '<path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 10V7a3 3 0 0 1 6 0v3"/>',
+        metro: '<rect x="6" y="3" width="12" height="14" rx="3"/><path d="M6 10h12M8.5 17l-2 4M15.5 17l2 4"/><circle cx="9" cy="13.5" r="1" fill="currentColor" stroke="none"/><circle cx="15" cy="13.5" r="1" fill="currentColor" stroke="none"/>',
+        home: '<path d="M3.5 11L12 3.8l8.5 7.2"/><path d="M6 9.5V20h12V9.5M10 20v-5h4v5"/>',
+        card: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h3"/>',
+        cash: '<rect x="2.5" y="6.5" width="19" height="11" rx="1.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/>',
+        bank: '<path d="M3.5 9.5L12 4.5l8.5 5H3.5z"/><path d="M6 12v5M10 12v5M14 12v5M18 12v5M4 20h16"/>',
+        success: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>',
+        alert: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5V13M12 16.5h.01"/>',
+    };
+
+    function iconSvg(name, extraClass = '') {
+        return `<svg class="cart-icon${extraClass ? ' ' + extraClass : ''}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON_PATHS[name]}</svg>`;
+    }
+
     // --- Delivery & payment choices (kept in sync with the charm builder's
     // src/components/charmEditor/orderOptions.ts) ---
     const DELIVERY_OPTIONS = [
@@ -137,14 +158,14 @@
         { id: 'home', method: 'home', title: 'Home delivery', detail: 'Anywhere in the UAE (Jeebly)', fee: 20, needsAddress: true },
     ];
     const DELIVERY_METHODS = [
-        { method: 'pickup', icon: '🛍️', title: 'Pick up', detail: 'Barsha Heights (Tecom)', price: 'FREE' },
-        { method: 'metro', icon: '🚇', title: 'Metro meet-up', detail: 'We meet you at a metro station', price: 'FREE – 9 AED' },
-        { method: 'home', icon: '🏠', title: 'Home delivery', detail: 'Anywhere in the UAE (Jeebly)', price: '20 AED' },
+        { method: 'pickup', icon: 'bag', title: 'Pick up', detail: 'Barsha Heights (Tecom)', price: 'FREE' },
+        { method: 'metro', icon: 'metro', title: 'Metro meet-up', detail: 'We meet you at a metro station', price: 'FREE – 9 AED' },
+        { method: 'home', icon: 'home', title: 'Home delivery', detail: 'Anywhere in the UAE (Jeebly)', price: '20 AED' },
     ];
     const PAYMENT_OPTIONS = [
-        { id: 'ziina', icon: '💳', title: 'Pay online now (Ziina)', detail: "You'll be redirected to Ziina to pay securely (card, Apple Pay or Google Pay)" },
-        { id: 'cod', icon: '💵', title: 'Cash on Delivery', detail: 'Pay in cash when you get your order' },
-        { id: 'bank', icon: '🏦', title: 'Bank Transfer', detail: "We'll send our bank details on WhatsApp" },
+        { id: 'ziina', icon: 'card', title: 'Pay online now (Ziina)', detail: "You'll be redirected to Ziina to pay securely (card, Apple Pay or Google Pay)" },
+        { id: 'cod', icon: 'cash', title: 'Cash on Delivery', detail: 'Pay in cash when you get your order' },
+        { id: 'bank', icon: 'bank', title: 'Bank Transfer', detail: "We'll send our bank details on WhatsApp" },
     ];
 
     let deliveryMethod = null;   // 'pickup' | 'metro' | 'home'
@@ -174,7 +195,7 @@
     function optionCardHtml({ group, value, icon, title, detail, price, disabled }) {
         return `
             <button type="button" class="cart-option" role="radio" aria-checked="false" data-group="${group}" data-value="${value}"${disabled ? ' disabled' : ''}>
-                ${icon ? `<span class="cart-option__icon" aria-hidden="true">${icon}</span>` : ''}
+                ${icon ? `<span class="cart-option__icon" aria-hidden="true">${iconSvg(icon)}</span>` : ''}
                 <span class="cart-option__text">
                     <span class="cart-option__title">${title}</span>
                     <span class="cart-option__detail">${detail}</span>
@@ -231,7 +252,7 @@
             </div>
 
             <form class="cart-order-form" id="cartOrderForm" novalidate hidden>
-                <p class="cart-form__intro">Just 3 easy steps ✨</p>
+                <p class="cart-form__intro">Just 3 easy steps ${iconSvg('sparkles', 'cart-icon--accent')}</p>
 
                 <section class="cart-step">
                     <h3 class="cart-step__heading"><span class="cart-step__num">1</span>Your details</h3>
@@ -240,7 +261,7 @@
                     </label>
                     <label class="cart-form__label">Mobile number (WhatsApp)
                         <input type="tel" name="phone" class="cart-form__input" placeholder="971 5X XXX XXXX" inputmode="numeric" autocomplete="tel" required>
-                        <span class="cart-form__hint">We'll message you on WhatsApp 💬</span>
+                        <span class="cart-form__hint">We'll message you on WhatsApp ${iconSvg('message')}</span>
                     </label>
                     <label class="cart-form__label">Your name
                         <input type="text" name="name" class="cart-form__input" autocomplete="name" required>
@@ -251,7 +272,7 @@
                     <h3 class="cart-step__heading"><span class="cart-step__num">2</span>How do you want to get it?</h3>
                     <div class="cart-options" role="radiogroup" aria-label="Delivery option">
                         ${DELIVERY_METHODS.map(m => optionCardHtml({ group: 'method', value: m.method, icon: m.icon, title: m.title, detail: m.detail, price: m.price })).join('')}
-                        ${optionCardHtml({ group: 'method', value: 'international', icon: '✈️', title: 'International shipping', detail: 'Coming soon', disabled: true })}
+                        ${optionCardHtml({ group: 'method', value: 'international', icon: 'plane', title: 'International shipping', detail: 'Coming soon', disabled: true })}
                     </div>
 
                     <div class="cart-suboptions" id="cartMetroStations" hidden>
@@ -277,7 +298,7 @@
                     <textarea name="notes" class="cart-form__input cart-form__textarea" placeholder="e.g. a gift message"></textarea>
                 </label>
 
-                <p class="cart-form__note">📱 <strong>Note:</strong> Further details will be sent to your WhatsApp number.</p>
+                <p class="cart-form__note">${iconSvg('phone')}<span><strong>Note:</strong> Further details will be sent to your WhatsApp number.</span></p>
 
                 <div class="cart-form__totals">
                     <h3 class="cart-form__totals-heading">Price Details</h3>
@@ -640,7 +661,7 @@
         window.history.replaceState(null, '', window.location.pathname + (query ? '?' + query : '') + window.location.hash);
 
         const messages = {
-            success: ['Payment successful! 🎉', "Thank you! Your order is confirmed. We'll message you on WhatsApp soon."],
+            success: ['Payment successful!', "Thank you! Your order is confirmed. We'll message you on WhatsApp soon."],
             cancel: ['Payment canceled', 'No payment was taken. Your cart is still saved — you can try again, or choose Cash on Delivery or Bank Transfer.'],
             failed: ['Payment failed', 'No payment was taken. Your cart is still saved — please try again or choose another way to pay.'],
         };
@@ -661,6 +682,7 @@
         modal.innerHTML = `
             <div class="cart-result__backdrop"></div>
             <div class="cart-result__box cart-result__box--${outcome}">
+                ${iconSvg(outcome === 'success' ? 'success' : 'alert', 'cart-result__icon')}
                 <p class="cart-result__title"></p>
                 <p class="cart-result__text"></p>
                 <button type="button" class="cart-btn cart-btn--primary cart-result__btn">Close</button>
@@ -708,8 +730,8 @@
                 if (handlePromoRefused(result)) return;
                 if (!result.success) throw new Error(result.error || 'Something went wrong sending your order.');
                 statusEl.textContent = result.orderNumber
-                    ? `Thank you! 🎉 Your order #${result.orderNumber} is sent. We'll message you on WhatsApp soon.`
-                    : "Thank you! 🎉 Your order is sent. We'll message you on WhatsApp soon.";
+                    ? `Thank you! Your order #${result.orderNumber} is sent. We'll message you on WhatsApp soon.`
+                    : "Thank you! Your order is sent. We'll message you on WhatsApp soon.";
                 statusEl.className = 'cart-order-status cart-order-status--success';
                 cart = [];
                 appliedPromo = null;

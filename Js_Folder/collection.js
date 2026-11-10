@@ -31,19 +31,9 @@
        CONSTANTS
        ========================================================== */
 
-    // Fallback glyphs for charms without a photo, matched by label
-    const GLYPH_MAP = [
-        [/heart/i, '❤'], [/star/i, '★'], [/flower|rose/i, '✿'], [/paw/i, '🐾'],
-        [/butterfly/i, '🦋'], [/moon/i, '🌙'], [/cherr/i, '🍒'], [/bow/i, '🎀'],
-        [/clover/i, '🍀'], [/evil eye/i, '🧿'], [/christmas tree/i, '🎄'], [/santa/i, '🎅'],
-        [/candy cane/i, '🍬'], [/gummy bear/i, '🐻'], [/coffee/i, '☕'], [/telephone/i, '☎'],
-        [/ladybug/i, '🐞'], [/bunny|rabbit/i, '🐰'], [/cat/i, '🐱'], [/pup|dog|husky|corgi|retriever|bulldog/i, '🐶'],
-        [/turtle/i, '🐢'], [/watch/i, '⌚'], [/keychain|key /i, '🔑'], [/spider/i, '🕷'],
-        [/bat\b/i, '🦇'], [/camera/i, '📷'], [/envelope/i, '✉'], [/sun /i, '☀'],
-        [/sparkle|diamond|gem/i, '✨'], [/crown/i, '👑'], [/yin yang/i, '☯'], [/boba/i, '🧋'],
-        [/plane|airplane/i, '✈'], [/flag/i, '🏳'], [/ball/i, '⚽'], [/car\b|lamborghini|porsche|bmw|ferrari|mercedes/i, '🏎'],
-        [/shell|pearl/i, '🐚'], [/lock/i, '🔒'], [/bag|purse/i, '👜'], [/tea|drink/i, '🧋']
-    ];
+    // Fallback for a charm without a photo (letters and numbers show themselves): a small
+    // sparkle icon, in the same line style as the cart's icons
+    const FALLBACK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 3.5l1.7 4.8 4.8 1.7-4.8 1.7L11 16.5l-1.7-4.8L4.5 10l4.8-1.7L11 3.5z"/><path d="M18.5 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8.8-2z"/></svg>';
 
     /* ==========================================================
        STATE
@@ -58,11 +48,6 @@
     /* ==========================================================
        HELPERS
        ========================================================== */
-
-    function glyphFor(label) {
-        const hit = GLYPH_MAP.find(([re]) => re.test(label));
-        return hit ? hit[1] : null;
-    }
 
     function slugify(str) {
         return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -144,11 +129,11 @@
             img.decoding = 'async';
             tile.appendChild(img);
         } else {
-            const glyph = item.label.length === 1 ? item.label : (glyphFor(item.label) || item.label.charAt(0));
             const glyphSpan = document.createElement('span');
             glyphSpan.className = 'charm-glyph';
             glyphSpan.setAttribute('aria-hidden', 'true');
-            glyphSpan.textContent = glyph;
+            if (item.label.length === 1) glyphSpan.textContent = item.label;
+            else glyphSpan.innerHTML = FALLBACK_ICON;
             tile.appendChild(glyphSpan);
         }
 

@@ -393,6 +393,12 @@ body {
     line-height: 1;
 }
 
+.charm-glyph svg {
+    display: block;
+    width: 1.9rem;
+    height: 1.9rem;
+}
+
 .charm-tile.has-photo {
     background: #ffffff;
     border: 1px solid rgba(28, 43, 75, 0.08);

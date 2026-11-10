@@ -491,6 +491,28 @@ body.cart-open {
     color: #d1293d;
 }
 
+/* A tick-in-circle or alert icon in front of the order result message */
+.cart-order-status--success::before,
+.cart-order-status--error::before {
+    content: '';
+    display: inline-block;
+    width: 1.15em;
+    height: 1.15em;
+    margin-right: 6px;
+    vertical-align: -0.2em;
+    background: currentColor;
+}
+
+.cart-order-status--success::before {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l3 3 5-6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8 12.5l3 3 5-6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.cart-order-status--error::before {
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5V13M12 16.5h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7.5V13M12 16.5h.01'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 /* --- Order form: 3 numbered steps with big tap-to-choose cards --- */
 .cart-order-form .cart-form__label {
     font-size: 1rem;
@@ -504,6 +526,9 @@ body.cart-open {
 }
 
 .cart-form__intro {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     margin: 0;
     font-size: 1rem;
     color: #1C2B4B;
@@ -578,7 +603,34 @@ body.cart-open {
 
 .cart-option__icon {
     flex-shrink: 0;
-    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #f0f6fc;
+    color: #1C2B4B;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-option[aria-checked="true"] .cart-option__icon {
+    background: #ffffff;
+}
+
+.cart-option__icon .cart-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Line icons drawn by iconSvg() in cart.js */
+.cart-icon {
+    flex-shrink: 0;
+    width: 1.1em;
+    height: 1.1em;
+}
+
+.cart-icon--accent {
+    color: #2d79ba;
 }
 
 .cart-option__text {
@@ -629,7 +681,12 @@ body.cart-open {
 }
 
 .cart-option[aria-checked="true"] .cart-option__check::after {
-    content: '✓';
+    content: '';
+    width: 14px;
+    height: 14px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 .cart-suboptions {
@@ -641,6 +698,9 @@ body.cart-open {
 }
 
 .cart-form__hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 0.875rem;
     font-weight: 400;
     color: #6b7a90;
@@ -648,7 +708,16 @@ body.cart-open {
 
 
 
+.cart-form__note .cart-icon {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+}
+
 .cart-form__note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
     margin: 0;
     padding: 12px 16px;
     border-radius: 16px;
@@ -814,6 +883,18 @@ html.dark-mode .cart-promo__input {
     box-shadow: 0 20px 50px rgba(15, 42, 79, 0.35);
     text-align: center;
     font-family: 'Poppins', sans-serif;
+}
+
+.cart-result__icon {
+    display: block;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 10px;
+    color: #d1293d;
+}
+
+.cart-result__box--success .cart-result__icon {
+    color: #2e7d4f;
 }
 
 .cart-result__title {

@@ -191,6 +191,12 @@
     height: 35px;
 }
 
+/* My orders (person icon), next to the cart */
+.icon-btn.icon-btn--account img {
+    width: 31px;
+    height: 31px;
+}
+
 
 .hamburger {
     display: none;
@@ -479,6 +485,11 @@ body.menu-open {
     .icon-btn img {
         width: 28px;
         height: 28px;
+    }
+
+    .icon-btn.icon-btn--account img {
+        width: 25px;
+        height: 25px;
     }
 
     
